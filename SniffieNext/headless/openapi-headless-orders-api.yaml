@@ -1,0 +1,188 @@
+openapi: 3.0.0
+info:
+  description: |
+    ## Overview 
+
+    This is the API description for Sniffie's Orders API.
+
+  version: 1.0.0
+  title: Sniffie Orders API
+tags:
+  - name: orders
+    description: Manage orders of an account
+paths:
+  /orders:
+    post:
+      tags:
+        - orders
+      summary: Creates a new order history item
+      description: Inserts a orderHistory row
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/OrderInput'
+                - $ref: '#/components/schemas/OrderInputList'  
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResult'
+        500:
+          $ref: '#/components/responses/5XX'
+components:
+  responses:
+    5XX:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+              
+    OrderResult:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: Api gateway request Id
+        data:
+          $ref: '#/components/schemas/OrderInput'
+    OrderInputList:
+      type: array
+      items:
+        $ref: '#/components/schemas/OrderInput'
+      maxItems: 200
+    OrderInput:
+      type: object
+      required:
+        - shopName
+        - orderNumber
+        - createdAt
+        - additionalDiscountAppliedToOrder
+        - totalDiscount
+        - totalTaxAmount
+        - totalPriceWithoutVat
+        - orderItems
+      properties:
+        shopName:
+          type: string
+          description: Name of the shop
+          example: 'www.acme-inc.com'
+        orderNumber:
+          type: string
+          description: Order number of whole order 
+          example: 'ORD9876-11'
+        createdAt:
+          type: string
+          format: datetime
+          description: Datetime of the creation date for the order in UTC
+          example: '2021-03-20T09:12:28Z'
+        additionalDiscountAppliedToOrder:
+          type: number
+          format: decimal
+          description: Amount of discount applied to the order in addition to line item discounts
+          example: '0.00'
+        totalDiscount:
+          type: number
+          format: decimal
+          description: Total amount of discount applied to the order (all line item discounts + additionalDiscountAppliedToOrder)
+          example: '0.00'
+        totalTaxAmount:
+          type: number
+          format: decimal
+          description: Total tax amount of the order
+          example: '23.99'
+        totalPrice:
+          type: number
+          format: decimal
+          description: Total price of the order (with VAT)
+          example: '99.95'
+        orderItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        bundlesInOrder:
+          type: array
+          items:
+            $ref: '#/components/schemas/BundleItem'
+        additionalProperties:
+          type: object
+          additionalProperties: true
+          description: additional properties related to this order
+
+
+    BundleItem:
+      type: object
+      required:
+        - orderBundleLineItems
+      properties:
+        orderBundleLineItems:
+          type: array
+          description: List of order item ids on the order that create a single bundle
+          example: ['ORD9876-11-1, ORD9876-11-2']
+          items:
+            type: string
+    OrderItem:
+      type: object
+      required:
+        - unitPrice
+        - taxAmount
+        - discountAmount
+        - currency
+        - quantity
+        - sku
+        - orderLineNumber
+      properties:
+        unitPrice:
+          type: number
+          format: decimal
+          description: Price at which the product was sold (including vat, including discount)
+          example: '99.95'
+        taxAmount:
+          type: number
+          format: decimal
+          description: Amount of tax applied to the line item
+          example: '23.99'
+        discountAmount:
+          type: number
+          format: decimal
+          description: Amount of discount applied to the line item
+          example: '0.00'
+        currency:
+          type: string
+          description: Three letter currency code as defined by ISO-4217
+          format: iso-4217
+          example: 'EUR'
+        quantity:
+          type: number
+          description: How many items were sold of this particular sku
+          example: '1'
+        sku:
+          type: string
+          description: SKU of the product
+          example: 'SKU-123456-Y4'
+        orderLineNumber:
+          type: string
+          description: Order line number of the product line item 
+          example: 'ORD9876-11-1'
+        originalPrice: 
+          type: number
+          format: decimal
+          description: Original (RRP) price of the line item, including tax and excluding discount
+        
+       

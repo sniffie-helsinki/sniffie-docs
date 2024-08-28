@@ -17,6 +17,8 @@ For fetching data from Sniffie:
 3. Custom solution
 
 ### Bulk transfer
-
+For SniffieV1Enterprise, see SniffieV1Enterprise/bulkTransfer
 
 ### Rest API
+For SniffieV1Enterprise, see SniffieV1Enterprise/rest
+For SniffieNext see SniffieNext/headless

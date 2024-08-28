@@ -1,0 +1,22 @@
+{
+  "name": "s3signedurlexample",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.7.5",
+    "pako": "^2.1.0",
+    "typedef": "^1.1.0",
+    "typescript": "^5.5.4"
+  },
+  "devDependencies": {
+    "@types/pako": "^2.0.3",
+    "@types/request": "^2.48.12"
+  }
+}

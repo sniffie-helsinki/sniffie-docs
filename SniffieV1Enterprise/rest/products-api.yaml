@@ -1,0 +1,282 @@
+openapi: 3.0.0
+info:
+  description: |
+    ## Overview 
+
+    This is the API description for Sniffie's Products API. 
+    - 100 requests per second
+    - 200 products per request
+    
+    When possible, send max item count instead of one item per request to avoid overflooding the API.
+
+    If your products' variant count is high, you may need to reduce the maxItems count to avoid getting timeouts from the API. 
+    The API has a hard limit of 30 seconds, after which it will disconnect the request. 
+    When this happens, reduce the amount of items you send at once.
+    
+    You can get the token from our customer service, make sure it is in form of {accountId}&&{token}
+  version: 1.0.0
+  title: Sniffie Products API
+servers:
+  - url: https://api.sniffie.io/v1/account-products
+tags:
+  - name: products
+    description: Manage products of an account
+security:
+  - ApiKeyAuth: []
+paths:
+  /{accountId}/products:
+    post:
+      tags:
+        - products
+      summary: Creates or updates (if the same product exists) a product, and a product history item
+      description: Inserts a new product row, and a product history row
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/ProductInput'
+                - $ref: '#/components/schemas/ProductInputList'
+      parameters:
+        - name: accountId
+          in: path
+          description: AccountId of the account in question
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResult'
+        400:
+          description: Check request, invalid payload
+        429:
+          description: Too many requests, slow down request rate and retry
+        500:
+          $ref: '#/components/responses/5XX'
+   
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+  responses:
+    5XX:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    404:
+      description: Item not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+    ProductResult:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: Api gateway request Id
+        data:
+          $ref: '#/components/schemas/ProductInput'
+    ProductInputList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ProductInput'
+      maxItems: 500
+    ProductInput:
+      required:
+        - productInfo
+        - variants
+      properties:
+        productInfo:
+          $ref: '#/components/schemas/ProductGeneralInfo'
+        variants:
+          type: array
+          items: 
+            $ref: '#/components/schemas/ProductVariant'
+    ProductGeneralInfo:
+      type: object
+      required:
+        - categoryName
+        - shopName
+        - productName
+        - productId
+        - variants
+      properties:
+        productId:
+          type: string
+          description: Unique identifier for the product, within the shop in question
+          example: 'ACM-T-SHIRT-123'
+        categoryName:
+          type: string
+          description: Category to which the product belongs to
+          example: 'T-Shirts'
+        shopName:
+          type: string
+          description: Name of the shop
+          example: 'Acme Inc'
+        productName:
+          type: string
+          description: Name of the product
+          example: 'The Blue Shirt #1'
+        manufacturer:
+          type: string
+          description: Manufacturer
+          example: 'Acme' 
+        productBrand:
+          type: string
+          description: Brand of the product
+          example: 'Acme Anvils'
+        imageUrl:
+          type: string
+          description: Url to the image of the product
+        productUrl:
+          type: string
+          description: Url to the product page
+        additionalProperties:
+          type: object
+          additionalProperties: true
+          description: additional properties related to this product
+          
+    ProductVariant:
+      type: object
+      required:
+        - price
+        - originalPrice
+        - productStatus
+        - currency
+        - purchasePrice
+        - sku
+        - stockCount
+        - variantName
+      properties:
+        price:
+          type: number
+          format: decimal
+          description: Price expressed as a decimal number (with VAT)
+          example: '99.95'
+        originalPrice:
+          type: number
+          format: decimal
+          description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units
+          example: '129.99'
+        productStatus: 
+          type: string
+          nullable: true
+          description: Status of the product, is it active or disabled
+          enum: 
+            - enabled
+            - disabled
+            - null
+          default: enabled
+        currency:
+          type: string
+          description: Three letter currency code as defined by ISO-4217
+          format: iso-4217
+          example: 'EUR'
+        purchasePrice:
+          type: number
+          format: decimal
+          description: Cost of the product for the shop (without VAT)
+          example: '59.99'
+        sku:
+          type: string
+          description: SKU (stock keeping unit) of the product
+          example: 'SKU-123456-Y4'
+        stockCount:
+          type: number
+          description: Amount of items available in stock 
+          example: 90          
+        variantName:
+          type: string
+          description: Name of the variant
+          example: 'The Blue Shirt #1, size M'
+        taxRate:
+          type: number
+          format: decimal
+          description: Tax rate of the variant being sold
+          example: 24.0
+        variantId: 
+          type: string
+          description: Unique identifier for the variant, to distinguish it from the other variants
+          example: 'BLUE-SHIRT-1-M'
+        ean:
+          type: string
+          description: European Article Number. Unified code for products
+        manufacturer:
+          type: string
+          description: Manufacturer
+          example: 'Acme' 
+        productBrand:
+          type: string
+          description: Brand of the product
+          example: 'Acme Anvils'
+        imageUrl:
+          type: string
+          description: Url to the image of the product
+        productUrl:
+          type: string
+          description: Url to the product page
+        onSale:
+          type: boolean
+          description: Is the product on sale
+          default: false
+        stockStatus:
+          type: number
+          description: Amount of items available in stock 
+          example: 90
+        categories:
+          description: Category numbers the product belongs to
+          example: [111, 234]
+          items:
+            type: integer
+        presentmentPrices:
+          type: array
+          description: Any and all other currencies and prices that the product may be sold at
+          items:
+            $ref: '#/components/schemas/PresentmentPrice'
+        additionalProperties:
+          type: 'object'
+          additionalProperties: true
+          description: 'additional properties related to this product'
+    PresentmentPrice:
+      type: object
+      required:
+        - price 
+        - currency
+      properties:
+        price:
+          type: number
+          format: decimal
+          description: Price expressed as a decimal number of major currency units
+          example: '999.95'
+        currency:
+          type: string
+          description: Three letter currency code as defined by ISO-4217
+          format: iso-4217
+          example: 'SEK'
+        originalPrice:
+          type: number
+          format: decimal
+          description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units
+          example: '1299.99'
+          

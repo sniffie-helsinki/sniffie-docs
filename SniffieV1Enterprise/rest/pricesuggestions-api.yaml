@@ -1,0 +1,133 @@
+openapi: 3.0.0
+info:
+  description: |
+    ## Overview 
+
+    This is the API description for Sniffie's Products API.
+  version: 1.0.0
+  title: Sniffie Price suggestions API
+tags:
+  - name: pricesuggestions
+    description: Manage price suggestions for products
+paths:
+  /{accountId}:
+    get:
+      tags:
+        - pricesuggestions
+      summary: Get newest price suggestion for account's products
+      description: Returns newest price suggestion for all products that have one
+      parameters:
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/limitParam'
+        - name: accountId
+          in: path
+          description: Url encoded account id of the account in question
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceSuggestionList'
+        '500':
+          $ref: '#/components/responses/5XX'
+      security:
+        - ApiKeyAuth: []
+components:
+  responses:
+    '404':
+      description: Item not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    5XX:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+  parameters:
+    offsetParam:
+      in: query
+      name: offset
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+      description: The number of items to skip before starting to collect the result set.
+    limitParam:
+      in: query
+      name: limit
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 200
+        default: 200
+      description: The numbers of items to return.
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+    PriceSuggestionList:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: Api gateway request Id
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceSuggestion'
+    PriceSuggestion:
+      type: object
+      required:
+        - sku
+        - strategyId
+        - originalPrice
+        - validFrom
+      properties:
+        sku:
+          type: string
+          description: Unique identifier for the product, within the shop in question
+          example: ACM-T-SHIRT-123
+        originalPrice:
+          type: number
+          format: decimal
+          description: Price expressed as a decimal number (with VAT)
+          example: 99.95
+        campaignPrice:
+          type: number
+          format: decimal
+          description: The current price for the product if product is put on discount
+          example: 69.99
+        validFrom:
+          description: UTC ISO Datetime from when the price is valid from
+          example: '2022-08-15T00:03:00.143808'
+        validTo:
+          description: >-
+            UTC ISO Datetime until when the price is valid (usually only for
+            discount campaigns)
+          example: '2022-08-20T00:03:00.143808'
+servers:
+  - url: https://api-staging.sniffie.io/v1/account-pricesuggestions
+    description: 'Test'
+  - url: https://api.sniffie.io/v1/account-pricesuggestions
+    description: 'Production'
+  

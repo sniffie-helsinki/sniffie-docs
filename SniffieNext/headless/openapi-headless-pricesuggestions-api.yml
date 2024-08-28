@@ -1,0 +1,123 @@
+openapi: 3.0.0
+info:
+  description: |
+    ## Overview 
+
+    This is the API description for Sniffie's Products API.
+  version: 1.0.0
+  title: Sniffie Price suggestions API
+tags:
+  - name: pricesuggestions
+    description: Manage price suggestions for products
+paths:
+  /pricesuggestions:
+    get:
+      tags:
+        - pricesuggestions
+      summary: Get newest price suggestion for account's products
+      description: Returns newest price suggestion for all products that have one
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceSuggestionList'
+        500:
+          $ref: '#/components/responses/5XX'
+   
+components:
+  responses:
+    5XX:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    404:
+      description: Item not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+    PriceSuggestionList:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: Api gateway request Id
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceSuggestion'
+    PriceSuggestion:
+      type: object
+      required:
+        - sku
+        - newPrice
+        - currentPrice
+        - originalPrice
+        - updatedAt
+        - priceType
+        - priceChangeStatus
+        - warnings
+      properties:
+        sku:
+          type: string
+          description: Unique identifier for the product, within the shop in question
+          example: 'ACM-T-SHIRT-123'
+        newPrice:
+          type: number
+          format: decimal
+          description: Price expressed as a decimal number (with VAT)
+          example: 99.95
+        currentPrice:
+          type: number
+          format: decimal
+          description: The current know price for the product, based on which the calculations are done against
+          example: 105.99
+        originalPrice:
+          type: number
+          format: decimal
+          description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units
+          example: 129.99
+        updatedAt:
+          description: UTC ISO Datetime when the price suggestion was created
+          example: '2022-08-15T00:03:00.143808'
+        priceType:
+          type: string
+          description: Is the price suggestion for normal price (originalPrice) or for a discounted price (discount)
+          example: 'originalPrice'
+        priceChangeStatus:
+          type: string
+          description: Upcoming, applied, or prior change
+          example: 'upcoming'
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceSuggestionWarning'
+        
+   
+    PriceSuggestionWarning:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Enum identifier for the warning
+          example: 'unknown_currency'
+        info:
+          type: string
+          description: Cleartext explanation what the warning means
+          example: 'Unknown currency \"None\" included in group'
+          

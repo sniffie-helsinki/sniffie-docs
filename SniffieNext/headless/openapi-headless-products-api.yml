@@ -1,0 +1,520 @@
+openapi: 3.0.0
+info:
+  description: |
+    ## Overview 
+
+    This is the API description for Sniffie's Products API.
+  version: 1.0.0
+  title: Sniffie Products API
+security:
+  - ApiKeyAuth: []
+tags:
+  - name: products
+    description: Manage products of an account
+paths:
+  /products:
+    post:
+      tags:
+        - products
+      summary: Creates or updates (if the same product exists) a product, and a product history item
+      description: Inserts a new product row, and a product history row
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductInput'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResult'
+        500:
+          $ref: '#/components/responses/5XX'
+  /safeguards:
+    post:
+      tags:
+        - safeguards
+      summary: Creates or updates (if the strategy exists for given group) a strategy/safeguards item
+      description: Insert safeguards into strategies for the given group
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SafeguardInput'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SafeguardResult'
+        500:
+          $ref: '#/components/responses/5XX'
+  /omnibus/products:
+    post:
+      tags:
+        - products
+      summary: Creates or updates (if the same product exists) a product, and a product history item
+      description: Inserts a new product row, and a product history row
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OmnibusProductInput'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResult'
+        500:
+          $ref: '#/components/responses/5XX'
+  /omnibus/bulk:
+    get:
+      tags: 
+        - omnibus
+      summary: Endpoint that creates a signed url from which the caller can download a JSONL file that contains all the omnibus price objects for all variants in the catalog
+      description: Returns a link to an s3 JSONL file
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkDownloadResult'
+        500:
+          $ref: '#/components/responses/5XX'
+    post:
+      tags: 
+        - omnibus
+      summary: Endpoint that creates a signed post url to which the caller can upload a JSONL file that contains all the omnibus price objects (see OmnibusProductInput for schema) for all variants in the catalog
+      description: Returns an url to which the caller can post the items with a single request
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkUploadResult'
+        500:
+          $ref: '#/components/responses/5XX'
+   
+components:
+  responses:
+    5XX:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    404:
+      description: Item not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+  schemas:
+    BulkDownloadResult:
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          type: string
+          description: url from which to download the bulk file that contains all omnibus data for a catalog
+    BulkUploadResult:
+      type: object
+      required:
+        - url
+        - headerFields
+      properties:
+        url:
+          type: string
+          description: url to which to upload the bulk file that contains all omnibus data for a catalog
+        headerFields: 
+          type: object
+          description: Fields which to include in the headers/form upload when pushing to S3
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+    ProductResult:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: Api gateway request Id
+        data:
+          $ref: '#/components/schemas/ProductInput'
+    SafeguardResult:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: Api gateway request Id
+        data:
+          $ref: '#/components/schemas/SafeguardInput'
+    ProductInput:
+      required:
+        - productInfo
+        - variants
+      properties:
+        productInfo:
+          $ref: '#/components/schemas/ProductGeneralInfo'
+        variants:
+          type: array
+          items: 
+            $ref: '#/components/schemas/ProductVariant'
+    SafeguardInput:
+      type: object
+      required:
+        - shopName
+        - groupId
+        - demandWeight
+        - lowerLimit
+        - upperLimit
+        - minimumMargin
+        - maxChangeAtOnce
+      properties:
+        shopName:
+          type: string
+          description: Name of the shop
+          example: 'Acme Inc'
+        processName:
+          type: string
+          description: process for which the safeguards are being inserted
+          enum:
+            - sampoDefault
+            - stockOptimization
+            - sampoRegular
+          default: sampoDefault
+        groupId:
+          type: string
+          description: Id of the group
+          example: 'ACM-T-SHIRT-123'
+        demandWeight:
+          type: number
+          format: decimal
+          description: Percentage weight given to demand over profit. If the value given is 20 then the demand will be given 20% weight and profit will be given (100-20) = 80% weight
+          example: '20.00'
+        absoluteMax:
+          type: number
+          format: decimal
+          description: Absolute Maximum price which will not be crossed for all variants under the group
+          example: '2000.00'
+        lowerLimit:
+          type: number
+          format: decimal
+          description: The lower limit for the price in terms of percentage of Original Price. If the value given is 50 then the lower limit of price will be 50 % of Original Price i.e. (0.5)*(Original Price)
+          example: '50'
+        upperLimit:
+          type: number
+          format: decimal
+          description: The upper limit for the price in terms of percentage of Original Price. If the value given is 200 then the upper limit of price will be 200 % of Original Price i.e. (2.0)*(Original Price)
+          example: '200'
+        minimumMargin:
+          type: number
+          format: decimal
+          description: The lower limit for the price over the Cost in terms of percentage of Cost. If the value given is 10 then the lower limit of price will be Cost + 10 % of Cost i.e. (1.1)*(Cost)
+          example: '10'
+        maxChangeAtOnce:
+          type: number
+          format: decimal
+          description: The maximum percentual change of price in either direction (up or down) from the current price. If the value given is 10 then the price can maximum increase by 10% of current price at once and can decrease by 10% current price. Thus one time price change will be between (0.9)*(current price) and (1.1)*(current price).
+          example: '10'
+        maxIncreaseAtOnce:
+          type: number
+          format: decimal
+          description: The maximum percentual increase of price from the current price. If the value given is 5 then the price can maximum increase by 5% of current price at once.  (1.05)*(current price). This will override maxChangeAtOnce option for price increase.
+          example: '5'
+        maxDecreaseAtOnce:
+          type: number
+          format: decimal
+          description: The maximum percentual decrease of price from the current price. If the value given is 25 then the price can maximum decrease by 25% of current price at once.  (0.75)*(current price). This will override maxChangeAtOnce option for price decrease.
+          example: '25'
+    OmnibusProductInput:
+      required:
+        - productInfo
+        - variants
+      properties:
+        productInfo:
+          $ref: '#/components/schemas/ProductGeneralInfo'
+        variants:
+          type: array
+          maxItems: 500
+          items:
+            $ref: '#/components/schemas/OmnibusProductVariant'
+    ProductGeneralInfo:
+      type: object
+      required:
+        - shopName
+        - productId
+        - variants
+      properties:
+        productId:
+          type: string
+          description: Unique identifier for the product, within the shop in question
+          example: 'ACM-T-SHIRT-123'
+        categoryName:
+          type: string
+          description: Category to which the product belongs to
+          example: 'T-Shirts'
+        shopName:
+          type: string
+          description: Name of the shop
+          example: 'Acme Inc'
+        productName:
+          type: string
+          description: Name of the product
+          example: 'The Blue Shirt #1'
+        manufacturer:
+          type: string
+          description: Manufacturer
+          example: 'Acme' 
+        productBrand:
+          type: string
+          description: Brand of the product
+          example: 'Acme Anvils'
+        imageUrl:
+          type: string
+          description: Url to the image of the product
+        productUrl:
+          type: string
+          description: Url to the product page
+        additionalProperties:
+          type: object
+          additionalProperties: true
+          description: additional properties related to this product
+          
+    OmnibusProductVariant:
+      type: object
+      required:
+        - price
+        - currency
+        - sku
+      properties:
+        price:
+          type: number
+          format: decimal
+          description: Price expressed as a decimal number (with VAT)
+          example: '99.95'
+        compareAtPrice:
+          type: number
+          format: decimal
+          description: Required when item is on discount. Compare at Price / Suggested retail price, expressed as a decimal number of major currency units
+          example: '129.99'
+        productStatus: 
+          type: string
+          nullable: true
+          description: Status of the product, is it active or disabled
+          enum: 
+            - enabled
+            - disabled
+            - null
+          default: enabled
+        currency:
+          type: string
+          description: Three letter currency code as defined by ISO-4217
+          format: iso-4217
+          example: 'EUR'
+        purchasePrice:
+          type: number
+          format: decimal
+          description: Cost of the product for the shop (with VAT)
+          example: '59.99'
+        sku:
+          type: string
+          description: SKU (stock keeping unit) of the product
+          example: 'SKU-123456-Y4'
+        stockCount:
+          type: number
+          description: Amount of items available in stock 
+          example: 90
+        variantName:
+          type: string
+          description: Name of the variant
+          example: 'The Blue Shirt #1, size M'
+        variantId: 
+          type: string
+          description: Unique identifier for the variant, to distinguish it from the other variants
+          example: 'BLUE-SHIRT-1-M'
+        ean:
+          type: string
+          description: European Article Number. Unified code for products
+        manufacturer:
+          type: string
+          description: Manufacturer
+          example: 'Acme' 
+        productBrand:
+          type: string
+          description: Brand of the product
+          example: 'Acme Anvils'
+        imageUrl:
+          type: string
+          description: Url to the image of the product
+        productUrl:
+          type: string
+          description: Url to the product page
+        onSale:
+          type: boolean
+          description: Is the product on sale
+          default: false
+        stockStatus:
+          type: number
+          description: Amount of items available in stock 
+          example: 90
+        categories:
+          description: Category numbers the product belongs to
+          example: [111, 234]
+          items:
+            type: integer
+        dateForPrice:
+          description: ISO Date for the price, if in the past
+          example: '2022-06-05'
+        presentmentPrices:
+          type: array
+          description: Any and all other currencies and prices that the product may be sold at
+          items:
+            $ref: '#/components/schemas/PresentmentPrice'
+        additionalProperties:
+          type: 'object'
+          additionalProperties: true
+          description: 'additional properties related to this product'
+    ProductVariant:
+      type: object
+      required:
+        - price
+        - originalPrice
+        - productStatus
+        - currency
+        - purchasePrice
+        - sku
+        - stockCount
+        - variantName
+      properties:
+        price:
+          type: number
+          format: decimal
+          description: Price expressed as a decimal number (with VAT)
+          example: '99.95'
+        originalPrice:
+          type: number
+          format: decimal
+          description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units
+          example: '129.99'
+        productStatus: 
+          type: string
+          nullable: true
+          description: Status of the product, is it active or disabled
+          enum: 
+            - enabled
+            - disabled
+            - null
+          default: enabled
+        currency:
+          type: string
+          description: Three letter currency code as defined by ISO-4217
+          format: iso-4217
+          example: 'EUR'
+        purchasePrice:
+          type: number
+          format: decimal
+          description: Cost of the product for the shop (with VAT)
+          example: '59.99'
+        sku:
+          type: string
+          description: SKU (stock keeping unit) of the product
+          example: 'SKU-123456-Y4'
+        stockCount:
+          type: number
+          description: Amount of items available in stock 
+          example: 90
+        variantName:
+          type: string
+          description: Name of the variant
+          example: 'The Blue Shirt #1, size M'
+        variantId: 
+          type: string
+          description: Unique identifier for the variant, to distinguish it from the other variants
+          example: 'BLUE-SHIRT-1-M'
+        ean:
+          type: string
+          description: European Article Number. Unified code for products
+        manufacturer:
+          type: string
+          description: Manufacturer
+          example: 'Acme' 
+        productBrand:
+          type: string
+          description: Brand of the product
+          example: 'Acme Anvils'
+        imageUrl:
+          type: string
+          description: Url to the image of the product
+        productUrl:
+          type: string
+          description: Url to the product page
+        onSale:
+          type: boolean
+          description: Is the product on sale
+          default: false
+        stockStatus:
+          type: number
+          description: Amount of items available in stock 
+          example: 90
+        categories:
+          description: Category numbers the product belongs to
+          example: [111, 234]
+          items:
+            type: integer
+        dateForPrice:
+          description: ISO Date for the price, if in the past
+          example: '2022-06-05'
+        presentmentPrices:
+          type: array
+          description: Any and all other currencies and prices that the product may be sold at
+          items:
+            $ref: '#/components/schemas/PresentmentPrice'
+        additionalProperties:
+          type: 'object'
+          additionalProperties: true
+          description: 'additional properties related to this product'
+    PresentmentPrice:
+      type: object
+      required:
+        - price 
+        - currency
+      properties:
+        price:
+          type: number
+          format: decimal
+          description: Price expressed as a decimal number of major currency units
+          example: '999.95'
+        currency:
+          type: string
+          description: Three letter currency code as defined by ISO-4217
+          format: iso-4217
+          example: 'SEK'
+        originalPrice:
+          type: number
+          format: decimal
+          description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units
+          example: '1299.99'
+          
