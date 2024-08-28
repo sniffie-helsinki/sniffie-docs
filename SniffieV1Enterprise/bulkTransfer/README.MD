@@ -14,3 +14,7 @@ Using the bulk upload is much more cost and time efficient, compared to pushing 
 6. Upload the compressed file to the url (see a working code example here)
 
 And then you're done
+
+## Try it out
+Run 
+`npm run test`

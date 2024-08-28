@@ -1,7 +1,7 @@
 const zlib = require("zlib");
 async function createS3UploadForm(args: {
   url: string;
-  data: { [key: string]: unknown };
+  data: object;
 }): Promise<unknown> {
   const { url, data } = args;
 

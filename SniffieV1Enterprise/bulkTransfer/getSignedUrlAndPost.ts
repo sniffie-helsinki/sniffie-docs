@@ -19,20 +19,17 @@ const getSignedUrl = async (
   });
 };
 
-export const getSignedUrlAndPost = async () => {
+export const getSignedUrlAndPost = async (token:string, data:object) => {
   const options = {
     method: "GET",
     headers: {
-      Authorization: "676&&oA&hCXi$x**TH#sA810Sv2",
+      Authorization: token,
     },
   };
   const response = await getSignedUrl(options);
 
   return await createAndPostS3UploadForm({
     url: response?.data?.url,
-    data: {
-      example: "json",
-      and: "rest of the values",
-    },
+    data,
   });
 };
