@@ -15,9 +15,9 @@ Using the bulk upload is much more cost and time efficient, compared to pushing 
 
 And then you're done
 
-## Try it out
-Run 
-`npm run test`
+## Try it out 
+In index.ts replace the token value with your own token (which you can get from Sniffie). Then either leave the data in index.ts as is, or modify it to your liking and then just.... 
+Run `npm run test`
 
 ## Architecture
 [![Bulk transfer architecture](bulkTranferArchitecture.png)]
