@@ -18,3 +18,6 @@ And then you're done
 ## Try it out
 Run 
 `npm run test`
+
+## Architecture
+[![Bulk transfer architecture](bulkTranferArchitecture.png)]
