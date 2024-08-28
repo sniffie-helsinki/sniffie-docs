@@ -6,8 +6,9 @@ Using the bulk upload is much more cost and time efficient, compared to pushing 
 
 ## Bulk transfer steps
 
-1. Make sure you have your api key, which enables you to call the Sniffie endpoint https://api(-staging).sniffie.io/v1/account-products/<replace_with_accountId>/products/bulk-transfer
+1. Make sure you have your api key, which enables you to call the Sniffie endpoint for the presigned upload url
 2. Make a GET request to the endpoint
+  https://api(-staging).sniffie.io/v1/account-products/<replace_with_accountId>/products/bulk-transfer
 3. Save the URL which comes as a response
 4. Package your payload in the right format into a gzip buffer. 
 5. Set the headers to the request, `Content-Encoding` as `gzip` and `Content-Type` as `application/json` or `text/plain` if using `jsonl`
