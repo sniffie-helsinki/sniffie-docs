@@ -6,6 +6,6 @@ const data = {
 };
 const accountId = "replaceMeWithYourAccountId"; // you get these from Sniffie
 const token = "replaceMeWithYourToken"; // you get these from Sniffie
-getSignedUrlAndPost(token, data).then((response) => {
+getSignedUrlAndPost(accountId, token, data).then((response) => {
   console.log(response);
 });
