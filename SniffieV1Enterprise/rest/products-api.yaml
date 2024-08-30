@@ -245,10 +245,8 @@ components:
           description: Amount of items available in stock 
           example: 90
         categories:
-          description: Category numbers the product belongs to
-          example: [111, 234]
-          items:
-            type: integer
+          description: Subcategories from smallest to highest
+          example: ["iPhones", "Phones", "Electronics"]
         presentmentPrices:
           type: array
           description: Any and all other currencies and prices that the product may be sold at
