@@ -1,0 +1,121 @@
+openapi: 3.0.0
+info:
+  description: |
+    ## Overview 
+
+    This is the API description for Sniffie's Omnibus API.
+  version: 1.0.0
+  title: Sniffie Omnibus API
+tags:
+  - name: omnibus
+    description: Get omnibus objects for your market / account
+servers:
+  - url: https://your-sqs-url-here/ # The "url: " prefix is required    
+paths:
+  /:
+    get:
+      tags:
+        - omnibus
+      summary: Gets omnibus info for the product via GET protocol (POST is preferred protocol)
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OmnibusResult'
+components:
+  schemas:
+    OmnibusResult:
+      type: object
+      properties:
+        mrefId:
+          type: integer
+          description: Integer of internal Sniffie Id
+        validOn:
+          type: string
+          description: UTC ISO datetime when the object was last valid.
+        website:
+          type: string
+          description: Website name
+        SKU:
+          type: string
+          description: SKU for the product
+        infoJson:
+          $ref: "#/components/schemas/InfoJson"
+    InfoJson:
+      properties:
+        OmnibusPrice:
+          $ref: "#/components/schemas/OmnibusPriceObject"
+    OmnibusPriceObject:
+      properties:
+        lowestPrice:
+          type: number
+          description: Lowest price (including possible coupons)
+        date:
+          type: string
+          description: Date when the lowest price has occurred
+        evaluationPeriod:
+          $ref: "#/components/schemas/EvaluationPeriod"
+        cause:
+          $ref: "#/components/schemas/Cause"
+        isRolling:
+          type: integer
+          description: If the calculation is done using the rolling method from current date
+        campaignOngoingSince:
+          type: string
+          description: Date since when the current campaign has been ongoing
+        omnibusFromLastPriceChange:
+          type: integer
+          description: If the Polish county requirement is in use
+        campaignLenghtExceeded:
+          type: boolean
+          description: If maximum campaign length is exceeded
+        maxCampaignLength:
+          type: integer
+          description: Number of days in max market length
+        comparisonIsOriginalPrice:
+          type: integer
+          description: If comparison price is original price
+        omnibusPriceIsLastPriceChange:
+          type: integer
+          description: If the Polish county requirement is in use and Omnibus price is last requirements
+    Cause:
+      properties:
+        price:
+          type: number
+          description: Price without coupons
+        coupon:
+          $ref: "#/components/schemas/Coupon"
+    Coupon:
+      properties:
+        id:
+          type: number
+          description: ID for the coupon
+        discountPercentage:
+          type: number
+          description: Discount percentage for coupon. Empty if discountValue is used
+        discountValue:
+          type: number
+          description: Discount value for coupon. Empty if discountPercentage is used
+        priceType:
+          type: string
+          description: if the coupon applies to all products or normal priced products only
+          example: 'all'
+        couponCode:
+          type: string
+          description: Coupon code for the coupon in question
+        startsFrom:
+          type: string
+          description: Date when the coupon starts to work.
+        endsOn:
+          type: string
+          description: Date when the coupon code expires. Empty if coupon does not have an expiry date.
+    EvaluationPeriod:
+      properties:
+        to:
+          type: string
+          description: Last date for evaluation
+        from:
+          type: string
+          description: First date for evaluation
