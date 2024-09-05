@@ -2,6 +2,9 @@
 
 This repository contains API descriptions and instructions on how to integrate to our Sniffie backend, to push products and orders data, and how to get price suggestions and/or other data out. 
 
+# Architecture
+[![Sniffie External integrations architecture](Sniffie_External_integrations-architecture.png)]
+
 ## Capabilities
 We offer multiple ways to integrate into our system, depending on the use case and the clients' capabilities.
 Our go to solutions, which you can do implement mostly yourself by following the instructions and documentation, are:
@@ -11,7 +14,7 @@ For bringing data into Sniffie:
 2. Rest API
 
 For fetching data from Sniffie:
-1. Dedicated SQS queues (preferred)
+1. Dedicated SQS queues (preferred. see Sniffie External integrations architecture -diagram]
 3. Bulk download
 2. Rest API
 
