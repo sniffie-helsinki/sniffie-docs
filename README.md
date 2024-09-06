@@ -3,7 +3,7 @@
 This repository contains API descriptions and instructions on how to integrate to our Sniffie backend, to push products and orders data, and how to get price suggestions and/or other data out. 
 
 # Architecture
-[![Sniffie External integrations architecture](Sniffie_External_integrations-architecture.png)]
+[![Sniffie External integrations architecture](Sniffie_External_integrations-architecture.pdf)]
 
 ## Capabilities
 We offer multiple ways to integrate into our system, depending on the use case and the clients' capabilities.
