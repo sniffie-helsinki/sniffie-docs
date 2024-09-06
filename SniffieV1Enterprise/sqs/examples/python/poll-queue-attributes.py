@@ -1,14 +1,13 @@
 '''
 This code example assumes that you don't have AWS infrastrucure in place
 
-If you are using AWs in your own organization, you likely want to use AWS SDK with AWS specific examples.
+If you are using AWS in your own organization, you likely want to use AWS SDK with AWS specific examples.
 '''
 
-from urllib.request import urlopen 
+import requests
 from xml.etree.ElementTree import fromstring, ElementTree
 import json
 import sys
-import re
 
 config = None
 
@@ -51,11 +50,10 @@ If you get 403, double check your queue url and make sure the request
 is coming from a whitelisted IP address
 If you get 400, your request is malformed
 '''
-response = urlopen(final_url)
+response = requests.get(final_url)
 
 # We now read the response. We know that we will get xml in the response so we'll convert this to xml
-content = str(response.read(), "utf-8")
-tree = ElementTree(fromstring(content))
+tree = ElementTree(fromstring(response.text))
 
 # Create dictionary for which we store the attribute names in dictionary
 attribute_dict = {}
