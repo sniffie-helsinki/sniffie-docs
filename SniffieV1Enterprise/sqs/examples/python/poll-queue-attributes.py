@@ -1,16 +1,17 @@
 '''
+This function contains bare-bones code on how to poll SQS queue attributes.
+
 This code example assumes that you don't have AWS infrastrucure in place
 
 If you are using AWS in your own organization, you likely want to use AWS SDK with AWS specific examples.
 '''
 
 import requests
-from xml.etree.ElementTree import fromstring, ElementTree
 import json
 import sys
+from xml.etree.ElementTree import fromstring, ElementTree
 
 config = None
-
 
 # Open the config file and read it to a dictionary
 with open("config.json") as f: # open config file
@@ -26,8 +27,6 @@ elif not "sqs-url" in config:
 elif not config["sqs-url"]:
   print("sqs-url is not present. make sure sqs-url value is present")
   sys.exit()
-
-# We now read the url to variable
 
 queue_url = config["sqs-url"]
 print(f"Fetching queue attributes from {queue_url}")
@@ -71,5 +70,8 @@ if "ApproximateNumberOfMessages" in attribute_dict:
   message_count = int(attribute_dict["ApproximateNumberOfMessages"]) # cast to int
   if message_count > 0:
     print(f"There are {message_count} messages available, these should be fetched!")    
+    # TRIGGER MESSAGE FETCHING PROCESS. You and also just write the code here fetch & store messages. See example code in the receive-queue-messages.py file
   else:
     print("No messages available")
+print("Finished")
+
