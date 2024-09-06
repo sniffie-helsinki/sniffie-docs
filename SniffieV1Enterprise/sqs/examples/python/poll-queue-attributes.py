@@ -21,16 +21,16 @@ f.close()
 if config == None:
   print("config json is still None, exiting. make sure config file exists")
   sys.exit()
-elif not 'sqs-url' in config:
+elif not "sqs-url" in config:
   print("config json does not have sqs-url. make sure sqs-url key exists")
   sys.exit()
-elif not config['sqs-url']:
+elif not config["sqs-url"]:
   print("sqs-url is not present. make sure sqs-url value is present")
   sys.exit()
 
 # We now read the url to variable
 
-queue_url = config['sqs-url']
+queue_url = config["sqs-url"]
 print(f"Fetching queue attributes from {queue_url}")
 
 '''
@@ -41,7 +41,7 @@ Here we are fetching only ApproximateNumberOfMessages, but you can also fetch ot
 If you want all attributes, use AttributeNames=All
 '''
 
-final_url = f'{queue_url}?Action=GetQueueAttributes&AttributeNames=ApproximateNumberOfMessages'
+final_url = f"{queue_url}?Action=GetQueueAttributes&AttributeNames=ApproximateNumberOfMessages"
 
 '''
 Next, we open the url and fetch the desired attributes
@@ -54,7 +54,7 @@ If you get 400, your request is malformed
 response = urlopen(final_url)
 
 # We now read the response. We know that we will get xml in the response so we'll convert this to xml
-content = str(response.read(), 'utf-8')
+content = str(response.read(), "utf-8")
 tree = ElementTree(fromstring(content))
 
 # Create dictionary for which we store the attribute names in dictionary
@@ -69,8 +69,8 @@ for res in tree.findall(".//{http://queue.amazonaws.com/doc/2012-11-05/}GetQueue
 
 # Now we can store / check for the desired attributes. We check here only if messages available
 
-if 'ApproximateNumberOfMessages' in attribute_dict:
-  message_count = int(attribute_dict['ApproximateNumberOfMessages']) # cast to int
+if "ApproximateNumberOfMessages" in attribute_dict:
+  message_count = int(attribute_dict["ApproximateNumberOfMessages"]) # cast to int
   if message_count > 0:
     print(f"There are {message_count} messages available, these should be fetched!")    
   else:
