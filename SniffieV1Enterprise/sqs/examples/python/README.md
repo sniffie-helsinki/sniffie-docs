@@ -29,4 +29,5 @@ We also recommend that you add local alerting on the failed messages or failed p
 
 ## Before running for the first time
 
-Copy `config.json.example` to `config.json` and fill the necessary details
+1. Copy `config.json.example` to `config.json` and fill the necessary details.
+2. Run `pip install -r requirements.txt` in the project folder
