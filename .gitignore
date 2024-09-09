@@ -128,10 +128,8 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-SniffieV1Enterprise/.DS_Store
-SniffieV1Enterprise/.DS_Store
-SniffieV1Enterprise/rest/.DS_Store
-SniffieV1Enterprise/rest/POST/.DS_Store
-SniffieV1Enterprise/.DS_Store
-SniffieV1Enterprise/rest/.DS_Store
-SniffieV1Enterprise/rest/POST/.DS_Store
+
+#.DS_Store
+.DS_Store
+SniffieV1Enterprise/sqs/examples/python/config.json
+SniffieV1Enterprise/sqs/examples/javascript/config.js
