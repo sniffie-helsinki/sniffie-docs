@@ -1,0 +1,3 @@
+const config = { sqsUrl: "your-sqs-url-here"};
+
+export default config;
