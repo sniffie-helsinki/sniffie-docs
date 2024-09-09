@@ -59,45 +59,51 @@ function parseMessagesToJson($xmlResponse) {
 
 // Send a POST request to delete the fetched messages
 function deleteMessages($sqsUrl, $messages) {
+    $entries = [];
     foreach ($messages as $message) {
-        $receiptHandle = $message['ReceiptHandle'];
-
+        $tmp = [
+            'ReceiptHandle' => $message['ReceiptHandle'],
+            'Id' => $message['MessageId']
+        ];
         // Prepare the payload for the DeleteMessage action
-        $payload = json_encode([
-            'ReceiptHandle' => $receiptHandle
-        ]);
-
-        // Prepare cURL for sending POST request
-        $ch = curl_init();
-
-        // Set ISO 8601 date format
-        $isoDate = gmdate("Ymd\THis\Z");
-
-        // Set the URL and options for the POST request
-        curl_setopt($ch, CURLOPT_URL, $sqsUrl . '?Action=DeleteMessage');
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/x-amz-json-1.0',
-            'X-Amz-Target: AmazonSQS.DeleteMessage',
-            'X-Amz-Date: ' . $isoDate,
-            'Connection: Keep-Alive'
-        ]);
-
-        // Execute the cURL request
-        $response = curl_exec($ch);
-
-        // Check if there was an error
-        if (curl_errno($ch)) {
-            echo "Error: " . curl_error($ch);
-        } else {
-            echo "Deleted message with ReceiptHandle: $receiptHandle\n";
-        }
-
-        // Close cURL session
-        curl_close($ch);
+        array_push($entries, $tmp);
     }
+    $payload = json_encode(["QueueUrl" => $sqsUrl, "Entries" => $entries]);
+
+    // Prepare cURL for sending POST request
+    $ch = curl_init();
+
+    // Set ISO 8601 date format
+    $isoDate = gmdate("Ymd\THis\Z");
+
+    // Set the URL and options for the POST request
+    curl_setopt($ch, CURLOPT_URL, $sqsUrl);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Content-Type: application/x-amz-json-1.0',
+        'X-Amz-Target: AmazonSQS.DeleteMessageBatch',
+        'X-Amz-Date: ' . $isoDate,
+        'Connection: Keep-Alive'
+    ]);
+
+    // Execute the cURL request
+    $response = curl_exec($ch);
+    // Check if there was an error
+    if (curl_errno($ch)) {
+        echo "Error: " . curl_error($ch);
+    } else {
+        $obj = json_decode($response, true);
+        if (array_key_exists('Failed', $obj)) {
+          echo "Some failed\n";
+        } else {
+          echo "Successfully deleted messages\n";
+        }
+    }
+
+    // Close cURL session
+    curl_close($ch);
 }
 
 $continue = true;
