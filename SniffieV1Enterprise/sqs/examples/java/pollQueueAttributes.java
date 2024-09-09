@@ -23,12 +23,12 @@ public class pollQueueAttributes {
             /*
               Add the GetAttributes action at the end of the URL.
 
-              Here we are fetching only ApproximateNumberOfMessages, but you can also fetch other  attributes, see https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_GetQueueAttributes.html
+        Here we are fetching only ApproximateNumberOfMessages, but you can also fetch other  attributes, see https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_GetQueueAttributes.html
         
-              If you want all attributes, use AttributeNames=All
+        If you want all attributes, use AttributeNames=All
              */
             String finalUrl = sqsUrl+"?Action=GetQueueAttributes&AttributeNames=ApproximateNumberOfMessages";
-            System.out.println("SQS URL: " + finalUrl);
+            System.out.println("Fetching queue attributes from: " + finalUrl);
 
             // 2. Make a simple GET request to the SQS end point.
             HttpClient client = HttpClient.newHttpClient();
@@ -44,6 +44,7 @@ public class pollQueueAttributes {
 
             // 3. Parse the XML response to find the specified attributes.
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setNamespaceAware(true); // set this to be name space aware
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document = builder.parse(new java.io.ByteArrayInputStream(xmlResponse.getBytes()));
             
@@ -64,12 +65,22 @@ public class pollQueueAttributes {
 
                     System.out.println("Attribute Name: " + attributeName);
                     System.out.println("Attribute Value: " + attributeValue);
+                    if (attributeName == "ApproximateNumberOfMessages") {
+                      int intVal = Integer.parseInt(attributeValue);
+                      if (intVal > 0){
+                        System.out.println("There are "+attributeValue+" messages available, these should be fetched!");
+                        
+                        // Add your logic to start message fetching
+                      }
+                    }
                 }
             } else {
                 System.out.println("No GetQueueAttributesResult element found.");
-            }        } catch (Exception e) {
+            }       
+    } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("Finished!");
 
   }
 
