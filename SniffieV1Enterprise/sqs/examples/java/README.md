@@ -1,6 +1,6 @@
-# SQS example code (Python)
+# SQS example code (Java)
 
-This folder contains code examples for Python on how to fetch data from an AWS SQS queue. For more information on AWS SQS queues and development, see https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html
+This folder contains code examples for Java on how to fetch data from an AWS SQS queue. For more information on AWS SQS queues and development, see https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html
 
 ## Requirements
 1. Java installed in the system
