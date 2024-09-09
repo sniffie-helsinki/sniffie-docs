@@ -59,6 +59,7 @@ function parseMessagesToJson($xmlResponse) {
 
 // Send a POST request to delete the fetched messages
 function deleteMessages($sqsUrl, $messages) {
+    echo"Deleting messages...\n";
     $entries = [];
     foreach ($messages as $message) {
         $tmp = [
@@ -113,19 +114,15 @@ while ($continue){
   if ($xmlResponse) {
       // Parse the messages from the XML response
       $messages = parseMessagesToJson($xmlResponse);
-
       // Display fetched messages
       if (empty($messages)){ // break the loop
+        echo"No messages received. Breaking\n";
         $continue = false;
-      }
-      // Send POST requests to delete the messages
-      if (!empty($messages)) {
-
-          // ADD HERE YOUR LOGIC TO HANDLE MESSAGE SAVING PRIOR DELETION
-
-          deleteMessages($sqsUrl, $messages);
       } else {
-          echo "No messages to delete.\n";
+        echo"Received ".strval(count($messages))." message(s) from the queue.\n";
+        // ADD HERE YOUR LOGIC TO HANDLE MESSAGE SAVING PRIOR DELETION
+
+        deleteMessages($sqsUrl, $messages);
       }
   } else {
       $continue = false;
