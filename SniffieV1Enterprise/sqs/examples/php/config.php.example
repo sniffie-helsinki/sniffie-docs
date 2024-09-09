@@ -1,0 +1,4 @@
+<?php
+// config.php
+$sqsUrl = 'https://your-sqs-endpoint-url'; // Replace with your actual SQS URL
+?>
