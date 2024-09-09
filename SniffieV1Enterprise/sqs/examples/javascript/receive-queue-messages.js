@@ -73,7 +73,7 @@ const deleteMessageFromSqs = async (url, messageList) => {
     data: payload
   });
 
-  // successfull reqponses have response.data in them so we assume the request is successful
+  // successfull responses have response.data in them so we assume the request is successful
 
   if (response.data.Failed){ // there are some failed messages. added logic here
     console.log('some messages failed to be deleted, logging...')
