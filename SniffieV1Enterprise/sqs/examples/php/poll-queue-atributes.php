@@ -2,7 +2,7 @@
 // Include the config file that contains the SQS URL
 include 'config.php'; // This will import $sqsUrl
 
-// 1. Fetch SQS queue attributes using a GET request
+// Fetch SQS queue attributes using a GET request
 function fetchSqsAttributes($sqsUrl) {
     // Initialize cURL session
     $ch = curl_init();
@@ -27,7 +27,7 @@ function fetchSqsAttributes($sqsUrl) {
     return $response;
 }
 
-// 2. Parse the XML response to get the queue attributes
+// Parse the XML response to get the queue attributes
 function parseSqsAttributes($xmlResponse) {
     $attributes = [];
 
@@ -55,7 +55,7 @@ function parseSqsAttributes($xmlResponse) {
     return $attributes;
 }
 
-// 3. Fetch and parse SQS queue attributes
+// Fetch and parse SQS queue attributes
 $xmlResponse = fetchSqsAttributes($sqsUrl);
 
 if ($xmlResponse) {
@@ -68,7 +68,9 @@ if ($xmlResponse) {
         echo "Attribute Name: " . $name . "\n";
         echo "Attribute Value: " . $value . "\n";
         if ($name == 'ApproximateNumberOfMessages' && $value > 0){
+          echo "Messages should be fetched.";
           // start the message fetcher process
+
         }
     }
 } else {

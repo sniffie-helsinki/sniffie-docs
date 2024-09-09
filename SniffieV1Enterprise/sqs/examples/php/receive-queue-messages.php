@@ -112,10 +112,10 @@ while ($continue){
       if (empty($messages)){ // break the loop
         $continue = false;
       }
-      // 2. Send POST requests to delete the messages
+      // Send POST requests to delete the messages
       if (!empty($messages)) {
 
-          // ADD HERE YOUR LOGIC TO HANDLE MESSAGE SAVING
+          // ADD HERE YOUR LOGIC TO HANDLE MESSAGE SAVING PRIOR DELETION
 
           deleteMessages($sqsUrl, $messages);
       } else {
