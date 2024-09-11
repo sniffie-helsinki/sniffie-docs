@@ -194,10 +194,9 @@ components:
           format: iso-4217
           example: 'EUR'
         purchasePrice:
-          type: number
-          format: decimal
-          description: Cost of the product for the shop (without VAT)
-          example: '59.99'
+          oneOf:
+            - $ref: '#/components/schemas/PurchasePriceObject'
+            - $ref: '#/components/schemas/PurchasePriceNumber'
         sku:
           type: string
           description: SKU (stock keeping unit) of the product
@@ -256,6 +255,22 @@ components:
           type: 'object'
           additionalProperties: true
           description: 'additional properties related to this product'
+    
+    PurchasePriceNumber:
+      type: number
+      description: Purchase price as a number
+    
+    PurchasePriceObject:
+      type: object
+      description: Cost of the product for the shop (without VAT). Amount and currency.
+      properties:
+        amount: 
+          type: number
+          example: 20.99
+        currency: 
+          type: string
+          example: 'SEK'
+    
     PresentmentPrice:
       type: object
       required:
