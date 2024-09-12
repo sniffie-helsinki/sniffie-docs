@@ -5,11 +5,10 @@ import {
 } from '@aws-sdk/client-sqs';
 
 // Fill in the variables
-const queue =
-	'https://sqs.eu-north-1.amazonaws.com/712657908714/2231OutgoingQueue.fifo'; // queue url: string, get this from Sniffie
+const queue = ''; // queue url: string, get this from Sniffie
 const env = 'staging';
-const accountId = 676; // accountId: number, get this from Sniffie
-const apiKey = '676&&disBeSomethingElseNow23134!!'; // apiKey: string, get this from Sniffie
+const accountId = null; // accountId: number, get this from Sniffie
+const apiKey = ''; // apiKey: string, get this from Sniffie
 
 let config = {
 	method: 'get',
@@ -73,10 +72,10 @@ async function pollQueue() {
 			console.log('No messages to process');
 			return 'Queue is empty';
 		}
-        console.log(
-            'This is just one iteration, you should run this in a loop, until all messages have been processed'
-        );
-        return 'Bye bye!';
+		console.log(
+			'This is just one iteration, you should run this in a loop, until all messages have been processed'
+		);
+		return 'Bye bye!';
 	} catch (error) {
 		console.error('Error polling the queue:', error);
 	}
