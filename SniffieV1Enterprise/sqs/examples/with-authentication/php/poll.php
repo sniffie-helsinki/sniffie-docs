@@ -5,7 +5,7 @@ use Aws\Sqs\SqsClient;
 use GuzzleHttp\Client;
 
 $queue = ''; // queue url: string, get this from Sniffie
-$env = 'staging';
+$env = 'production'; // environment: string, 'production' or 'staging'
 $accountId = null; // accountId: number, get this from Sniffie
 $apiKey = ''; // apiKey: string, get this from Sniffie
 
