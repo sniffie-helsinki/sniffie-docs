@@ -4,7 +4,7 @@
 Fill in the variables to poll.php: 
 
 - $queue = ''; // queue url: string, get this from Sniffie
-- $env = 'staging';
+- $env = ''; // blank or staging
 - $accountId = null; // accountId: number, get this from Sniffie
 - $apiKey = ''; // apiKey: string, get this from Sniffie
 
