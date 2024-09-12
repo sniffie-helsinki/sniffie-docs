@@ -6,7 +6,7 @@ import {
 
 // Fill in the variables
 const queue = ''; // queue url: string, get this from Sniffie
-const env = 'staging';
+const env = process.env.ENV; // blank or staging, if you are using staging environment
 const accountId = null; // accountId: number, get this from Sniffie
 const apiKey = ''; // apiKey: string, get this from Sniffie
 

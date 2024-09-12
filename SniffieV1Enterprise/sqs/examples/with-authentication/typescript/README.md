@@ -1,12 +1,12 @@
 # Sniffie SQS Poller - Typescript
 
 ## Prerequisite
-Fill in the variables to poll.php: 
+Fill in the variables to poll.ts: 
 
-- $queue = ''; // queue url: string, get this from Sniffie
-- $env = 'staging';
-- $accountId = null; // accountId: number, get this from Sniffie
-- $apiKey = ''; // apiKey: string, get this from Sniffie
+- const queue = ''; // queue url: string, get this from Sniffie
+- const env = process.env.ENV; // blank or staging, if you are using staging environment
+- const accountId = null; // accountId: number, get this from Sniffie
+- const apiKey = ''; // apiKey: string, get this from Sniffie
 
 ## Test
 Run `npm install`

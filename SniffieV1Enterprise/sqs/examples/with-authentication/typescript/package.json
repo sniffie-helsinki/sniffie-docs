@@ -12,5 +12,8 @@
   "dependencies": {
     "@aws-sdk/client-sqs": "^3.650.0",
     "@aws-sdk/credential-provider-env": "^3.649.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.4"
   }
 }
