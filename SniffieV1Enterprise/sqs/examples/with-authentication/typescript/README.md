@@ -1,4 +1,4 @@
-# Sniffie SQS Poller - PHP
+# Sniffie SQS Poller - NodeJS
 
 ## Prerequisite
 Fill in the variables to poll.php: 
@@ -9,7 +9,8 @@ Fill in the variables to poll.php:
 - $apiKey = ''; // apiKey: string, get this from Sniffie
 
 ## Test
-After filling in the required variables, execute the poller with run `php poll.php`
+Run `npm install`
+After filling in the required variables, execute the poller with run `npx ts-node poll.ts`
 
 
 ## What happens here?
