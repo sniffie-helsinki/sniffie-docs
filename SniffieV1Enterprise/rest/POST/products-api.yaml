@@ -37,8 +37,8 @@ paths:
           application/json:
             schema:
               oneOf:
-                - $ref: '#/components/schemas/ProductInput'
                 - $ref: '#/components/schemas/ProductInputList'
+                - $ref: '#/components/schemas/ProductInput'
       parameters:
         - name: accountId
           in: path
