@@ -212,5 +212,9 @@ components:
           type: string
           description: Order line number of the product line item 
           example: 'ORD9876-11-1'
+        additionalProperties:
+          type: object
+          additionalProperties: true
+          description: additional properties related to this line item          
         
        
