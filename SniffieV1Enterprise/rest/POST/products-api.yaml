@@ -18,6 +18,7 @@ info:
   title: Sniffie Products API
 servers:
   - url: https://api.sniffie.io/v1/account-products
+  - url: https://api.sniffie-staging.io/v1/account-products
 tags:
   - name: products
     description: Manage products of an account
@@ -125,7 +126,7 @@ components:
         productId:
           type: string
           description: Unique identifier for the product, within the shop in question
-          example: 'ACM-T-SHIRT-123'
+          example: 'blue-shirt-1-all-variants'
         categoryName:
           type: string
           description: Category to which the product belongs to
@@ -149,9 +150,11 @@ components:
         imageUrl:
           type: string
           description: Url to the image of the product
+          example: "www.myacmeshop.fi/imgs/blue-shirt-1-all-variants"
         productUrl:
           type: string
           description: Url to the product page
+          example: "www.myacmeshop.fi/products/anvil/blue-shirt-1-all-variants"
         additionalProperties:
           type: object
           additionalProperties: true
@@ -218,10 +221,11 @@ components:
         variantId: 
           type: string
           description: Unique identifier for the variant, to distinguish it from the other variants
-          example: 'BLUE-SHIRT-1-M'
+          example: 'blue-shirt-1-size-m'
         ean:
           type: string
-          description: European Article Number. Unified code for products
+          description: EAN/UPC. European Article Number / Universal Product code. Unified code for products. https://www.iso.org/standard/46143.html
+          example: 0123456789123
         manufacturer:
           type: string
           description: Manufacturer
@@ -232,24 +236,26 @@ components:
           example: 'Acme Anvils'
         imageUrl:
           type: string
-          description: Url to the image of the product
+          description: Url to the image of the product variant
+          example: "www.myacmeshop.fi/imgs/blue-shirt-1-size-m.jpg"
         productUrl:
           type: string
-          description: Url to the product page
+          description: Url to the product variant page
+          example: "www.myacmeshop.fi/products/anvil/blue-shirt-1-size-m"
         onSale:
           type: boolean
-          description: Is the product on sale
+          description: Is the product on discount
           default: false
         stockStatus:
           type: number
           description: Amount of items available in stock 
           example: 90
         categories:
-          description: Subcategories from smallest to highest
+          description: Subcategories from smallest to largest (how many other items is there in the same category)
           example: ["iPhones", "Phones", "Electronics"]
         presentmentPrices:
           type: array
-          description: Any and all other currencies and prices that the product may be sold at
+          description: What the customer sees when they select another currency and/or country
           items:
             $ref: '#/components/schemas/PresentmentPrice'
         additionalProperties:
@@ -272,6 +278,10 @@ components:
           description: Three letter currency code as defined by ISO-4217
           format: iso-4217
           example: 'SEK'
+        country:
+          type: string
+          description: If the same currency is used in multiple countries, but with different price, then indicate the price per country
+          example: 'Sweden'
         originalPrice:
           type: number
           format: decimal
