@@ -14,6 +14,7 @@ info:
   title: Sniffie Orders API
 servers:
   - url: https://api.sniffie.io/v1/account-orders
+  - url: https://api.sniffie-staging.io/v1/orders-products
 tags:
   - name: orders
     description: Manage orders of an account
@@ -151,7 +152,7 @@ components:
           type: object
           additionalProperties: true
           description: additional properties related to this order
-
+          example: {"anyKeyYouWishGoesHere":"Any for this key goes here", "andAnotherKeyMightComeHereToo": "With its value here"}
 
     BundleItem:
       type: object
@@ -185,6 +186,7 @@ components:
           type: number
           format: decimal
           description: Original (RRP) price of the line item, including tax and excluding discount
+          example: 99.95
         taxAmount:
           type: number
           format: decimal
