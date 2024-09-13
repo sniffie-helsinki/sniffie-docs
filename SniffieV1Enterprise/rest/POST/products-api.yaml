@@ -158,7 +158,8 @@ components:
         additionalProperties:
           type: object
           additionalProperties: true
-          description: additional properties related to this product
+          description: additional properties related to this parent product
+          example: { "AnyKeyYouLikeRelatedToTheParentProduct": "and the value", "AndAsManyRelevantKeysHereAndOn": "That are useful to your specific usecases. Please consult Sniffie CS team, what are good values here" }
           
     ProductVariant:
       type: object
@@ -261,7 +262,8 @@ components:
         additionalProperties:
           type: 'object'
           additionalProperties: true
-          description: 'additional properties related to this product'
+          description: 'Additional properties related to this product variant, can be used to filter products in UI, and group them by these values'
+          example: { "AnyKeyYouLikeRelatedToThisVariant": "And its value here", "AndAsManyRelevantKeysHereAndOn": "That are useful to your specific usecases. Please consult Sniffie CS team, what are good values here" }
     PresentmentPrice:
       type: object
       required:
