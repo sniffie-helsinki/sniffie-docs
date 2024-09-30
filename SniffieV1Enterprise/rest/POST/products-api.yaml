@@ -259,6 +259,11 @@ components:
           description: What the customer sees when they select another currency and/or country
           items:
             $ref: '#/components/schemas/PresentmentPrice'
+        kpiData:
+          type: 'object'
+          additionalProperties: true
+          description: 'KPI data to be included in the AI processes'
+          example: { "CAC": {"date" : "2024-09-30", "value": "10"}, "pageViews": {"date" : "2024-09-30", "value": "459"} }
         additionalProperties:
           type: 'object'
           additionalProperties: true
