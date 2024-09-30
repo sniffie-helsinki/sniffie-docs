@@ -6,13 +6,13 @@ info:
     This is the API description for Sniffie's Products API. 
     - 100 requests per second
     - 200 products per request
-    
+
     When possible, send max item count instead of one item per request to avoid overflooding the API.
 
     If your products' variant count is high, you may need to reduce the maxItems count to avoid getting timeouts from the API. 
     The API has a hard limit of 30 seconds, after which it will disconnect the request. 
     When this happens, reduce the amount of items you send at once.
-    
+
     You can get the token from our customer service, make sure it is in form of {accountId}&&{token}
   version: 1.0.0
   title: Sniffie Products API
@@ -31,14 +31,14 @@ paths:
         - products
       summary: Creates or updates (if the same product exists) a product, and a product history item
       description: Inserts a new product row, and a product history row
-      requestBody: 
+      requestBody:
         required: true
         content:
           application/json:
             schema:
               oneOf:
-                - $ref: '#/components/schemas/ProductInputList'
-                - $ref: '#/components/schemas/ProductInput'
+                - $ref: "#/components/schemas/ProductInputList"
+                - $ref: "#/components/schemas/ProductInput"
       parameters:
         - name: accountId
           in: path
@@ -52,14 +52,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProductResult'
+                $ref: "#/components/schemas/ProductResult"
         400:
           description: Check request, invalid payload
         429:
           description: Too many requests, slow down request rate and retry
         500:
-          $ref: '#/components/responses/5XX'
-   
+          $ref: "#/components/responses/5XX"
+
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -72,13 +72,13 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
     404:
       description: Item not found
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
   schemas:
     Error:
       type: object
@@ -97,11 +97,11 @@ components:
           type: string
           description: Api gateway request Id
         data:
-          $ref: '#/components/schemas/ProductInput'
+          $ref: "#/components/schemas/ProductInput"
     ProductInputList:
       type: array
       items:
-        $ref: '#/components/schemas/ProductInput'
+        $ref: "#/components/schemas/ProductInput"
       maxItems: 500
     ProductInput:
       required:
@@ -109,11 +109,11 @@ components:
         - variants
       properties:
         productInfo:
-          $ref: '#/components/schemas/ProductGeneralInfo'
+          $ref: "#/components/schemas/ProductGeneralInfo"
         variants:
           type: array
-          items: 
-            $ref: '#/components/schemas/ProductVariant'
+          items:
+            $ref: "#/components/schemas/ProductVariant"
     ProductGeneralInfo:
       type: object
       required:
@@ -126,27 +126,27 @@ components:
         productId:
           type: string
           description: Unique identifier for the product, within the shop in question
-          example: 'blue-shirt-1-all-variants'
+          example: "blue-shirt-1-all-variants"
         categoryName:
           type: string
           description: Category to which the product belongs to
-          example: 'T-Shirts'
+          example: "T-Shirts"
         shopName:
           type: string
           description: Name of the shop
-          example: 'Acme Inc'
+          example: "Acme Inc"
         productName:
           type: string
           description: Name of the product
-          example: 'The Blue Shirt #1'
+          example: "The Blue Shirt #1"
         manufacturer:
           type: string
           description: Manufacturer
-          example: 'Acme' 
+          example: "Acme"
         productBrand:
           type: string
           description: Brand of the product
-          example: 'Acme Anvils'
+          example: "Acme Anvils"
         imageUrl:
           type: string
           description: Url to the image of the product
@@ -159,8 +159,14 @@ components:
           type: object
           additionalProperties: true
           description: additional properties related to this parent product
-          example: { "additionalParentAttribute1": "extra attribute", "anotherParentAttribute WithOtherKey":"and some other value", "Any Key You Like Related To The Parent Product. Key can include spaces": "and the value", "AndAsManyRelevantKeysHereAndOn": "That are useful to your specific usecases. Please consult Sniffie CS team, what are good values here" }
-          
+          example:
+            {
+              "additionalParentAttribute1": "extra attribute",
+              "anotherParentAttribute WithOtherKey": "and some other value",
+              "Any Key You Like Related To The Parent Product. Key can include spaces": "and the value",
+              "AndAsManyRelevantKeysHereAndOn": "That are useful to your specific usecases. Please consult Sniffie CS team, what are good values here",
+            }
+
     ProductVariant:
       type: object
       required:
@@ -177,17 +183,17 @@ components:
           type: number
           format: decimal
           description: Price expressed as a decimal number (with VAT)
-          example: '99.95'
+          example: "99.95"
         originalPrice:
           type: number
           format: decimal
           description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units
-          example: '129.99'
-        productStatus: 
+          example: "129.99"
+        productStatus:
           type: string
           nullable: true
           description: Status of the product, is it active or disabled
-          enum: 
+          enum:
             - enabled
             - disabled
             - null
@@ -196,33 +202,33 @@ components:
           type: string
           description: Three letter currency code as defined by ISO-4217
           format: iso-4217
-          example: 'EUR'
+          example: "EUR"
         purchasePrice:
           type: number
           format: decimal
           description: Cost of the product for the shop (without VAT)
-          example: '59.99'
+          example: "59.99"
         sku:
           type: string
           description: SKU (stock keeping unit) of the product
-          example: 'SKU-123456-Y4'
+          example: "SKU-123456-Y4"
         stockCount:
           type: number
-          description: Amount of items available in stock 
-          example: 90          
+          description: Amount of items available in stock
+          example: 90
         variantName:
           type: string
           description: Name of the variant
-          example: 'The Blue Shirt #1, size M'
+          example: "The Blue Shirt #1, size M"
         taxRate:
           type: number
           format: decimal
           description: Tax rate of the variant being sold
           example: 24.0
-        variantId: 
+        variantId:
           type: string
           description: Unique identifier for the variant, to distinguish it from the other variants
-          example: 'blue-shirt-1-size-m'
+          example: "blue-shirt-1-size-m"
         ean:
           type: string
           description: EAN/UPC. European Article Number / Universal Product code. Unified code for products. https://www.iso.org/standard/46143.html
@@ -230,11 +236,11 @@ components:
         manufacturer:
           type: string
           description: Manufacturer
-          example: 'Acme' 
+          example: "Acme"
         productBrand:
           type: string
           description: Brand of the product
-          example: 'Acme Anvils'
+          example: "Acme Anvils"
         imageUrl:
           type: string
           description: Url to the image of the product variant
@@ -249,7 +255,7 @@ components:
           default: false
         stockStatus:
           type: number
-          description: Amount of items available in stock 
+          description: Amount of items available in stock
           example: 90
         categories:
           description: Subcategories from smallest to largest (how many other items is there in the same category)
@@ -258,35 +264,86 @@ components:
           type: array
           description: What the customer sees when they select another currency and/or country
           items:
-            $ref: '#/components/schemas/PresentmentPrice'
+            $ref: "#/components/schemas/PresentmentPrice"
+        kpiData:
+          type: array
+          items:
+            type: "#/components/schemas/KpiDataObject"
+          description: "KPI data to be included in the AI processes"
+          example:
+            [
+              {
+                "name": "CAC",
+                "data":
+                  [
+                    { "date": "2024-09-30", "value": "10" },
+                    { "date": "2024-09-29", "value": "9" },
+                  ],
+              },
+              {
+                "name": "pageViews",
+                "data":
+                  [
+                    { "date": "2024-09-30", "value": "459" },
+                    { "date": "2024-09-29", "value": "220" },
+                  ],
+              }
+            ]
         additionalProperties:
-          type: 'object'
+          type: "object"
           additionalProperties: true
-          description: 'Additional properties related to this product variant, can be used to filter products in UI, and group them by these values'
-          example: { "additionalAttribute1": "extra attribute", "anotherAttribute WithOtherKey":"and some other value", "Any Key You Like Related To This Variant. Key can include spaces": "And its value here", "AndAsManyRelevantKeysHereAndOn": "That are useful to your specific usecases. Please consult Sniffie CS team, what are good values here" }
+          description: "Additional properties related to this product variant, can be used to filter products in UI, and group them by these values"
+          example:
+            {
+              "additionalAttribute1": "extra attribute",
+              "anotherAttribute WithOtherKey": "and some other value",
+              "Any Key You Like Related To This Variant. Key can include spaces": "And its value here",
+              "AndAsManyRelevantKeysHereAndOn": "That are useful to your specific usecases. Please consult Sniffie CS team, what are good values here",
+            }
+    KpiDataObject:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the KPI
+          example: "CAC"
+        data:
+          type: array
+          maxItems: 30
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date
+                description: Date of the KPI data
+                example: "2024-09-30"
+              value:
+                type: string
+                description: Value of the KPI
+                example: "10"
     PresentmentPrice:
       type: object
       required:
-        - price 
+        - price
         - currency
       properties:
         price:
           type: number
           format: decimal
           description: Price expressed as a decimal number of major currency units
-          example: '999.95'
+          example: "999.95"
         currency:
           type: string
           description: Three letter currency code as defined by ISO-4217
           format: iso-4217
-          example: 'SEK'
+          example: "SEK"
         country:
           type: string
           description: If the same currency is used in multiple countries, but with different price, then indicate the price per country
-          example: 'Sweden'
+          example: "Sweden"
         originalPrice:
           type: number
           format: decimal
           description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units
-          example: '1299.99'
-          
+          example: "1299.99"
