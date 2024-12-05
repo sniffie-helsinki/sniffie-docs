@@ -268,7 +268,7 @@ components:
         kpiData:
           type: array
           items:
-            type: "#/components/schemas/KpiDataObject"
+            $ref: "#/components/schemas/KpiDataObject"
           description: "KPI data to be included in the AI processes"
           example:
             [
