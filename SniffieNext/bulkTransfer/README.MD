@@ -23,5 +23,9 @@ And then you're done
 In index.ts replace the token value with your own token (which you can get from Sniffie). Then either leave the data in index.ts as is, or modify it to your liking and then just.... 
 Run `npm run test`
 
+## Documentation
+
+See our openapi spec [bulk-upload-openapi.yaml]
+
 ## Architecture
 [![Bulk transfer architecture](bulkTranferArchitecture.png)]
