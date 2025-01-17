@@ -143,6 +143,7 @@ components:
         parentProductName:
           type: string
           description: Name of the group this variant belongs to. Will be used in the user interface to group the variants under the parent and display this value as the group name
+          example: 'The Blue Shirt'
         variantName:
           type: string
           description: Name of the variant
