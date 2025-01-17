@@ -1,0 +1,334 @@
+openapi: "3.0.1"
+info:
+  title: "next-external-sniffie-data-api"
+  version: "1.0"
+servers:
+- url: "https://next-api.sniffie.io/v2/sniffie/"
+paths:
+  /bulk-uploads/orders-upload-link:
+    get:
+      responses:
+        default:
+          description: "Default response for GET /bulk-uploads/orders-upload-link"
+          content:
+             application/json:
+              schema:
+                $ref: "#/components/schemas/BulkUploadResponse"
+      security:
+      - NextExternalLambdaTokenAuthorizer: []
+  /bulk-uploads/products-upload-link:
+    get:
+      responses:
+        default:
+          description: "Default response for GET /bulk-uploads/products-upload-link"
+          content:
+             application/json:
+              schema:
+                $ref: "#/components/schemas/BulkUploadResponse"
+      security:
+      - NextExternalLambdaTokenAuthorizer: []
+  /bulk-uploads/supplemental-data-upload-link:
+    post:
+      responses:
+        default:
+          description: "Default response for POST /bulk-uploads/supplemental-data-upload-link"
+          content:
+             application/json:
+              schema:
+                $ref: "#/components/schemas/BulkUploadResponse"
+components:
+  securitySchemes:
+    NextExternalLambdaTokenAuthorizer:
+      type: "apiKey"
+      name: "Authorization"
+      in: "header"
+  schemas:
+    OrderLineItem:
+      description: Send all orders to be updated in a jsonl file, where each json item is in its own row
+      type: object
+      required:
+        - soldFrom
+        - orderNumber
+        - orderLineNumber
+        - createdAt
+        - price
+        - currency
+        - quantity
+        - sku
+      properties:
+        soldFrom:
+          type: string
+          description: Name of the shop, channel, website, POS. Grouping factor for sales analytics
+          example: 'www.acme-inc.com'
+        orderNumber:
+          type: string
+          description: Order number of whole order 
+          example: 'ORD9876-11'
+        orderLineNumber:
+          type: string
+          description: Order line number of the product line item 
+          example: 'ORD9876-11-1'
+        createdAt:
+          type: string
+          format: datetime
+          description: Datetime of the creation date for the order in UTC
+          example: '2021-03-20T09:12:28Z'
+        price:
+          type: number
+          format: decimal
+          description: Price what the customer paid for the item (all discounts, taxes and other charges included)
+          example: '99.95'
+        currency:
+          type: string
+          description: Three letter currency code as defined by ISO-4217
+          format: iso-4217
+          example: 'EUR'
+        quantity:
+          type: number
+          description: How many items were sold of this particular sku
+          example: '1'
+        sku:
+          type: string
+          description: unique identifier for an item. Grouping factor for sales analytics
+          example: 'SKU-123456-Y4'
+        bundleId:
+          type: string
+          description: If the item is a part of a bundle, this field is used to group the bundles with matching id
+          example: "bundle-1"
+        taxAmount:
+          type: number
+          format: decimal
+          description: Amount of tax applied to the line item
+          example: '23.99'
+        discountAmount:
+          type: number
+          format: decimal
+          description: Amount of discount applied to the line item
+          example: '0.00'
+        originalPrice: 
+          type: number
+          format: decimal
+          description: Original (RRP) price of the line item, including tax and excluding discount
+        additionalProperties:
+          type: object
+          additionalProperties: true
+          description: additional properties related to this order
+          example:
+            vat: 25.5%
+
+        
+    ProductVariant:
+      description: Send all variants to be updated in a jsonl file, where each json item is in its own row
+      type: object
+      required:
+        - gid
+        - parentProductId
+        - parentProductName
+        - price
+        - originalPrice
+        - categories
+        - currency
+        - cogs
+        - sku
+        - stockCount
+        - variantName
+      properties:
+        gid: 
+          type: string
+          description: Unique global identifier for the variant, to distinguish it from the other variants. Use sku if no other id is available
+          example: 'BLUE-SHIRT-1-M'
+        parentProductId:
+          type: string
+          description: A grouping id with which the variant is tied to other variants. Used for grouping in analytics and pricing and user interface. If no grouping id exists, use gid
+        parentProductName:
+          type: string
+          description: Name of the group this variant belongs to. Will be used in the user interface to group the variants under the parent and display this value as the group name
+          example: 'The Blue Shirt'
+        variantName:
+          type: string
+          description: Name of the variant
+          example: 'The Blue Shirt #1, size M'
+        price:
+          type: number
+          format: decimal
+          description: Price what the customer pays (with VAT)
+          example: '99.95'
+        originalPrice:
+          type: number
+          format: decimal
+          description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units
+          example: '129.99'
+        categories:
+          type: array
+          description: Names of the categories the item is belongs to. Used as a grouping factor amongst different items. If no category exists send ['All']
+          example: ['Anvils', 'Tools']
+          items: 
+            type: string
+        currency:
+          type: string
+          description: Three letter currency code as defined by ISO-4217
+          format: iso-4217
+          example: 'EUR'
+        sku:
+          type: string
+          description: SKU (stock keeping unit) of the product. This must match the sku in the orders
+          example: 'SKU-123456-Y4'
+        cogs:
+          type: number
+          format: decimal
+          description: All costs related to the product, used to calculate margins. If cogsNotAvailable is true, send 0.01
+          example: '22.57'
+        stockCount:
+          type: number
+          description: Amount of items available in stock. If stockCountNotAvailable is true, send 10000000
+          example: 90
+        cogsNotAvailable:
+          type: boolean
+          default: false
+          example: true
+        variantStatus: 
+          type: string
+          description: Status of the product, is it active or disabled
+          enum: 
+            - enabled
+            - disabled
+          default: enabled
+        stockCountNotAvailable:
+          type: boolean
+          default: false
+          example: true
+        ean:
+          type: string
+          description: European Article Number. Unified code for products. Required for competitor matching
+        manufacturer:
+          type: string
+          description: Manufacturer
+          example: 'Acme' 
+        productBrand:
+          type: string
+          description: Brand of the product
+          example: 'Acme Anvils'
+        imageUrl:
+          type: string
+          description: Url to the image of the product
+        productUrl:
+          type: string
+          description: Url to the product page
+        productType:
+          type: string
+          description: What kind of a product is it
+          example: Tool
+        onSale:
+          type: boolean
+          description: Is the product on sale
+          default: false
+        dateForPrice:
+          type: string
+          description: ISO Date for the price, if in the past
+          example: '2025-01-17'
+        tags:
+          type: array
+          description: Possible tags to help with grouping, searching and sorting
+          example: ['Black Friday 2025', 'Outlet']
+          items: 
+            type: string
+        otherPrices:
+          type: array
+          description: Any and all other currencies and prices that the product may be sold at
+          items:
+            $ref: '#/components/schemas/AlternativePrice'
+        additionalProperties:
+          type: object
+          additionalProperties: true
+          description: 'additional properties related to this product'
+          example:
+            decommissionDate: '2025-03-31'
+            comment: 'Moved to outlet on 2025-02-01'
+
+    AlternativePrice:
+      type: object
+      required:
+        - price 
+        - currency
+      properties:
+        price:
+          type: number
+          format: decimal
+          description: Price expressed as a decimal number of major currency units
+          example: '999.95'
+        currency:
+          type: string
+          description: Three letter currency code as defined by ISO-4217
+          format: iso-4217
+          example: 'SEK'
+        originalPrice:
+          type: number
+          format: decimal
+          description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units
+          example: '1299.99'
+          
+    SupplementalData:
+      description: Send all supplemental data to be updated for products in a jsonl file, where each json item is in its own row
+      type: object
+      required:
+      - gid
+      properties:
+        gid:
+          type: string
+          description: Unique global identifier that matches the product variant to which the data is to be added to
+          example: 'BLUE-SHIRT-1-M'
+        additionalProperties:
+          type: object
+          additionalProperties: true
+          description: Any number of different attributes and values related to the supplemental data
+          example:
+            color: "blue"
+            size: "M"
+            restockDate: "2025-02-01"
+            material: "cotton"
+            weight: "200g"
+    BulkUploadResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          example: "EhpTQixbAi0EMvg="
+        data:
+          type: object
+          properties:
+            supplementsUploadUrl:
+              type: string
+              example: "https://name-of-bucket.s3.eu-north-1.amazonaws.com/"
+            supplementsUploadFields:
+              type: object
+              properties:
+                Content-Type:
+                  type: string
+                  example: "application/json"
+                Content-Encoding:
+                  type: string
+                  example: "gzip"
+                bucket:
+                  type: string
+                  example: "name-of-bucket"
+                X-Amz-Algorithm:
+                  type: string
+                  example: "AWS4-HMAC-SHA256"
+                X-Amz-Credential:
+                  type: string
+                  example: "ASIAXXX/20250117/some-aws-region-1/s3/aws4_request"
+                X-Amz-Date:
+                  type: string
+                  example: "20250117T092725Z"
+                X-Amz-Security-Token:
+                  type: string
+                  example: "ssijdhfksdjhfkljlsh"
+                key:
+                  type: string
+                  example: "youraccountid/bulk-uploads/supplemental-data/products/COGS-2025-01-17T09:27:25.044Z.jsonl.gz"
+                Policy:
+                  type: string
+                  example: "sfndklaskjldhf"
+                X-Amz-Signature:
+                  type: string
+                  example: "3d93c156f943a2685faf5d87dca11b128f8217173a2826affa0905ccfacb887d"
