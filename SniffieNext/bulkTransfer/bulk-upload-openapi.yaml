@@ -125,7 +125,6 @@ components:
         - parentProductId
         - parentProductName
         - price
-        - originalPrice
         - categories
         - currency
         - cogs
@@ -153,10 +152,10 @@ components:
           format: decimal
           description: Price what the customer pays (with VAT)
           example: '99.95'
-        originalPrice:
+        compareAtPrice:
           type: number
           format: decimal
-          description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units
+          description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true
           example: '129.99'
         categories:
           type: array
@@ -232,6 +231,21 @@ components:
           example: ['Black Friday 2025', 'Outlet']
           items: 
             type: string
+        marginTargetPercentage:
+          type: number
+          format: decimal
+          description: Target margin percentage for the product
+          example: 50.0
+        recommendedRetailPrice:
+          type: number
+          format: decimal
+          description: Recommended retail price for the product
+          example: 99.95
+        vatRate: 
+          type: number
+          format: decimal
+          description: Default vat rate in percentage. If multiple vat rates are used, use the supplemental data upload to send the vat rates for each variant per store
+          example: 24.0
         otherPrices:
           type: array
           description: Any and all other currencies and prices that the product may be sold at
