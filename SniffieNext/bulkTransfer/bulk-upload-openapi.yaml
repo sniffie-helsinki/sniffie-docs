@@ -123,6 +123,7 @@ components:
       required:
         - gid
         - parentProductId
+        - parentProductName
         - price
         - originalPrice
         - categories
@@ -139,6 +140,9 @@ components:
         parentProductId:
           type: string
           description: A grouping id with which the variant is tied to other variants. Used for grouping in analytics and pricing and user interface. If no grouping id exists, use gid
+        parentProductName:
+          type: string
+          description: Name of the group this variant belongs to. Will be used in the user interface to group the variants under the parent and display this value as the group name
         variantName:
           type: string
           description: Name of the variant
