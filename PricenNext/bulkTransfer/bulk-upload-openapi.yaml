@@ -1,17 +1,17 @@
 openapi: "3.0.1"
 info:
-  title: "next-external-sniffie-data-api"
+  title: "next-external-pricen-data-api"
   version: "1.0"
 servers:
-- url: "https://next-api.sniffie.io/v2/sniffie/"
+- url: "https://next-api.pricen.io/v2/pricen/"
 paths:
   /bulk-uploads/orders-upload-link:
     get:
       responses:
         default:
-          description: "Default response for GET /bulk-uploads/orders-upload-link"
-          content:
-             application/json:
+            description: "Upload OrderLine objects in jsonl format"
+            content:
+            application/json:
               schema:
                 $ref: "#/components/schemas/BulkUploadResponse"
       security:
@@ -19,45 +19,47 @@ paths:
   /bulk-uploads/competitor-upload-link:
     get:
       responses:
-        default:
-          description: "Default response for GET /bulk-uploads/competitor-upload-link"
-          content:
-             application/json:
-              schema:
-                $ref: "#/components/schemas/BulkUploadResponse"
+      default:
+        description: "Upload CompetitorProductVariant objects in jsonl format"
+        content:
+         application/json:
+          schema:
+          $ref: "#/components/schemas/BulkUploadResponse"
       security:
       - NextExternalLambdaTokenAuthorizer: []
   /bulk-uploads/stores-upload-link:
     get:
       responses:
-        default:
-          description: "Default response for GET /bulk-uploads/stores-upload-link"
-          content:
-             application/json:
-              schema:
-                $ref: "#/components/schemas/BulkUploadResponse"
+      default:
+        description: "Upload Store objects in jsonl format"
+        content:
+         application/json:
+          schema:
+          $ref: "#/components/schemas/BulkUploadResponse"
       security:
       - NextExternalLambdaTokenAuthorizer: []
   /bulk-uploads/products-upload-link:
     get:
       responses:
-        default:
-          description: "Default response for GET /bulk-uploads/products-upload-link"
-          content:
-             application/json:
-              schema:
-                $ref: "#/components/schemas/BulkUploadResponse"
+      default:
+        description: "Upload ProductVariant objects in jsonl format"
+        content:
+         application/json:
+          schema:
+          $ref: "#/components/schemas/BulkUploadResponse"
       security:
       - NextExternalLambdaTokenAuthorizer: []
-  /bulk-uploads/supplemental-data-upload-link:
+    /bulk-uploads/supplemental-data-upload-link:
     post:
       responses:
-        default:
-          description: "Default response for POST /bulk-uploads/supplemental-data-upload-link"
-          content:
-             application/json:
-              schema:
-                $ref: "#/components/schemas/BulkUploadResponse"
+      default:
+        description: "Upload SupplementalData objects in jsonl format"
+        content:
+         application/json:
+          schema:
+          $ref: "#/components/schemas/BulkUploadResponse"
+      security:
+      - NextExternalLambdaTokenAuthorizer: []
 components:
   securitySchemes:
     NextExternalLambdaTokenAuthorizer:
@@ -440,7 +442,40 @@ components:
           format: decimal
           description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units
           example: '1299.99'
-          
+    
+    Store:
+      description: Send all store data to be updated in a jsonl file, where each json item is in its own row
+      type: object
+      required:
+        - storeName
+        - pricingEnabled
+      properties:
+        storeName:
+          type: string
+          description: Name of the store
+          example: 'Acme Store #1'
+        pricingEnabled:
+          type: boolean
+          description: Is pricing enabled for the store
+          example: true
+        region:
+          type: string
+          description: Region where the store is located
+          example: 'North America'
+        zone:
+          type: string
+          description: Zone within the region where the store is located
+          example: 'West Coast'
+        additionalAttributes:
+          type: object
+          additionalProperties: true
+          description: Additional attributes related to the store
+          example:
+            openingHours: '9am-9pm'
+            manager: 'John Doe'
+            phone: '+1 555 123 4567'
+            address: '123 Main Street, Springfield, IL 62701'
+    
     SupplementalData:
       description: Send all supplemental data to be updated for products in a jsonl file, where each json item is in its own row
       type: object
