@@ -1,41 +1,65 @@
 openapi: "3.0.1"
 info:
-  title: "next-external-sniffie-data-api"
+  title: "next-external-pricen-data-api"
   version: "1.0"
 servers:
-- url: "https://next-api.sniffie.io/v2/sniffie/"
+- url: "https://next-api.pricen.io/v2/pricen/"
 paths:
   /bulk-uploads/orders-upload-link:
     get:
       responses:
         default:
-          description: "Default response for GET /bulk-uploads/orders-upload-link"
-          content:
-             application/json:
+            description: "Upload OrderLine objects in jsonl format"
+            content:
+            application/json:
               schema:
                 $ref: "#/components/schemas/BulkUploadResponse"
+      security:
+      - NextExternalLambdaTokenAuthorizer: []
+  /bulk-uploads/competitor-upload-link:
+    get:
+      responses:
+      default:
+        description: "Upload CompetitorProductVariant objects in jsonl format"
+        content:
+         application/json:
+          schema:
+          $ref: "#/components/schemas/BulkUploadResponse"
+      security:
+      - NextExternalLambdaTokenAuthorizer: []
+  /bulk-uploads/stores-upload-link:
+    get:
+      responses:
+      default:
+        description: "Upload Store objects in jsonl format"
+        content:
+         application/json:
+          schema:
+          $ref: "#/components/schemas/BulkUploadResponse"
       security:
       - NextExternalLambdaTokenAuthorizer: []
   /bulk-uploads/products-upload-link:
     get:
       responses:
-        default:
-          description: "Default response for GET /bulk-uploads/products-upload-link"
-          content:
-             application/json:
-              schema:
-                $ref: "#/components/schemas/BulkUploadResponse"
+      default:
+        description: "Upload ProductVariant objects in jsonl format"
+        content:
+         application/json:
+          schema:
+          $ref: "#/components/schemas/BulkUploadResponse"
       security:
       - NextExternalLambdaTokenAuthorizer: []
-  /bulk-uploads/supplemental-data-upload-link:
+    /bulk-uploads/supplemental-data-upload-link:
     post:
       responses:
-        default:
-          description: "Default response for POST /bulk-uploads/supplemental-data-upload-link"
-          content:
-             application/json:
-              schema:
-                $ref: "#/components/schemas/BulkUploadResponse"
+      default:
+        description: "Upload SupplementalData objects in jsonl format"
+        content:
+         application/json:
+          schema:
+          $ref: "#/components/schemas/BulkUploadResponse"
+      security:
+      - NextExternalLambdaTokenAuthorizer: []
 components:
   securitySchemes:
     NextExternalLambdaTokenAuthorizer:
@@ -115,7 +139,6 @@ components:
           description: additional properties related to this order
           example:
             vat: 25.5%
-
         
     ProductVariant:
       description: Send all variants to be updated in a jsonl file, where each json item is in its own row
@@ -125,7 +148,6 @@ components:
         - parentProductId
         - parentProductName
         - price
-        - originalPrice
         - categories
         - currency
         - cogs
@@ -153,10 +175,10 @@ components:
           format: decimal
           description: Price what the customer pays (with VAT)
           example: '99.95'
-        originalPrice:
+        compareAtPrice:
           type: number
           format: decimal
-          description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units
+          description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true
           example: '129.99'
         categories:
           type: array
@@ -232,6 +254,160 @@ components:
           example: ['Black Friday 2025', 'Outlet']
           items: 
             type: string
+        marginTargetPercentage:
+          type: number
+          format: decimal
+          description: Target margin percentage for the product
+          example: 50.0
+        recommendedRetailPrice:
+          type: number
+          format: decimal
+          description: Recommended retail price for the product
+          example: 99.95
+        vatRate: 
+          type: number
+          format: decimal
+          description: Default vat rate in percentage. If multiple vat rates are used, use the supplemental data upload to send the vat rates for each variant per store
+          example: 24.0
+        otherPrices:
+          type: array
+          description: Any and all other currencies and prices that the product may be sold at
+          items:
+            $ref: '#/components/schemas/AlternativePrice'
+        additionalProperties:
+          type: object
+          additionalProperties: true
+          description: 'additional properties related to this product'
+          example:
+            decommissionDate: '2025-03-31'
+            comment: 'Moved to outlet on 2025-02-01'
+    CompetitorProductVariant:
+      description: |
+        Competitor variant is automatically matched to product variants by their sku. 
+        That's why sku is mandatory, along with price and currency and the date when the price was collected. 
+        Send all competitor variants to be updated in a jsonl file, where each json item is in its own row
+      type: object
+      required:
+        - gid
+        - price
+        - currency
+        - sku
+        - dateForPrice
+      properties:
+        gid: 
+          type: string
+          description: Unique global identifier for the variant, to distinguish it from the other variants. Use sku if no other id is available
+          example: 'BLUE-SHIRT-1-M'
+        parentProductId:
+          type: string
+          description: A grouping id with which the variant is tied to other variants. Used for grouping in analytics and pricing and user interface. If no grouping id exists, use gid
+        parentProductName:
+          type: string
+          description: Name of the group this variant belongs to. Will be used in the user interface to group the variants under the parent and display this value as the group name
+          example: 'The Blue Shirt'
+        variantName:
+          type: string
+          description: Name of the variant
+          example: 'The Blue Shirt #1, size M'
+        price:
+          type: number
+          format: decimal
+          description: Price what the customer pays (with VAT)
+          example: '99.95'
+        compareAtPrice:
+          type: number
+          format: decimal
+          description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true
+          example: '129.99'
+        dateForPrice:
+          type: string
+          description: ISO Date for the price
+          example: '2025-01-17'
+        categories:
+          type: array
+          description: Names of the categories the item is belongs to. Used as a grouping factor amongst different items. If no category exists send ['All']
+          example: ['Anvils', 'Tools']
+          items: 
+            type: string
+        currency:
+          type: string
+          description: Three letter currency code as defined by ISO-4217
+          format: iso-4217
+          example: 'EUR'
+        sku:
+          type: string
+          description: SKU (stock keeping unit) of the product. This must match the sku in the orders
+          example: 'SKU-123456-Y4'
+        cogs:
+          type: number
+          format: decimal
+          description: All costs related to the product, used to calculate margins. If cogsNotAvailable is true, send 0.01
+          example: '22.57'
+        stockCount:
+          type: number
+          description: Amount of items available in stock. If stockCountNotAvailable is true, send 10000000
+          example: 90
+        cogsNotAvailable:
+          type: boolean
+          default: false
+          example: true
+        variantStatus: 
+          type: string
+          description: Status of the product, is it active or disabled
+          enum: 
+            - enabled
+            - disabled
+          default: enabled
+        stockCountNotAvailable:
+          type: boolean
+          default: false
+          example: true
+        ean:
+          type: string
+          description: European Article Number. Unified code for products. Required for competitor matching
+        manufacturer:
+          type: string
+          description: Manufacturer
+          example: 'Acme' 
+        productBrand:
+          type: string
+          description: Brand of the product
+          example: 'Acme Anvils'
+        imageUrl:
+          type: string
+          description: Url to the image of the product
+        productUrl:
+          type: string
+          description: Url to the product page
+        productType:
+          type: string
+          description: What kind of a product is it
+          example: Tool
+        onSale:
+          type: boolean
+          description: Is the product on sale
+          default: false
+        tags:
+          type: array
+          description: Possible tags to help with grouping, searching and sorting
+          example: ['Black Friday 2025', 'Outlet']
+          items: 
+            type: string
+        marginTargetPercentage:
+          type: number
+          format: decimal
+          description: Target margin percentage for the product
+          example: 50.0
+        recommendedRetailPrice:
+          type: number
+          format: decimal
+          description: Recommended retail price for the product
+          example: 99.95
+        vatRate: 
+          type: number
+          format: decimal
+          description: Default vat rate in percentage. If multiple vat rates are used, use the supplemental data upload to send the vat rates for each variant per store
+          example: 24.0
         otherPrices:
           type: array
           description: Any and all other currencies and prices that the product may be sold at
@@ -266,7 +442,40 @@ components:
           format: decimal
           description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units
           example: '1299.99'
-          
+    
+    Store:
+      description: Send all store data to be updated in a jsonl file, where each json item is in its own row
+      type: object
+      required:
+        - storeName
+        - pricingEnabled
+      properties:
+        storeName:
+          type: string
+          description: Name of the store
+          example: 'Acme Store #1'
+        pricingEnabled:
+          type: boolean
+          description: Is pricing enabled for the store
+          example: true
+        region:
+          type: string
+          description: Region where the store is located
+          example: 'North America'
+        zone:
+          type: string
+          description: Zone within the region where the store is located
+          example: 'West Coast'
+        additionalAttributes:
+          type: object
+          additionalProperties: true
+          description: Additional attributes related to the store
+          example:
+            openingHours: '9am-9pm'
+            manager: 'John Doe'
+            phone: '+1 555 123 4567'
+            address: '123 Main Street, Springfield, IL 62701'
+    
     SupplementalData:
       description: Send all supplemental data to be updated for products in a jsonl file, where each json item is in its own row
       type: object
