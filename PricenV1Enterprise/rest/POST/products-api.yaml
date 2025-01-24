@@ -3,7 +3,7 @@ info:
   description: |
     ## Overview 
 
-    This is the API description for Sniffie's Products API. 
+    This is the API description for Pricen's Products API. 
     - 100 requests per second
     - 200 products per request
 
@@ -15,7 +15,7 @@ info:
 
     You can get the token from our customer service, make sure it is in form of {accountId}&&{token}
   version: 1.0.0
-  title: Sniffie Products API
+  title: Pricen Products API
 servers:
   - url: https://api.sniffie.io/v1/account-products
   - url: https://api.sniffie-staging.io/v1/account-products
@@ -164,7 +164,7 @@ components:
               "additionalParentAttribute1": "extra attribute",
               "anotherParentAttribute WithOtherKey": "and some other value",
               "Any Key You Like Related To The Parent Product. Key can include spaces": "and the value",
-              "AndAsManyRelevantKeysHereAndOn": "That are useful to your specific usecases. Please consult Sniffie CS team, what are good values here",
+              "AndAsManyRelevantKeysHereAndOn": "That are useful to your specific usecases. Please consult Pricen CS team, what are good values here",
             }
 
     ProductVariant:
@@ -298,7 +298,7 @@ components:
               "additionalAttribute1": "extra attribute",
               "anotherAttribute WithOtherKey": "and some other value",
               "Any Key You Like Related To This Variant. Key can include spaces": "And its value here",
-              "AndAsManyRelevantKeysHereAndOn": "That are useful to your specific usecases. Please consult Sniffie CS team, what are good values here",
+              "AndAsManyRelevantKeysHereAndOn": "That are useful to your specific usecases. Please consult Pricen CS team, what are good values here",
             }
     KpiDataObject:
       type: object

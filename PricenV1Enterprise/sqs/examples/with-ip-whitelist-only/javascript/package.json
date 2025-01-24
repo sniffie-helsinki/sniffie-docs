@@ -2,7 +2,7 @@
     "name": "SQS poller-receiver",
     "version": "0.0.1",
     "description": "Example code on how to poll SQS + receive messages + mark messages as deleted",
-    "author": "Niko @ Sniffie Software ltd",
+    "author": "Niko @ Pricen Software ltd",
     "type": "module",
     "engines": {
         "node": ">=20"

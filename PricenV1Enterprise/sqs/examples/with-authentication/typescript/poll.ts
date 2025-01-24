@@ -5,10 +5,10 @@ import {
 } from '@aws-sdk/client-sqs';
 
 // Fill in the variables
-const queue = ''; // queue url: string, get this from Sniffie
+const queue = ''; // queue url: string, get this from Pricen
 const env = process.env.ENV; // blank or staging, if you are using staging environment
-const accountId = null; // accountId: number, get this from Sniffie
-const apiKey = ''; // apiKey: string, get this from Sniffie
+const accountId = null; // accountId: number, get this from Pricen
+const apiKey = ''; // apiKey: string, get this from Pricen
 
 let config = {
 	method: 'get',

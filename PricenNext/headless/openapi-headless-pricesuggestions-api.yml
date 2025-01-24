@@ -3,9 +3,9 @@ info:
   description: |
     ## Overview 
 
-    This is the API description for Sniffie's Products API.
+    This is the API description for Pricen's Products API.
   version: 1.0.0
-  title: Sniffie Price suggestions API
+  title: Pricen Price suggestions API
 tags:
   - name: pricesuggestions
     description: Manage price suggestions for products

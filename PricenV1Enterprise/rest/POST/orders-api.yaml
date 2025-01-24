@@ -3,7 +3,7 @@ info:
   description: |
     ## Overview 
 
-    This is the API description for Sniffie's Orders API.     
+    This is the API description for Pricen's Orders API.     
     - 100 requests per second
     - 200 orders per request
     
@@ -11,7 +11,7 @@ info:
 
     You can get the token from our customer service, make sure it is in form of {accountId}&&{token}
   version: 1.0.0
-  title: Sniffie Orders API
+  title: Pricen Orders API
 servers:
   - url: https://api.sniffie.io/v1/account-orders
   - url: https://api.sniffie-staging.io/v1/orders-products

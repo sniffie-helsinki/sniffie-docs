@@ -1,9 +1,9 @@
 const AWS = require('aws-sdk');
 const sqs = new AWS.SQS();
-const queue = ''; // queue url: string, get this from Sniffie
+const queue = ''; // queue url: string, get this from Pricen
 const env = process.env.ENV; // blank or staging, if you are using staging environment
-const accountId = null; // accountId: number, get this from Sniffie
-const apiKey = ''; // apiKey: string, get this from Sniffie
+const accountId = null; // accountId: number, get this from Pricen
+const apiKey = ''; // apiKey: string, get this from Pricen
 let config = {
 	method: 'get',
 	maxBodyLength: Infinity,
