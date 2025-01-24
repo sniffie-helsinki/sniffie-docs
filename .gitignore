@@ -131,7 +131,7 @@ dist
 
 #.DS_Store
 .DS_Store
-SniffieV1Enterprise/sqs/examples/python/config.json
-SniffieV1Enterprise/sqs/examples/javascript/config.js
-SniffieV1Enterprise/sqs/examples/java/config.txt
-SniffieV1Enterprise/sqs/examples/php/config.php
+PricenV1Enterprise/sqs/examples/python/config.json
+PricenV1Enterprise/sqs/examples/javascript/config.js
+PricenV1Enterprise/sqs/examples/java/config.txt
+PricenV1Enterprise/sqs/examples/php/config.php

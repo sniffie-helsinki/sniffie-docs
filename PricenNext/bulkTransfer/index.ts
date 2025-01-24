@@ -4,7 +4,7 @@ const data = {
   example: "json",
   and: "rest of the values",
 };
-const token = "replaceMeWithToken"; // you get this from Sniffie
+const token = "replaceMeWithToken"; // you get this from Pricen
 getSignedUrlAndPost(token, data).then((response) => {
   console.log(response);
 });

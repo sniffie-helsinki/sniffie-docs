@@ -4,10 +4,10 @@ require 'vendor/autoload.php';
 use Aws\Sqs\SqsClient;
 use GuzzleHttp\Client;
 
-$queue = ''; // queue url: string, get this from Sniffie
+$queue = ''; // queue url: string, get this from Pricen
 $env = ''; // environment: string, '' or 'staging'
-$accountId = null; // accountId: number, get this from Sniffie
-$apiKey = ''; // apiKey: string, get this from Sniffie
+$accountId = null; // accountId: number, get this from Pricen
+$apiKey = ''; // apiKey: string, get this from Pricen
 
 $config = [
     'method' => 'GET',

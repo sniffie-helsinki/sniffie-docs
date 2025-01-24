@@ -3,9 +3,9 @@ info:
   description: |
     ## Overview 
 
-    This is the API description for Sniffie's Products API.
+    This is the API description for Pricen's Products API.
   version: 1.0.0
-  title: Sniffie Products API
+  title: Pricen Products API
 security:
   - ApiKeyAuth: []
 tags:

@@ -3,10 +3,10 @@ info:
   description: |
     ## Overview 
 
-    This is the API description for Sniffie's Orders API.
+    This is the API description for Pricen's Orders API.
 
   version: 1.0.0
-  title: Sniffie Orders API
+  title: Pricen Orders API
 tags:
   - name: orders
     description: Manage orders of an account

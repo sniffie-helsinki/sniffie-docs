@@ -1,7 +1,7 @@
-# Bulk transfer to Sniffie
+# Bulk transfer to Pricen
 
-Sniffie enables the user to do bulk uploads directly to their bulk uploads S3, provided that the user has an account with an api key set up properly. 
-With the api key, the user can request a signed url to S3, which they can use to upload a gzipped jsonl file which Sniffie will then process further. 
+Pricen enables the user to do bulk uploads directly to their bulk uploads S3, provided that the user has an account with an api key set up properly. 
+With the api key, the user can request a signed url to S3, which they can use to upload a gzipped jsonl file which Pricen will then process further. 
 Using the bulk upload is much more cost and time efficient, compared to pushing the same payloads in smaller batches through the rest api. 
 
 ## File format: JSONL
@@ -14,7 +14,7 @@ Due to the significant performance benefits, which makes streaming easier among 
 ```
 ## Bulk transfer steps
 
-1. Make sure you have your api key, which enables you to call the Sniffie endpoint for the presigned upload url
+1. Make sure you have your api key, which enables you to call the Pricen endpoint for the presigned upload url
 2. Make a GET request to the endpoint depending on the content type
   - https://api(-staging)sniffie.io/v2/sniffie/bulk-uploads/products-upload-link
   - https://api(-staging)sniffie.io/v2/sniffie/bulk-uploads/orders-upload-link
@@ -28,7 +28,7 @@ Due to the significant performance benefits, which makes streaming easier among 
 And then you're done
 
 ## Try it out 
-In index.ts replace the token value with your own token (which you can get from Sniffie). Then either leave the data in index.ts as is, or modify it to your liking and then just.... 
+In index.ts replace the token value with your own token (which you can get from Pricen). Then either leave the data in index.ts as is, or modify it to your liking and then just.... 
 Run `npm run test`
 
 ## Documentation
