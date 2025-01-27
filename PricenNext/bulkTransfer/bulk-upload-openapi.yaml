@@ -156,8 +156,8 @@ components:
       type: object
       required:
         - gid
-        - parentProductId
-        - parentProductName
+        - groupId
+        - groupName
         - price
         - categories
         - currency
@@ -170,10 +170,10 @@ components:
           type: string
           description: Unique global identifier for the variant, to distinguish it from the other variants. Use sku if no other id is available
           example: 'BLUE-SHIRT-1-M'
-        parentProductId:
+        groupId:
           type: string
           description: A grouping id with which the variant is tied to other variants. Used for grouping in analytics and pricing and user interface. If no grouping id exists, use gid
-        parentProductName:
+        groupName:
           type: string
           description: Name of the group this variant belongs to. Will be used in the user interface to group the variants under the parent and display this value as the group name
           example: 'The Blue Shirt'
@@ -309,10 +309,10 @@ components:
           type: string
           description: Unique global identifier for the variant, to distinguish it from the other variants. Use sku if no other id is available
           example: 'BLUE-SHIRT-1-M'
-        parentProductId:
+        groupId:
           type: string
           description: A grouping id with which the variant is tied to other variants. Used for grouping in analytics and pricing and user interface. If no grouping id exists, use gid
-        parentProductName:
+        groupName:
           type: string
           description: Name of the group this variant belongs to. Will be used in the user interface to group the variants under the parent and display this value as the group name
           example: 'The Blue Shirt'
@@ -433,7 +433,7 @@ components:
             comment: 'Moved to outlet on 2025-02-01'
     StoreProduct:
       type: object
-      description: A mapping object between store and products. Can be used to provide store specific overriding values e.g. price, group id (parentProductId) etc. 
+      description: A mapping object between store and products. Can be used to provide store specific overriding values e.g. price, group id (groupId) etc. 
       required:
         - storeId
         - gid
@@ -446,10 +446,10 @@ components:
           type: string
           description: Unique global identifier for the product, needs to match the gid in the ProductVariant object
           example: 'product-123'
-        parentProductId:
+        groupId:
           type: string
           description: A grouping id with which the variant is tied to other variants. Used for grouping in analytics and pricing and user interface. If no grouping id exists, use gid
-        parentProductName:
+        groupName:
           type: string
           description: Name of the group this variant belongs to. Will be used in the user interface to group the variants under the parent and display this value as the group name
           example: 'The Blue Shirt'
