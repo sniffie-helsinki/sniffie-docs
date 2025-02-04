@@ -1,0 +1,689 @@
+{
+  "type": "object",
+  "title": "Schema",
+  "definitions": {
+    "OrderLineItem": {
+      "description": "Send all orders to be updated in a jsonl file, where each json item is in its own row",
+      "type": "object",
+      "required": [
+        "soldFrom",
+        "orderNumber",
+        "orderLineNumber",
+        "createdAt",
+        "price",
+        "currency",
+        "quantity",
+        "sku"
+      ],
+      "properties": {
+        "soldFrom": {
+          "type": "string",
+          "description": "Name of the shop, channel, website, POS. Grouping factor for sales analytics"
+        },
+        "orderNumber": {
+          "type": "string",
+          "description": "Order number of whole order"
+        },
+        "orderLineNumber": {
+          "type": "string",
+          "description": "Order line number of the product line item"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "datetime",
+          "description": "Datetime of the creation date for the order in UTC"
+        },
+        "price": {
+          "type": "number",
+          "format": "decimal",
+          "description": "Price what the customer paid for the item (all discounts, taxes and other charges included)"
+        },
+        "currency": {
+          "type": "string",
+          "description": "Three letter currency code as defined by ISO-4217",
+          "format": "iso-4217"
+        },
+        "quantity": {
+          "type": "number",
+          "description": "How many items were sold of this particular sku"
+        },
+        "sku": {
+          "type": "string",
+          "description": "unique identifier for an item. Grouping factor for sales analytics"
+        },
+        "bundleId": {
+          "type": "string",
+          "description": "If the item is a part of a bundle, this field is used to group the bundles with matching id"
+        },
+        "taxAmount": {
+          "type": "number",
+          "format": "decimal",
+          "description": "Amount of tax applied to the line item"
+        },
+        "discountAmount": {
+          "type": "number",
+          "format": "decimal",
+          "description": "Amount of discount applied to the line item"
+        },
+        "originalPrice": {
+          "type": "number",
+          "format": "decimal",
+          "description": "Original (RRP) price of the line item, including tax and excluding discount"
+        },
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "additional properties related to this order"
+        }
+      },
+      "$schema": "http://json-schema.org/draft-04/schema#"
+    },
+    "ProductVariant": {
+      "description": "Send all variants to be updated in a jsonl file, where each json item is in its own row",
+      "type": "object",
+      "required": [
+        "gid",
+        "groupId",
+        "groupName",
+        "price",
+        "categories",
+        "currency",
+        "cogs",
+        "sku",
+        "stockCount",
+        "variantName"
+      ],
+      "properties": {
+        "gid": {
+          "type": "string",
+          "description": "Unique global identifier for the variant, to distinguish it from the other variants. Use sku if no other id is available"
+        },
+        "groupId": {
+          "type": "string",
+          "description": "A grouping id with which the variant is tied to other variants. Used for grouping in analytics and pricing and user interface. If no grouping id exists, use gid"
+        },
+        "groupName": {
+          "type": "string",
+          "description": "Name of the group this variant belongs to. Will be used in the user interface to group the variants under the parent and display this value as the group name"
+        },
+        "variantName": {
+          "type": "string",
+          "description": "Name of the variant"
+        },
+        "price": {
+          "type": "number",
+          "format": "decimal",
+          "description": "Price what the customer pays (with VAT)"
+        },
+        "compareAtPrice": {
+          "type": "number",
+          "format": "decimal",
+          "description": "Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true"
+        },
+        "categories": {
+          "type": "array",
+          "description": "Names of the categories the item is belongs to. Used as a grouping factor amongst different items. If no category exists send ['All']",
+          "items": {
+            "type": "string"
+          }
+        },
+        "currency": {
+          "type": "string",
+          "description": "Three letter currency code as defined by ISO-4217",
+          "format": "iso-4217"
+        },
+        "sku": {
+          "type": "string",
+          "description": "SKU (stock keeping unit) of the product. This must match the sku in the orders"
+        },
+        "cogs": {
+          "type": "number",
+          "format": "decimal",
+          "description": "All costs related to the product, used to calculate margins. If cogsNotAvailable is true, send 0.01"
+        },
+        "stockCount": {
+          "type": "number",
+          "description": "Amount of items available in stock. If stockCountNotAvailable is true, send 10000000"
+        },
+        "cogsNotAvailable": {
+          "type": "boolean",
+          "default": false
+        },
+        "variantStatus": {
+          "type": "string",
+          "description": "Status of the product, is it active or disabled",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "default": "enabled"
+        },
+        "stockCountNotAvailable": {
+          "type": "boolean",
+          "default": false
+        },
+        "ean": {
+          "type": "string",
+          "description": "European Article Number. Unified code for products. Required for competitor matching"
+        },
+        "manufacturer": {
+          "type": "string",
+          "description": "Manufacturer"
+        },
+        "productBrand": {
+          "type": "string",
+          "description": "Brand of the product"
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "Url to the image of the product"
+        },
+        "productUrl": {
+          "type": "string",
+          "description": "Url to the product page"
+        },
+        "productType": {
+          "type": "string",
+          "description": "What kind of a product is it"
+        },
+        "onSale": {
+          "type": "boolean",
+          "description": "Is the product on sale",
+          "default": false
+        },
+        "dateForPrice": {
+          "type": "string",
+          "description": "ISO Date for the price, if in the past"
+        },
+        "tags": {
+          "type": "array",
+          "description": "Possible tags to help with grouping, searching and sorting",
+          "items": {
+            "type": "string"
+          }
+        },
+        "marginTargetPercentage": {
+          "type": "number",
+          "format": "decimal",
+          "description": "Target margin percentage for the product"
+        },
+        "recommendedRetailPrice": {
+          "type": "number",
+          "format": "decimal",
+          "description": "Recommended retail price for the product"
+        },
+        "vatRate": {
+          "type": "number",
+          "format": "decimal",
+          "description": "Default vat rate in percentage. If multiple vat rates are used, use the supplemental data upload to send the vat rates for each variant per store"
+        },
+        "otherPrices": {
+          "type": "array",
+          "description": "Any and all other currencies and prices that the product may be sold at",
+          "items": {
+            "$ref": "#/definitions/AlternativePrice"
+          }
+        },
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "additional properties related to this product"
+        }
+      },
+      "$schema": "http://json-schema.org/draft-04/schema#"
+    },
+    "CompetitorProductVariant": {
+      "description": "Competitor variant is automatically matched to product variants by their sku. \nThat's why sku is mandatory, along with price and currency and the date when the price was collected. \nSend all competitor variants to be updated in a jsonl file, where each json item is in its own row\n",
+      "type": "object",
+      "required": [
+        "gid",
+        "price",
+        "currency",
+        "sku",
+        "dateForPrice"
+      ],
+      "properties": {
+        "gid": {
+          "type": "string",
+          "description": "Unique global identifier for the variant, to distinguish it from the other variants. Use sku if no other id is available"
+        },
+        "groupId": {
+          "type": "string",
+          "description": "A grouping id with which the variant is tied to other variants. Used for grouping in analytics and pricing and user interface. If no grouping id exists, use gid"
+        },
+        "groupName": {
+          "type": "string",
+          "description": "Name of the group this variant belongs to. Will be used in the user interface to group the variants under the parent and display this value as the group name"
+        },
+        "variantName": {
+          "type": "string",
+          "description": "Name of the variant"
+        },
+        "price": {
+          "type": "number",
+          "format": "decimal",
+          "description": "Price what the customer pays (with VAT)"
+        },
+        "compareAtPrice": {
+          "type": "number",
+          "format": "decimal",
+          "description": "Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true"
+        },
+        "dateForPrice": {
+          "type": "string",
+          "description": "ISO Date for the price"
+        },
+        "categories": {
+          "type": "array",
+          "description": "Names of the categories the item is belongs to. Used as a grouping factor amongst different items. If no category exists send ['All']",
+          "items": {
+            "type": "string"
+          }
+        },
+        "currency": {
+          "type": "string",
+          "description": "Three letter currency code as defined by ISO-4217",
+          "format": "iso-4217"
+        },
+        "sku": {
+          "type": "string",
+          "description": "SKU (stock keeping unit) of the product. This must match the sku in the orders"
+        },
+        "cogs": {
+          "type": "number",
+          "format": "decimal",
+          "description": "All costs related to the product, used to calculate margins. If cogsNotAvailable is true, send 0.01"
+        },
+        "stockCount": {
+          "type": "number",
+          "description": "Amount of items available in stock. If stockCountNotAvailable is true, send 10000000"
+        },
+        "cogsNotAvailable": {
+          "type": "boolean",
+          "default": false
+        },
+        "variantStatus": {
+          "type": "string",
+          "description": "Status of the product, is it active or disabled",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "default": "enabled"
+        },
+        "stockCountNotAvailable": {
+          "type": "boolean",
+          "default": false
+        },
+        "ean": {
+          "type": "string",
+          "description": "European Article Number. Unified code for products. Required for competitor matching"
+        },
+        "manufacturer": {
+          "type": "string",
+          "description": "Manufacturer"
+        },
+        "productBrand": {
+          "type": "string",
+          "description": "Brand of the product"
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "Url to the image of the product"
+        },
+        "productUrl": {
+          "type": "string",
+          "description": "Url to the product page"
+        },
+        "productType": {
+          "type": "string",
+          "description": "What kind of a product is it"
+        },
+        "onSale": {
+          "type": "boolean",
+          "description": "Is the product on sale",
+          "default": false
+        },
+        "tags": {
+          "type": "array",
+          "description": "Possible tags to help with grouping, searching and sorting",
+          "items": {
+            "type": "string"
+          }
+        },
+        "marginTargetPercentage": {
+          "type": "number",
+          "format": "decimal",
+          "description": "Target margin percentage for the product"
+        },
+        "recommendedRetailPrice": {
+          "type": "number",
+          "format": "decimal",
+          "description": "Recommended retail price for the product"
+        },
+        "vatRate": {
+          "type": "number",
+          "format": "decimal",
+          "description": "Default vat rate in percentage. If multiple vat rates are used, use the supplemental data upload to send the vat rates for each variant per store"
+        },
+        "otherPrices": {
+          "type": "array",
+          "description": "Any and all other currencies and prices that the product may be sold at",
+          "items": {
+            "$ref": "#/definitions/AlternativePrice"
+          }
+        },
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "additional properties related to this product"
+        }
+      },
+      "$schema": "http://json-schema.org/draft-04/schema#"
+    },
+    "StoreProduct": {
+      "type": "object",
+      "description": "A mapping object between store and products. Can be used to provide store specific overriding values e.g. price, group id (groupId) etc.",
+      "required": [
+        "storeId",
+        "gid"
+      ],
+      "properties": {
+        "storeId": {
+          "type": "string",
+          "description": "Identifier for the store, must match the store identifier in the Store object"
+        },
+        "gid": {
+          "type": "string",
+          "description": "Unique global identifier for the product, needs to match the gid in the ProductVariant object"
+        },
+        "groupId": {
+          "type": "string",
+          "description": "A grouping id with which the variant is tied to other variants. Used for grouping in analytics and pricing and user interface. If no grouping id exists, use gid"
+        },
+        "groupName": {
+          "type": "string",
+          "description": "Name of the group this variant belongs to. Will be used in the user interface to group the variants under the parent and display this value as the group name"
+        },
+        "variantName": {
+          "type": "string",
+          "description": "Name of the variant"
+        },
+        "price": {
+          "type": "number",
+          "format": "decimal",
+          "description": "Price what the customer pays (with VAT)"
+        },
+        "compareAtPrice": {
+          "type": "number",
+          "format": "decimal",
+          "description": "Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true"
+        },
+        "dateForPrice": {
+          "type": "string",
+          "description": "ISO Date for the price"
+        },
+        "categories": {
+          "type": "array",
+          "description": "Names of the categories the item is belongs to. Used as a grouping factor amongst different items. If no category exists send ['All']",
+          "items": {
+            "type": "string"
+          }
+        },
+        "currency": {
+          "type": "string",
+          "description": "Three letter currency code as defined by ISO-4217",
+          "format": "iso-4217"
+        },
+        "sku": {
+          "type": "string",
+          "description": "SKU (stock keeping unit) of the product. This must match the sku in the orders"
+        },
+        "cogs": {
+          "type": "number",
+          "format": "decimal",
+          "description": "All costs related to the product, used to calculate margins. If cogsNotAvailable is true, send 0.01"
+        },
+        "stockCount": {
+          "type": "number",
+          "description": "Amount of items available in stock. If stockCountNotAvailable is true, send 10000000"
+        },
+        "cogsNotAvailable": {
+          "type": "boolean",
+          "default": false
+        },
+        "variantStatus": {
+          "type": "string",
+          "description": "Status of the product, is it active or disabled",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "default": "enabled"
+        },
+        "stockCountNotAvailable": {
+          "type": "boolean",
+          "default": false
+        },
+        "ean": {
+          "type": "string",
+          "description": "European Article Number. Unified code for products. Required for competitor matching"
+        },
+        "manufacturer": {
+          "type": "string",
+          "description": "Manufacturer"
+        },
+        "productBrand": {
+          "type": "string",
+          "description": "Brand of the product"
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "Url to the image of the product"
+        },
+        "productUrl": {
+          "type": "string",
+          "description": "Url to the product page"
+        },
+        "productType": {
+          "type": "string",
+          "description": "What kind of a product is it"
+        },
+        "onSale": {
+          "type": "boolean",
+          "description": "Is the product on sale",
+          "default": false
+        },
+        "tags": {
+          "type": "array",
+          "description": "Possible tags to help with grouping, searching and sorting",
+          "items": {
+            "type": "string"
+          }
+        },
+        "marginTargetPercentage": {
+          "type": "number",
+          "format": "decimal",
+          "description": "Target margin percentage for the product"
+        },
+        "recommendedRetailPrice": {
+          "type": "number",
+          "format": "decimal",
+          "description": "Recommended retail price for the product"
+        },
+        "vatRate": {
+          "type": "number",
+          "format": "decimal",
+          "description": "Default vat rate in percentage. If multiple vat rates are used, use the supplemental data upload to send the vat rates for each variant per store"
+        },
+        "otherPrices": {
+          "type": "array",
+          "description": "Any and all other currencies and prices that the product may be sold at",
+          "items": {
+            "$ref": "#/definitions/AlternativePrice"
+          }
+        },
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "additional properties related to this product"
+        }
+      },
+      "$schema": "http://json-schema.org/draft-04/schema#"
+    },
+    "AlternativePrice": {
+      "type": "object",
+      "required": [
+        "price",
+        "currency"
+      ],
+      "properties": {
+        "price": {
+          "type": "number",
+          "format": "decimal",
+          "description": "Price expressed as a decimal number of major currency units"
+        },
+        "currency": {
+          "type": "string",
+          "description": "Three letter currency code as defined by ISO-4217",
+          "format": "iso-4217"
+        },
+        "originalPrice": {
+          "type": "number",
+          "format": "decimal",
+          "description": "Compare at Price / Suggested retail price, expressed as a decimal number of major currency units"
+        }
+      },
+      "$schema": "http://json-schema.org/draft-04/schema#"
+    },
+    "Store": {
+      "description": "Send all store data to be updated in a jsonl file, where each json item is in its own row",
+      "type": "object",
+      "required": [
+        "storeName",
+        "pricingEnabled"
+      ],
+      "properties": {
+        "storeName": {
+          "type": "string",
+          "description": "Name of the store"
+        },
+        "pricingEnabled": {
+          "type": "boolean",
+          "description": "Is pricing enabled for the store"
+        },
+        "region": {
+          "type": "string",
+          "description": "Region where the store is located"
+        },
+        "zone": {
+          "type": "string",
+          "description": "Zone within the region where the store is located"
+        },
+        "additionalAttributes": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Additional attributes related to the store"
+        }
+      },
+      "$schema": "http://json-schema.org/draft-04/schema#"
+    },
+    "SupplementalData": {
+      "description": "Send all supplemental data to be updated for products in a jsonl file, where each json item is in its own row",
+      "type": "object",
+      "required": [
+        "gid"
+      ],
+      "properties": {
+        "gid": {
+          "type": "string",
+          "description": "Unique global identifier that matches the product variant to which the data is to be added to"
+        },
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Any number of different attributes and values related to the supplemental data"
+        }
+      },
+      "$schema": "http://json-schema.org/draft-04/schema#"
+    },
+    "BulkUploadResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "supplementsUploadUrl": {
+              "type": "string"
+            },
+            "supplementsUploadFields": {
+              "type": "object",
+              "properties": {
+                "Content-Type": {
+                  "type": "string"
+                },
+                "Content-Encoding": {
+                  "type": "string"
+                },
+                "bucket": {
+                  "type": "string"
+                },
+                "X-Amz-Algorithm": {
+                  "type": "string"
+                },
+                "X-Amz-Credential": {
+                  "type": "string"
+                },
+                "X-Amz-Date": {
+                  "type": "string"
+                },
+                "X-Amz-Security-Token": {
+                  "type": "string"
+                },
+                "key": {
+                  "type": "string"
+                },
+                "Policy": {
+                  "type": "string"
+                },
+                "X-Amz-Signature": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "$schema": "http://json-schema.org/draft-04/schema#"
+    }
+  },
+  "properties": {
+    "OrderLineItem": {
+      "$ref": "#/definitions/OrderLineItem"
+    },
+    "ProductVariant": {
+      "$ref": "#/definitions/ProductVariant"
+    },
+    "CompetitorProductVariant": {
+      "$ref": "#/definitions/CompetitorProductVariant"
+    },
+    "StoreProduct": {
+      "$ref": "#/definitions/StoreProduct"
+    },
+    "AlternativePrice": {
+      "$ref": "#/definitions/AlternativePrice"
+    },
+    "Store": {
+      "$ref": "#/definitions/Store"
+    },
+    "SupplementalData": {
+      "$ref": "#/definitions/SupplementalData"
+    },
+    "BulkUploadResponse": {
+      "$ref": "#/definitions/BulkUploadResponse"
+    }
+  }
+}

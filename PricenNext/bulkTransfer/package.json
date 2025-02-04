@@ -10,14 +10,17 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "ajv": "^8.17.1",
     "axios": "^1.7.5",
     "pako": "^2.1.0",
     "request": "^2.88.2",
-    "typedef": "^1.1.0",
-    "typescript": "^5.5.4"
+    "typedef": "^1.1.0"
   },
   "devDependencies": {
     "@types/pako": "^2.0.3",
-    "@types/request": "^2.48.12"
+    "@types/request": "^2.48.12",
+    "openapi-typescript": "^7.6.1",
+    "openapi-typescript-validator": "^4.0.0",
+    "typescript": "^5.7.3"
   }
 }
