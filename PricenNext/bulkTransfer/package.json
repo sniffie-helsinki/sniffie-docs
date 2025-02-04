@@ -5,7 +5,9 @@
   "scripts": {
     "test": "npm install && npm run compile && node index.js",
     "compile": "tsc",
-    "validate-products": "npx ts-node validate-products.ts"
+    "validate-products": "npx ts-node validate-products.ts",
+    "validate-orders": "npx ts-node validate-orders.ts",
+    "validate-competitors": "npx ts-node validate-competitorData.ts"
   },
   "author": "",
   "license": "ISC",
