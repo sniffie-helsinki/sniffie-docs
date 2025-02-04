@@ -115,7 +115,7 @@ export interface ProductVariant {
   /**
    * Status of the product, is it active or disabled
    */
-  variantStatus?: "enabled" | "disabled";
+  variantStatus?: "enabled" | "disabled" | null;
   stockCountNotAvailable?: boolean;
   /**
    * European Article Number. Unified code for products. Required for competitor matching

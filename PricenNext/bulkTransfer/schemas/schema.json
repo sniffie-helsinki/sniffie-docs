@@ -35,8 +35,10 @@
         },
         "price": {
           "type": "number",
-          "format": "decimal",
-          "description": "Price what the customer paid for the item (all discounts, taxes and other charges included)"
+          "format": "double",
+          "description": "Price what the customer paid for the item (all discounts, taxes and other charges included)",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
         },
         "currency": {
           "type": "string",
@@ -57,18 +59,24 @@
         },
         "taxAmount": {
           "type": "number",
-          "format": "decimal",
-          "description": "Amount of tax applied to the line item"
+          "format": "double",
+          "description": "Amount of tax applied to the line item",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
         },
         "discountAmount": {
           "type": "number",
-          "format": "decimal",
-          "description": "Amount of discount applied to the line item"
+          "format": "double",
+          "description": "Amount of discount applied to the line item",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
         },
         "originalPrice": {
           "type": "number",
-          "format": "decimal",
-          "description": "Original (RRP) price of the line item, including tax and excluding discount"
+          "format": "double",
+          "description": "Original (RRP) price of the line item, including tax and excluding discount",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
         },
         "additionalProperties": {
           "type": "object",
@@ -112,13 +120,17 @@
         },
         "price": {
           "type": "number",
-          "format": "decimal",
-          "description": "Price what the customer pays (with VAT)"
+          "format": "double",
+          "description": "Price what the customer pays (with VAT)",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
         },
         "compareAtPrice": {
           "type": "number",
-          "format": "decimal",
-          "description": "Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true"
+          "format": "double",
+          "description": "Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
         },
         "categories": {
           "type": "array",
@@ -138,8 +150,10 @@
         },
         "cogs": {
           "type": "number",
-          "format": "decimal",
-          "description": "All costs related to the product, used to calculate margins. If cogsNotAvailable is true, send 0.01"
+          "format": "double",
+          "description": "All costs related to the product, used to calculate margins. If cogsNotAvailable is true, send 0.01",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
         },
         "stockCount": {
           "type": "number",
@@ -154,7 +168,8 @@
           "description": "Status of the product, is it active or disabled",
           "enum": [
             "enabled",
-            "disabled"
+            "disabled",
+            null
           ],
           "default": "enabled"
         },
@@ -204,18 +219,24 @@
         },
         "marginTargetPercentage": {
           "type": "number",
-          "format": "decimal",
-          "description": "Target margin percentage for the product"
+          "format": "double",
+          "description": "Target margin percentage for the product",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
         },
         "recommendedRetailPrice": {
           "type": "number",
-          "format": "decimal",
-          "description": "Recommended retail price for the product"
+          "format": "double",
+          "description": "Recommended retail price for the product",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
         },
         "vatRate": {
           "type": "number",
-          "format": "decimal",
-          "description": "Default vat rate in percentage. If multiple vat rates are used, use the supplemental data upload to send the vat rates for each variant per store"
+          "format": "double",
+          "description": "Default vat rate in percentage. If multiple vat rates are used, use the supplemental data upload to send the vat rates for each variant per store",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
         },
         "otherPrices": {
           "type": "array",
@@ -261,13 +282,17 @@
         },
         "price": {
           "type": "number",
-          "format": "decimal",
-          "description": "Price what the customer pays (with VAT)"
+          "format": "double",
+          "description": "Price what the customer pays (with VAT)",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
         },
         "compareAtPrice": {
           "type": "number",
-          "format": "decimal",
-          "description": "Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true"
+          "format": "double",
+          "description": "Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
         },
         "dateForPrice": {
           "type": "string",
@@ -291,8 +316,10 @@
         },
         "cogs": {
           "type": "number",
-          "format": "decimal",
-          "description": "All costs related to the product, used to calculate margins. If cogsNotAvailable is true, send 0.01"
+          "format": "double",
+          "description": "All costs related to the product, used to calculate margins. If cogsNotAvailable is true, send 0.01",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
         },
         "stockCount": {
           "type": "number",
@@ -353,18 +380,24 @@
         },
         "marginTargetPercentage": {
           "type": "number",
-          "format": "decimal",
-          "description": "Target margin percentage for the product"
+          "format": "double",
+          "description": "Target margin percentage for the product",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
         },
         "recommendedRetailPrice": {
           "type": "number",
-          "format": "decimal",
-          "description": "Recommended retail price for the product"
+          "format": "double",
+          "description": "Recommended retail price for the product",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
         },
         "vatRate": {
           "type": "number",
-          "format": "decimal",
-          "description": "Default vat rate in percentage. If multiple vat rates are used, use the supplemental data upload to send the vat rates for each variant per store"
+          "format": "double",
+          "description": "Default vat rate in percentage. If multiple vat rates are used, use the supplemental data upload to send the vat rates for each variant per store",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
         },
         "otherPrices": {
           "type": "array",
@@ -411,13 +444,17 @@
         },
         "price": {
           "type": "number",
-          "format": "decimal",
-          "description": "Price what the customer pays (with VAT)"
+          "format": "double",
+          "description": "Price what the customer pays (with VAT)",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
         },
         "compareAtPrice": {
           "type": "number",
-          "format": "decimal",
-          "description": "Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true"
+          "format": "double",
+          "description": "Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
         },
         "dateForPrice": {
           "type": "string",
@@ -441,8 +478,10 @@
         },
         "cogs": {
           "type": "number",
-          "format": "decimal",
-          "description": "All costs related to the product, used to calculate margins. If cogsNotAvailable is true, send 0.01"
+          "format": "double",
+          "description": "All costs related to the product, used to calculate margins. If cogsNotAvailable is true, send 0.01",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
         },
         "stockCount": {
           "type": "number",
@@ -503,18 +542,24 @@
         },
         "marginTargetPercentage": {
           "type": "number",
-          "format": "decimal",
-          "description": "Target margin percentage for the product"
+          "format": "double",
+          "description": "Target margin percentage for the product",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
         },
         "recommendedRetailPrice": {
           "type": "number",
-          "format": "decimal",
-          "description": "Recommended retail price for the product"
+          "format": "double",
+          "description": "Recommended retail price for the product",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
         },
         "vatRate": {
           "type": "number",
-          "format": "decimal",
-          "description": "Default vat rate in percentage. If multiple vat rates are used, use the supplemental data upload to send the vat rates for each variant per store"
+          "format": "double",
+          "description": "Default vat rate in percentage. If multiple vat rates are used, use the supplemental data upload to send the vat rates for each variant per store",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
         },
         "otherPrices": {
           "type": "array",
@@ -540,8 +585,10 @@
       "properties": {
         "price": {
           "type": "number",
-          "format": "decimal",
-          "description": "Price expressed as a decimal number of major currency units"
+          "format": "double",
+          "description": "Price expressed as a decimal number of major currency units",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
         },
         "currency": {
           "type": "string",
@@ -550,8 +597,10 @@
         },
         "originalPrice": {
           "type": "number",
-          "format": "decimal",
-          "description": "Compare at Price / Suggested retail price, expressed as a decimal number of major currency units"
+          "format": "double",
+          "description": "Compare at Price / Suggested retail price, expressed as a decimal number of major currency units",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
         }
       },
       "$schema": "http://json-schema.org/draft-04/schema#"

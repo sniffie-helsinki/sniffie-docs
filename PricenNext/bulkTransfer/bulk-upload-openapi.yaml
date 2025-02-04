@@ -110,7 +110,7 @@ components:
           example: '2021-03-20T09:12:28Z'
         price:
           type: number
-          format: decimal
+          format: double
           description: Price what the customer paid for the item (all discounts, taxes and other charges included)
           example: '99.95'
         currency:
@@ -132,17 +132,17 @@ components:
           example: "bundle-1"
         taxAmount:
           type: number
-          format: decimal
+          format: double
           description: Amount of tax applied to the line item
           example: '23.99'
         discountAmount:
           type: number
-          format: decimal
+          format: double
           description: Amount of discount applied to the line item
           example: '0.00'
         originalPrice: 
           type: number
-          format: decimal
+          format: double
           description: Original (RRP) price of the line item, including tax and excluding discount
         additionalProperties:
           type: object
@@ -183,12 +183,12 @@ components:
           example: 'The Blue Shirt #1, size M'
         price:
           type: number
-          format: decimal
+          format: double
           description: Price what the customer pays (with VAT)
           example: '99.95'
         compareAtPrice:
           type: number
-          format: decimal
+          format: double
           description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true
           example: '129.99'
         categories:
@@ -208,7 +208,7 @@ components:
           example: 'SKU-123456-Y4'
         cogs:
           type: number
-          format: decimal
+          format: double
           description: All costs related to the product, used to calculate margins. If cogsNotAvailable is true, send 0.01
           example: '22.57'
         stockCount:
@@ -225,6 +225,7 @@ components:
           enum: 
             - enabled
             - disabled
+            - null
           default: enabled
         stockCountNotAvailable:
           type: boolean
@@ -267,17 +268,17 @@ components:
             type: string
         marginTargetPercentage:
           type: number
-          format: decimal
+          format: double
           description: Target margin percentage for the product
           example: 50.0
         recommendedRetailPrice:
           type: number
-          format: decimal
+          format: double
           description: Recommended retail price for the product
           example: 99.95
         vatRate: 
           type: number
-          format: decimal
+          format: double
           description: Default vat rate in percentage. If multiple vat rates are used, use the supplemental data upload to send the vat rates for each variant per store
           example: 24.0
         otherPrices:
@@ -322,12 +323,12 @@ components:
           example: 'The Blue Shirt #1, size M'
         price:
           type: number
-          format: decimal
+          format: double
           description: Price what the customer pays (with VAT)
           example: '99.95'
         compareAtPrice:
           type: number
-          format: decimal
+          format: double
           description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true
           example: '129.99'
         dateForPrice:
@@ -351,7 +352,7 @@ components:
           example: 'SKU-123456-Y4'
         cogs:
           type: number
-          format: decimal
+          format: double
           description: All costs related to the product, used to calculate margins. If cogsNotAvailable is true, send 0.01
           example: '22.57'
         stockCount:
@@ -406,17 +407,17 @@ components:
             type: string
         marginTargetPercentage:
           type: number
-          format: decimal
+          format: double
           description: Target margin percentage for the product
           example: 50.0
         recommendedRetailPrice:
           type: number
-          format: decimal
+          format: double
           description: Recommended retail price for the product
           example: 99.95
         vatRate: 
           type: number
-          format: decimal
+          format: double
           description: Default vat rate in percentage. If multiple vat rates are used, use the supplemental data upload to send the vat rates for each variant per store
           example: 24.0
         otherPrices:
@@ -459,12 +460,12 @@ components:
           example: 'The Blue Shirt #1, size M'
         price:
           type: number
-          format: decimal
+          format: double
           description: Price what the customer pays (with VAT)
           example: '99.95'
         compareAtPrice:
           type: number
-          format: decimal
+          format: double
           description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true
           example: '129.99'
         dateForPrice:
@@ -488,7 +489,7 @@ components:
           example: 'SKU-123456-Y4'
         cogs:
           type: number
-          format: decimal
+          format: double
           description: All costs related to the product, used to calculate margins. If cogsNotAvailable is true, send 0.01
           example: '22.57'
         stockCount:
@@ -543,17 +544,17 @@ components:
             type: string
         marginTargetPercentage:
           type: number
-          format: decimal
+          format: double
           description: Target margin percentage for the product
           example: 50.0
         recommendedRetailPrice:
           type: number
-          format: decimal
+          format: double
           description: Recommended retail price for the product
           example: 99.95
         vatRate: 
           type: number
-          format: decimal
+          format: double
           description: Default vat rate in percentage. If multiple vat rates are used, use the supplemental data upload to send the vat rates for each variant per store
           example: 24.0
         otherPrices:
@@ -576,7 +577,7 @@ components:
       properties:
         price:
           type: number
-          format: decimal
+          format: double
           description: Price expressed as a decimal number of major currency units
           example: '999.95'
         currency:
@@ -586,7 +587,7 @@ components:
           example: 'SEK'
         originalPrice:
           type: number
-          format: decimal
+          format: double
           description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units
           example: '1299.99'
     
