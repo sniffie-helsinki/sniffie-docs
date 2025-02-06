@@ -172,7 +172,7 @@ components:
           example: 'BLUE-SHIRT-1-M'
         groupId:
           type: string
-          description: A grouping id with which the variant is tied to other variants. Used for grouping in analytics and pricing and user interface. If no grouping id exists, use gid
+          description: A grouping id with which the variant is tied to other variants. Used for grouping in analytics and pricing and user interface. Usually a parentProduct's id, if no other groups exist. If no grouping id exists, use gid
         groupName:
           type: string
           description: Name of the group this variant belongs to. Will be used in the user interface to group the variants under the parent and display this value as the group name
@@ -193,8 +193,8 @@ components:
           example: '129.99'
         categories:
           type: array
-          description: Names of the categories the item is belongs to. Used as a grouping factor amongst different items. If no category exists send ['All']
-          example: ['Anvils', 'Tools']
+          description: Names of the categories the item is belongs to. Send them in order from highest to lowest. Used as a grouping factor amongst different items. If no category exists send ['All']
+          example: ['Tools', 'Anvils']
           items: 
             type: string
         currency:
@@ -219,6 +219,10 @@ components:
           type: boolean
           default: false
           example: true
+        parentProductId: 
+          type: string
+          description: Parent product id, if the variant is a child of a parent product. 
+          example: 'product-123'
         variantStatus: 
           type: string
           description: Status of the product, is it active or disabled
@@ -653,10 +657,10 @@ components:
         data:
           type: object
           properties:
-            supplementsUploadUrl:
+            uploadUrl:
               type: string
               example: "https://name-of-bucket.s3.eu-north-1.amazonaws.com/"
-            supplementsUploadFields:
+            uploadFields:
               type: object
               properties:
                 Content-Type:
