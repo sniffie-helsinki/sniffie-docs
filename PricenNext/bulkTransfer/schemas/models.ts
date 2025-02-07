@@ -72,7 +72,7 @@ export interface ProductVariant {
    */
   gid: string;
   /**
-   * A grouping id with which the variant is tied to other variants. Used for grouping in analytics and pricing and user interface. If no grouping id exists, use gid
+   * A grouping id with which the variant is tied to other variants. Used for grouping in analytics and pricing and user interface. Usually a parentProduct's id, if no other groups exist. If no grouping id exists, use gid
    */
   groupId: string;
   /**
@@ -92,7 +92,7 @@ export interface ProductVariant {
    */
   compareAtPrice?: number;
   /**
-   * Names of the categories the item is belongs to. Used as a grouping factor amongst different items. If no category exists send ['All']
+   * Names of the categories the item is belongs to. Send them in order from highest to lowest. Used as a grouping factor amongst different items. If no category exists send ['All']
    */
   categories: string[];
   /**
@@ -112,6 +112,10 @@ export interface ProductVariant {
    */
   stockCount: number;
   cogsNotAvailable?: boolean;
+  /**
+   * Parent product id, if the variant is a child of a parent product.
+   */
+  parentProductId?: string;
   /**
    * Status of the product, is it active or disabled
    */
@@ -165,6 +169,10 @@ export interface ProductVariant {
    * Default vat rate in percentage. If multiple vat rates are used, use the supplemental data upload to send the vat rates for each variant per store
    */
   vatRate?: number;
+  /**
+   * Inventory policy for the product, can it continue selling even if the stock runs out
+   */
+  inventoryPolicy?: "DENY" | "CONTINUE";
   /**
    * Any and all other currencies and prices that the product may be sold at
    */
@@ -458,8 +466,8 @@ export interface SupplementalData {
 export interface BulkUploadResponse {
   requestId?: string;
   data?: {
-    supplementsUploadUrl?: string;
-    supplementsUploadFields?: {
+    uploadUrl?: string;
+    uploadFields?: {
       "Content-Type"?: string;
       "Content-Encoding"?: string;
       bucket?: string;

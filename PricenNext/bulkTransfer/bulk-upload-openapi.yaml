@@ -285,6 +285,13 @@ components:
           format: double
           description: Default vat rate in percentage. If multiple vat rates are used, use the supplemental data upload to send the vat rates for each variant per store
           example: 24.0
+        inventoryPolicy:
+          type: string
+          description: Inventory policy for the product, can it continue selling even if the stock runs out
+          enum:
+            - DENY
+            - CONTINUE
+          default: CONTINUE
         otherPrices:
           type: array
           description: Any and all other currencies and prices that the product may be sold at
