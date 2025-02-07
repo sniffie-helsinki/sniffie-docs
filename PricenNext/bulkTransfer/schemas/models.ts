@@ -208,6 +208,10 @@ export interface CompetitorProductVariant {
    */
   gid: string;
   /**
+   * Name of the competitor
+   */
+  competitorName: string;
+  /**
    * A grouping id with which the variant is tied to other variants. Used for grouping in analytics and pricing and user interface. If no grouping id exists, use gid
    */
   groupId?: string;

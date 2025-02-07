@@ -272,6 +272,7 @@
       "required": [
         "gid",
         "price",
+        "competitorName",
         "currency",
         "sku",
         "dateForPrice"
@@ -280,6 +281,10 @@
         "gid": {
           "type": "string",
           "description": "Unique global identifier for the variant, to distinguish it from the other variants. Use sku if no other id is available"
+        },
+        "competitorName": {
+          "type": "string",
+          "description": "Name of the competitor"
         },
         "groupId": {
           "type": "string",
