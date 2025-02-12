@@ -23,7 +23,7 @@ export interface OrderLineItem {
    */
   orderLineNumber: string;
   /**
-   * Datetime of the creation date for the order in UTC
+   * Date-time of the creation date for the order in UTC
    */
   createdAt: string;
   /**
@@ -107,6 +107,10 @@ export interface ProductVariant {
    * All costs related to the product, used to calculate margins. If cogsNotAvailable is true, send 0.01
    */
   cogs: number;
+  /**
+   * Provide cogs currency, if the cogs is in another currency other than the default. Three letter currency code as defined by ISO-4217
+   */
+  cogsCurrency?: string;
   /**
    * Amount of items available in stock. If stockCountNotAvailable is true, send 10000000
    */

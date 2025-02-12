@@ -30,8 +30,8 @@
         },
         "createdAt": {
           "type": "string",
-          "format": "datetime",
-          "description": "Datetime of the creation date for the order in UTC"
+          "format": "date-time",
+          "description": "Date-time of the creation date for the order in UTC"
         },
         "price": {
           "type": "number",
@@ -154,6 +154,11 @@
           "description": "All costs related to the product, used to calculate margins. If cogsNotAvailable is true, send 0.01",
           "minimum": -1.7976931348623157e+308,
           "maximum": 1.7976931348623157e+308
+        },
+        "cogsCurrency": {
+          "type": "string",
+          "description": "Provide cogs currency, if the cogs is in another currency other than the default. Three letter currency code as defined by ISO-4217",
+          "format": "iso-4217"
         },
         "stockCount": {
           "type": "number",

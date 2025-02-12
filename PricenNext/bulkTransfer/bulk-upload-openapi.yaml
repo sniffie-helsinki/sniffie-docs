@@ -105,8 +105,8 @@ components:
           example: 'ORD9876-11-1'
         createdAt:
           type: string
-          format: datetime
-          description: Datetime of the creation date for the order in UTC
+          format: date-time
+          description: Date-time of the creation date for the order in UTC
           example: '2021-03-20T09:12:28Z'
         price:
           type: number
