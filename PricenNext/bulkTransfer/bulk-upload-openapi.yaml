@@ -105,8 +105,8 @@ components:
           example: 'ORD9876-11-1'
         createdAt:
           type: string
-          format: date-time
-          description: Date-time of the creation date for the order in UTC
+          format: datetime
+          description: Datetime of the creation date for the order in UTC
           example: '2021-03-20T09:12:28Z'
         price:
           type: number
@@ -369,7 +369,7 @@ components:
           example: 'EUR'
         sku:
           type: string
-          description: SKU (stock keeping unit) of the product. This must match the sku in the orders
+          description: This must match the SKU of the product in the ProductVariant object to create a match
           example: 'SKU-123456-Y4'
         cogs:
           type: number
