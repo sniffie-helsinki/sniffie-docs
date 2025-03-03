@@ -89,7 +89,7 @@ components:
         - price
         - currency
         - quantity
-        - sku
+        - productId
       properties:
         soldFrom:
           type: string
@@ -122,9 +122,13 @@ components:
           type: number
           description: How many items were sold of this particular sku
           example: '1'
+        productId:
+          type: string
+          description: Unique global identifier for the product, needs to match the gid in the ProductVariant object. Grouping factor for sales analytics
+          example: 'product-123'
         sku:
           type: string
-          description: unique identifier for an item. Grouping factor for sales analytics
+          description: Stock keeping unit of the product. This must match the sku in the ProductVariant object
           example: 'SKU-123456-Y4'
         bundleId:
           type: string
