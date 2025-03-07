@@ -23,7 +23,7 @@ export interface OrderLineItem {
    */
   orderLineNumber: string;
   /**
-   * Date-time of the creation date for the order in UTC
+   * Datetime of the creation date for the order in UTC
    */
   createdAt: string;
   /**
@@ -39,9 +39,13 @@ export interface OrderLineItem {
    */
   quantity: number;
   /**
-   * unique identifier for an item. Grouping factor for sales analytics
+   * Unique global identifier for the product, needs to match the gid in the ProductVariant object. Grouping factor for sales analytics
    */
-  sku: string;
+  productId: string;
+  /**
+   * Stock keeping unit of the product. This must match the sku in the ProductVariant object
+   */
+  sku?: string;
   /**
    * If the item is a part of a bundle, this field is used to group the bundles with matching id
    */
@@ -170,7 +174,7 @@ export interface ProductVariant {
    */
   recommendedRetailPrice?: number;
   /**
-   * Default vat rate in percentage. If multiple vat rates are used, use the supplemental data upload to send the vat rates for each variant per store
+   * Default vat rate in percentile. If multiple vat rates are used, use the supplemental data upload to send the vat rates for each variant per store
    */
   vatRate?: number;
   /**
@@ -216,107 +220,21 @@ export interface CompetitorProductVariant {
    */
   competitorName: string;
   /**
-   * A grouping id with which the variant is tied to other variants. Used for grouping in analytics and pricing and user interface. If no grouping id exists, use gid
-   */
-  groupId?: string;
-  /**
-   * Name of the group this variant belongs to. Will be used in the user interface to group the variants under the parent and display this value as the group name
-   */
-  groupName?: string;
-  /**
-   * Name of the variant
-   */
-  variantName?: string;
-  /**
    * Price what the customer pays (with VAT)
    */
   price: number;
-  /**
-   * Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true
-   */
-  compareAtPrice?: number;
   /**
    * ISO Date for the price
    */
   dateForPrice: string;
   /**
-   * Names of the categories the item is belongs to. Used as a grouping factor amongst different items. If no category exists send ['All']
-   */
-  categories?: string[];
-  /**
    * Three letter currency code as defined by ISO-4217
    */
   currency: string;
   /**
-   * SKU (stock keeping unit) of the product. This must match the sku in the orders
+   * This must match the SKU of the product in the ProductVariant object to create a match
    */
   sku: string;
-  /**
-   * All costs related to the product, used to calculate margins. If cogsNotAvailable is true, send 0.01
-   */
-  cogs?: number;
-  /**
-   * Amount of items available in stock. If stockCountNotAvailable is true, send 10000000
-   */
-  stockCount?: number;
-  cogsNotAvailable?: boolean;
-  /**
-   * Status of the product, is it active or disabled
-   */
-  variantStatus?: "enabled" | "disabled";
-  stockCountNotAvailable?: boolean;
-  /**
-   * European Article Number. Unified code for products. Required for competitor matching
-   */
-  ean?: string;
-  /**
-   * Manufacturer
-   */
-  manufacturer?: string;
-  /**
-   * Brand of the product
-   */
-  productBrand?: string;
-  /**
-   * Url to the image of the product
-   */
-  imageUrl?: string;
-  /**
-   * Url to the product page
-   */
-  productUrl?: string;
-  /**
-   * What kind of a product is it
-   */
-  productType?: string;
-  /**
-   * Is the product on sale
-   */
-  onSale?: boolean;
-  /**
-   * Possible tags to help with grouping, searching and sorting
-   */
-  tags?: string[];
-  /**
-   * Target margin percentage for the product
-   */
-  marginTargetPercentage?: number;
-  /**
-   * Recommended retail price for the product
-   */
-  recommendedRetailPrice?: number;
-  /**
-   * Default vat rate in percentage. If multiple vat rates are used, use the supplemental data upload to send the vat rates for each variant per store
-   */
-  vatRate?: number;
-  /**
-   * Any and all other currencies and prices that the product may be sold at
-   */
-  otherPrices?: AlternativePrice[];
-  /**
-   * additional properties related to this product
-   */
-  additionalProperties?: {};
 }
 /**
  * A mapping object between store and products. Can be used to provide store specific overriding values e.g. price, group id (groupId) etc.
@@ -421,7 +339,7 @@ export interface StoreProduct {
    */
   recommendedRetailPrice?: number;
   /**
-   * Default vat rate in percentage. If multiple vat rates are used, use the supplemental data upload to send the vat rates for each variant per store
+   * Default vat rate in percentile. If multiple vat rates are used, use the supplemental data upload to send the vat rates for each variant per store
    */
   vatRate?: number;
   /**
