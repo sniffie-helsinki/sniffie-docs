@@ -353,6 +353,14 @@ components:
           type: string
           description: This must match the SKU of the product in the ProductVariant object to create a match
           example: 'SKU-123456-Y4'
+        compareAtPrice:
+          type: number
+          format: double
+          description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true
+          example: '129.99'
+        productUrl:
+          type: string
+          description: Url to the product page
     StoreProduct:
       type: object
       description: A mapping object between store and products. Can be used to provide store specific overriding values e.g. price, group id (groupId) etc. 
