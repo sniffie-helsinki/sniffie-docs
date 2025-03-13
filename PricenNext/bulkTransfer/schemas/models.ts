@@ -166,9 +166,9 @@ export interface ProductVariant {
    */
   tags?: string[];
   /**
-   * Target margin percentage for the product
+   * Target margin percentile for the product
    */
-  marginTargetPercentage?: number;
+  marginTargetPercentile?: number;
   /**
    * Recommended retail price for the product
    */
@@ -235,6 +235,14 @@ export interface CompetitorProductVariant {
    * This must match the SKU of the product in the ProductVariant object to create a match
    */
   sku: string;
+  /**
+   * Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true
+   */
+  compareAtPrice?: number;
+  /**
+   * Url to the product page
+   */
+  productUrl?: string;
 }
 /**
  * A mapping object between store and products. Can be used to provide store specific overriding values e.g. price, group id (groupId) etc.
@@ -331,9 +339,9 @@ export interface StoreProduct {
    */
   tags?: string[];
   /**
-   * Target margin percentage for the product
+   * Target margin percentile for the product
    */
-  marginTargetPercentage?: number;
+  marginTargetPercentile?: number;
   /**
    * Recommended retail price for the product
    */

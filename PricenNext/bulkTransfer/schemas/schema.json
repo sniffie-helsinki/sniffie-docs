@@ -230,10 +230,10 @@
             "type": "string"
           }
         },
-        "marginTargetPercentage": {
+        "marginTargetPercentile": {
           "type": "number",
           "format": "double",
-          "description": "Target margin percentage for the product",
+          "description": "Target margin percentile for the product",
           "minimum": -1.7976931348623157e+308,
           "maximum": 1.7976931348623157e+308
         },
@@ -314,6 +314,17 @@
         "sku": {
           "type": "string",
           "description": "This must match the SKU of the product in the ProductVariant object to create a match"
+        },
+        "compareAtPrice": {
+          "type": "number",
+          "format": "double",
+          "description": "Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
+        },
+        "productUrl": {
+          "type": "string",
+          "description": "Url to the product page"
         }
       },
       "$schema": "http://json-schema.org/draft-04/schema#"
@@ -444,10 +455,10 @@
             "type": "string"
           }
         },
-        "marginTargetPercentage": {
+        "marginTargetPercentile": {
           "type": "number",
           "format": "double",
-          "description": "Target margin percentage for the product",
+          "description": "Target margin percentile for the product",
           "minimum": -1.7976931348623157e+308,
           "maximum": 1.7976931348623157e+308
         },

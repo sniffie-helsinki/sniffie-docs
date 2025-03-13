@@ -279,11 +279,11 @@ components:
           example: ['Black Friday 2025', 'Outlet']
           items: 
             type: string
-        marginTargetPercentage:
+        marginTargetPercentile:
           type: number
           format: double
-          description: Target margin percentage for the product
-          example: 50.0
+          description: Target margin percentile for the product
+          example: 0.50
         recommendedRetailPrice:
           type: number
           format: double
@@ -471,11 +471,11 @@ components:
           example: ['Black Friday 2025', 'Outlet']
           items: 
             type: string
-        marginTargetPercentage:
+        marginTargetPercentile:
           type: number
           format: double
-          description: Target margin percentage for the product
-          example: 50.0
+          description: Target margin percentile for the product
+          example: 0.50
         recommendedRetailPrice:
           type: number
           format: double
