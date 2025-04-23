@@ -8,7 +8,7 @@ const getSignedUrl = async (
 }> => {
   return new Promise((resolve, reject) => {
     request(
-      `https://api-staging.pricen.ai/v2/sniffie/bulk-uploads/products-upload-link`,
+      `https://api-staging.pricen.ai/v2/data/bulk-uploads/products-upload-link`,
       options,
       function (error: any, response: any) {
         if (error) {

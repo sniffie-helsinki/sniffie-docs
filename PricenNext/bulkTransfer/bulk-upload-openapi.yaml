@@ -3,7 +3,8 @@ info:
   title: "next-external-pricen-data-api"
   version: "1.0"
 servers:
-- url: "https://next-api.pricen.io/v2/pricen/"
+- url: "https://api.pricen.io/v2/data/"
+- url: "https://api-staging.pricen.io/v2/data/"
 paths:
   /bulk-uploads/orders-upload-link:
     get:
