@@ -119,15 +119,21 @@ export interface ProductVariant {
    * Amount of items available in stock. If stockCountNotAvailable is true, send 10000000
    */
   stockCount: number;
+  /**
+   * If the cogs are not available, send true. Otherwise it's considered false
+   */
   cogsNotAvailable?: boolean;
   /**
    * Parent product id, if the variant is a child of a parent product.
    */
   parentProductId?: string;
   /**
-   * Status of the product, is it active or disabled
+   * Status of the product, is it active or disabled. Considered enabled by default
    */
   variantStatus?: "enabled" | "disabled" | null;
+  /**
+   * If the stock count is not available, send true. Otherwise it's considered false
+   */
   stockCountNotAvailable?: boolean;
   /**
    * European Article Number. Unified code for products. Required for competitor matching
@@ -154,7 +160,7 @@ export interface ProductVariant {
    */
   productType?: string;
   /**
-   * Is the product on sale
+   * if the product is on sale send true. Otherwise it's considered false
    */
   onSale?: boolean;
   /**
@@ -178,9 +184,9 @@ export interface ProductVariant {
    */
   vatRate?: number;
   /**
-   * Inventory policy for the product, can it continue selling even if the stock runs out
+   * Inventory policy for the product, can it continue selling even if the stock runs out. If no value is sent, the default is CONTINUE
    */
-  inventoryPolicy?: "DENY" | "CONTINUE";
+  inventoryPolicy?: "DENY" | "CONTINUE" | null;
   /**
    * Any and all other currencies and prices that the product may be sold at
    */
@@ -300,11 +306,17 @@ export interface StoreProduct {
    * Amount of items available in stock. If stockCountNotAvailable is true, send 10000000
    */
   stockCount?: number;
+  /**
+   * If the cogs are not available, send true. Otherwise it's considered false
+   */
   cogsNotAvailable?: boolean;
   /**
-   * Status of the product, is it active or disabled
+   * Status of the product, is it active or disabled. Considered enabled by default
    */
-  variantStatus?: "enabled" | "disabled";
+  variantStatus?: "enabled" | "disabled" | null;
+  /**
+   * If the stock count is not available, send true. Otherwise it's considered false
+   */
   stockCountNotAvailable?: boolean;
   /**
    * European Article Number. Unified code for products. Required for competitor matching
@@ -331,7 +343,7 @@ export interface StoreProduct {
    */
   productType?: string;
   /**
-   * Is the product on sale
+   * If the product is on sale send true. Otherwise it's considered false
    */
   onSale?: boolean;
   /**

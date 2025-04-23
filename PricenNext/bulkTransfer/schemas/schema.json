@@ -170,7 +170,7 @@
         },
         "cogsNotAvailable": {
           "type": "boolean",
-          "default": false
+          "description": "If the cogs are not available, send true. Otherwise it's considered false"
         },
         "parentProductId": {
           "type": "string",
@@ -178,17 +178,16 @@
         },
         "variantStatus": {
           "type": "string",
-          "description": "Status of the product, is it active or disabled",
+          "description": "Status of the product, is it active or disabled. Considered enabled by default",
           "enum": [
             "enabled",
             "disabled",
             null
-          ],
-          "default": "enabled"
+          ]
         },
         "stockCountNotAvailable": {
           "type": "boolean",
-          "default": false
+          "description": "If the stock count is not available, send true. Otherwise it's considered false"
         },
         "ean": {
           "type": "string",
@@ -216,8 +215,7 @@
         },
         "onSale": {
           "type": "boolean",
-          "description": "Is the product on sale",
-          "default": false
+          "description": "if the product is on sale send true. Otherwise it's considered false"
         },
         "dateForPrice": {
           "type": "string",
@@ -253,12 +251,12 @@
         },
         "inventoryPolicy": {
           "type": "string",
-          "description": "Inventory policy for the product, can it continue selling even if the stock runs out",
+          "description": "Inventory policy for the product, can it continue selling even if the stock runs out. If no value is sent, the default is CONTINUE",
           "enum": [
             "DENY",
-            "CONTINUE"
-          ],
-          "default": "CONTINUE"
+            "CONTINUE",
+            null
+          ]
         },
         "otherPrices": {
           "type": "array",
@@ -404,20 +402,20 @@
         },
         "cogsNotAvailable": {
           "type": "boolean",
-          "default": false
+          "description": "If the cogs are not available, send true. Otherwise it's considered false"
         },
         "variantStatus": {
           "type": "string",
-          "description": "Status of the product, is it active or disabled",
+          "description": "Status of the product, is it active or disabled. Considered enabled by default",
           "enum": [
             "enabled",
-            "disabled"
-          ],
-          "default": "enabled"
+            "disabled",
+            null
+          ]
         },
         "stockCountNotAvailable": {
           "type": "boolean",
-          "default": false
+          "description": "If the stock count is not available, send true. Otherwise it's considered false"
         },
         "ean": {
           "type": "string",
@@ -445,8 +443,7 @@
         },
         "onSale": {
           "type": "boolean",
-          "description": "Is the product on sale",
-          "default": false
+          "description": "If the product is on sale send true. Otherwise it's considered false"
         },
         "tags": {
           "type": "array",
