@@ -30,8 +30,8 @@
         },
         "createdAt": {
           "type": "string",
-          "format": "datetime",
-          "description": "Datetime of the creation date for the order in UTC"
+          "format": "date-time",
+          "description": "date-time of the creation date for the order in UTC"
         },
         "price": {
           "type": "number",
@@ -160,7 +160,10 @@
           "maximum": 1.7976931348623157e+308
         },
         "cogsCurrency": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "Provide cogs currency, if the cogs is in another currency other than the default. Three letter currency code as defined by ISO-4217",
           "format": "iso-4217"
         },
@@ -169,11 +172,17 @@
           "description": "Amount of items available in stock. If stockCountNotAvailable is true, send 10000000"
         },
         "cogsNotAvailable": {
-          "type": "boolean",
+          "type": [
+            "boolean",
+            "null"
+          ],
           "description": "If the cogs are not available, send true. Otherwise it's considered false"
         },
         "parentProductId": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "Parent product id, if the variant is a child of a parent product."
         },
         "variantStatus": {
@@ -186,7 +195,10 @@
           ]
         },
         "stockCountNotAvailable": {
-          "type": "boolean",
+          "type": [
+            "boolean",
+            "null"
+          ],
           "description": "If the stock count is not available, send true. Otherwise it's considered false"
         },
         "ean": {
@@ -202,7 +214,10 @@
           "description": "Brand of the product"
         },
         "imageUrl": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "Url to the image of the product"
         },
         "productUrl": {
@@ -414,7 +429,10 @@
           ]
         },
         "stockCountNotAvailable": {
-          "type": "boolean",
+          "type": [
+            "boolean",
+            "null"
+          ],
           "description": "If the stock count is not available, send true. Otherwise it's considered false"
         },
         "ean": {
@@ -422,19 +440,31 @@
           "description": "European Article Number. Unified code for products. Required for competitor matching"
         },
         "manufacturer": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "Manufacturer"
         },
         "productBrand": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "Brand of the product"
         },
         "imageUrl": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "Url to the image of the product"
         },
         "productUrl": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "Url to the product page"
         },
         "productType": {

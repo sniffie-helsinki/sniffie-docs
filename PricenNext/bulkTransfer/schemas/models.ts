@@ -23,7 +23,7 @@ export interface OrderLineItem {
    */
   orderLineNumber: string;
   /**
-   * Datetime of the creation date for the order in UTC
+   * date-time of the creation date for the order in UTC
    */
   createdAt: string;
   /**
@@ -114,7 +114,7 @@ export interface ProductVariant {
   /**
    * Provide cogs currency, if the cogs is in another currency other than the default. Three letter currency code as defined by ISO-4217
    */
-  cogsCurrency?: string;
+  cogsCurrency?: string | null;
   /**
    * Amount of items available in stock. If stockCountNotAvailable is true, send 10000000
    */
@@ -122,11 +122,11 @@ export interface ProductVariant {
   /**
    * If the cogs are not available, send true. Otherwise it's considered false
    */
-  cogsNotAvailable?: boolean;
+  cogsNotAvailable?: boolean | null;
   /**
    * Parent product id, if the variant is a child of a parent product.
    */
-  parentProductId?: string;
+  parentProductId?: string | null;
   /**
    * Status of the product, is it active or disabled. Considered enabled by default
    */
@@ -134,7 +134,7 @@ export interface ProductVariant {
   /**
    * If the stock count is not available, send true. Otherwise it's considered false
    */
-  stockCountNotAvailable?: boolean;
+  stockCountNotAvailable?: boolean | null;
   /**
    * European Article Number. Unified code for products. Required for competitor matching
    */
@@ -150,7 +150,7 @@ export interface ProductVariant {
   /**
    * Url to the image of the product
    */
-  imageUrl?: string;
+  imageUrl?: string | null;
   /**
    * Url to the product page
    */
@@ -317,7 +317,7 @@ export interface StoreProduct {
   /**
    * If the stock count is not available, send true. Otherwise it's considered false
    */
-  stockCountNotAvailable?: boolean;
+  stockCountNotAvailable?: boolean | null;
   /**
    * European Article Number. Unified code for products. Required for competitor matching
    */
@@ -325,19 +325,19 @@ export interface StoreProduct {
   /**
    * Manufacturer
    */
-  manufacturer?: string;
+  manufacturer?: string | null;
   /**
    * Brand of the product
    */
-  productBrand?: string;
+  productBrand?: string | null;
   /**
    * Url to the image of the product
    */
-  imageUrl?: string;
+  imageUrl?: string | null;
   /**
    * Url to the product page
    */
-  productUrl?: string;
+  productUrl?: string | null;
   /**
    * What kind of a product is it
    */

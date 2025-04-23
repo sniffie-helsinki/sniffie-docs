@@ -106,8 +106,8 @@ components:
           example: 'ORD9876-11-1'
         createdAt:
           type: string
-          format: datetime
-          description: Datetime of the creation date for the order in UTC
+          format: date-time
+          description: date-time of the creation date for the order in UTC
           example: '2021-03-20T09:12:28Z'
         price:
           type: number
@@ -221,6 +221,7 @@ components:
           description: Provide cogs currency, if the cogs is in another currency other than the default. Three letter currency code as defined by ISO-4217
           format: iso-4217
           example: 'SEK'
+          nullable: true
         stockCount:
           type: number
           description: Amount of items available in stock. If stockCountNotAvailable is true, send 10000000
@@ -229,10 +230,12 @@ components:
           type: boolean
           description: If the cogs are not available, send true. Otherwise it's considered false
           example: true
+          nullable: true
         parentProductId: 
           type: string
           description: Parent product id, if the variant is a child of a parent product. 
           example: 'product-123'
+          nullable: true
         variantStatus: 
           type: string
           description: Status of the product, is it active or disabled. Considered enabled by default
@@ -243,6 +246,7 @@ components:
             - null
         stockCountNotAvailable:
           type: boolean
+          nullable: true
           description: If the stock count is not available, send true. Otherwise it's considered false
           example: true
         ean:
@@ -259,6 +263,7 @@ components:
         imageUrl:
           type: string
           description: Url to the image of the product
+          nullable: true
         productUrl:
           type: string
           description: Url to the product page
@@ -440,6 +445,7 @@ components:
             - null
         stockCountNotAvailable:
           type: boolean
+          nullable: true
           description: If the stock count is not available, send true. Otherwise it's considered false
           example: true
         ean:
@@ -447,17 +453,21 @@ components:
           description: European Article Number. Unified code for products. Required for competitor matching
         manufacturer:
           type: string
+          nullable: true
           description: Manufacturer
           example: 'Acme' 
         productBrand:
           type: string
+          nullable: true
           description: Brand of the product
           example: 'Acme Anvils'
         imageUrl:
           type: string
+          nullable: true
           description: Url to the image of the product
         productUrl:
           type: string
+          nullable: true
           description: Url to the product page
         productType:
           type: string

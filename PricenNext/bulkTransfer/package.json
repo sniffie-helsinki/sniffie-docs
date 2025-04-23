@@ -5,7 +5,7 @@
   "scripts": {
     "test": "npm install && npm run compile && node index.js",
     "compile": "tsc",
-    "generate-schemas":"npm install && npx ts-node generate-schemas",
+    "generate-schemas": "npm install && npx ts-node generate-schemas",
     "validate-products": "npx ts-node validate-products.ts",
     "validate-orders": "npx ts-node validate-orders.ts",
     "validate-competitors": "npx ts-node validate-competitorData.ts"
@@ -15,6 +15,7 @@
   "description": "",
   "dependencies": {
     "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
     "axios": "^1.7.5",
     "pako": "^2.1.0",
     "request": "^2.88.2",

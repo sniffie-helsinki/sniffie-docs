@@ -135,7 +135,7 @@ const data = {
   Size: null,
   sku: "AL_69249396_EU",
   stockCount: 48,
-  stockCountNotAvailable: 0,
+  stockCountNotAvailable: false,
   tags: [
     "Food & Beverage",
     "Beverages",
@@ -161,7 +161,7 @@ const data = {
   vatRate: 0.24,
 };
 
-const token = "<accountId>&&<token>"; // you get these from Pricen  
+const token = '<accountId>&&<token>' // you get these from Pricen
 getSignedUrlAndPost(token, data).then((response) => {
   console.log(response);
 });
