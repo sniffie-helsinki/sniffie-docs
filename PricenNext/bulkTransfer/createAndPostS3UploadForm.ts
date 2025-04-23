@@ -13,7 +13,15 @@ async function createS3UploadForm(args: {
   Object.entries(fields).forEach(([field, value]) => {
     form.append(field, value);
   });
-  form.append("file", zlib.gzipSync(JSON.stringify(data)));
+  const compressedData = await new Promise<Buffer>((resolve, reject) => {
+    zlib.gzip(JSON.stringify(data), (err: any, result: Buffer<ArrayBufferLike> | PromiseLike<Buffer<ArrayBufferLike>>) => {
+      if (err) reject(err);
+      else resolve(result);
+    });
+  });
+  const blob = new Blob([compressedData], { type: "application/gzip" });
+  form.append("file", blob);
+
   const requestOptions = {
     method: "POST",
     body: form,
@@ -25,7 +33,10 @@ async function createS3UploadForm(args: {
 const upload = async (url: string, requestOptions) => {
   return new Promise((resolve, reject) => {
     fetch(url, requestOptions)
-      .then((response) => response.text())
+      .then((response) => {
+        console.log(response.statusText);
+        console.log(response.status);
+        return response.text()})
       .then((result) => {
         console.log(result);
         resolve(result);

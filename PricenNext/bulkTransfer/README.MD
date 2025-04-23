@@ -16,9 +16,9 @@ Due to the significant performance benefits, which makes streaming easier among 
 
 1. Make sure you have your api key, which enables you to call the Pricen endpoint for the presigned upload url
 2. Make a GET request to the endpoint depending on the content type
-  - https://api(-staging)sniffie.io/v2/sniffie/bulk-uploads/products-upload-link
-  - https://api(-staging)sniffie.io/v2/sniffie/bulk-uploads/orders-upload-link
-  - https://api(-staging)sniffie.io/v2/sniffie/bulk-uploads/supplemental-data-upload-link
+  - https://api(-staging)pricen.ai/v2/sniffie/bulk-uploads/products-upload-link
+  - https://api(-staging)pricen.ai/v2/sniffie/bulk-uploads/orders-upload-link
+  - https://api(-staging)pricen.ai/v2/sniffie/bulk-uploads/supplemental-data-upload-link
 
 3. Save the URL which comes as a response
 4. Package your payload in the right format into a gzip buffer. 
