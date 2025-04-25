@@ -104,7 +104,7 @@ const data = {
   currency: "EUR",
   currentPrice: 23.99,
   dateForPrice: "2025-04-23",
-  ean: 6855260859968,
+  ean: "6855260859968",
   gid: "gid://shopify/ProductVariant/1",
   groupId: "gid://shopify/Product/1",
   groupName: "Standard & Whiskey Core-Mark Scotch Spirit",
@@ -161,7 +161,7 @@ const data = {
   vatRate: 0.24,
 };
 
-const token = '<accountId>&&<token>' // you get these from Pricen
+const token = "<accountId>&&<token>"; // you get this from Pricen
 getSignedUrlAndPost(token, data).then((response) => {
   console.log(response);
 });

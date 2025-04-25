@@ -80,7 +80,7 @@ components:
       in: "header"
   schemas:
     OrderLineItem:
-      description: Send all orders to be updated in a jsonl file, where each json item is in its own row
+      description: Send all orders to be updated in a jsonl file, where each json item is in its own row. If sending orders for a given month, must include all orders for that month, as we process them in batches, and overwrite the previous data for that month.
       type: object
       required:
         - soldFrom

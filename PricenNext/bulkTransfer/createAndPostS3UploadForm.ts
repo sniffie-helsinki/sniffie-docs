@@ -1,12 +1,14 @@
 const zlib = require("zlib");
+const fs = require("fs");
 async function createS3UploadForm(args: {
   url: string;
   fields: { [key: string]: string };
-  data: object;
+  data?: object;
+  path?: string;
 }): Promise<unknown> {
-  const { url, fields, data } = args;
+  const { url, fields, data, path } = args;
 
-  if (!data) {
+  if (!data && !path) {
     throw new Error("Cannot create s3 upload form without data");
   }
   const form = new FormData();
@@ -14,13 +16,24 @@ async function createS3UploadForm(args: {
     form.append(field, value);
   });
   const compressedData = await new Promise<Buffer>((resolve, reject) => {
-    zlib.gzip(JSON.stringify(data), (err: any, result: Buffer<ArrayBufferLike> | PromiseLike<Buffer<ArrayBufferLike>>) => {
-      if (err) reject(err);
-      else resolve(result);
-    });
+    zlib.gzip(
+      JSON.stringify(data),
+      (err: any, result: Buffer<ArrayBufferLike> | PromiseLike<Buffer<ArrayBufferLike>>) => {
+        if (err) reject(err);
+        else resolve(result);
+      }
+    );
   });
-  const blob = new Blob([compressedData], { type: "application/gzip" });
-  form.append("file", blob);
+  if (data) {
+    const blob = new Blob([compressedData], { type: "application/gzip" });
+    form.append("file", blob);
+  } else if (path) {
+    // If path is provided, we will use it as a file
+    const file = fs.readFileSync(path);
+    const blob = new Blob([file], { type: "application/gzip" });
+    form.append("file", blob);
+  }
+
 
   const requestOptions = {
     method: "POST",
@@ -36,7 +49,8 @@ const upload = async (url: string, requestOptions) => {
       .then((response) => {
         console.log(response.statusText);
         console.log(response.status);
-        return response.text()})
+        return response.text();
+      })
       .then((result) => {
         console.log(result);
         resolve(result);

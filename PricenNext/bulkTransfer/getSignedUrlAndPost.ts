@@ -2,13 +2,14 @@ import createAndPostS3UploadForm from "./createAndPostS3UploadForm";
 import request, { CoreOptions } from "request";
 
 const getSignedUrl = async (
-  options: CoreOptions
+  options: CoreOptions,
+  fileType: string= 'products-upload-link'
 ): Promise<{
   data: { uploadUrl: string; uploadFields: { [key: string]: string } };
 }> => {
   return new Promise((resolve, reject) => {
     request(
-      `https://api-staging.pricen.ai/v2/data/bulk-uploads/products-upload-link`,
+      `https://api-staging.pricen.ai/v2/data/bulk-uploads/${fileType}`,
       options,
       function (error: any, response: any) {
         if (error) {
@@ -21,18 +22,19 @@ const getSignedUrl = async (
   });
 };
 
-export const getSignedUrlAndPost = async (token: string, data: object) => {
+export const getSignedUrlAndPost = async (token: string, data?: object, path?: string, fileType?: string) => {
   const options = {
     method: "GET",
     headers: {
       Authorization: token,
     },
   };
-  const response = await getSignedUrl(options);
+  const response = await getSignedUrl(options, fileType);
 
   return await createAndPostS3UploadForm({
     url: response?.data?.uploadUrl,
     fields: response?.data?.uploadFields,
     data,
+    path,
   });
 };
