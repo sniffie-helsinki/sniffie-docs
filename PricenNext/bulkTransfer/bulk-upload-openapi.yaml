@@ -536,9 +536,14 @@ components:
       description: Send all store data to be updated in a jsonl file, where each json item is in its own row
       type: object
       required:
+        - storeId
         - storeName
         - pricingEnabled
       properties:
+        storeId:
+          type: string
+          description: id of the store, can be the same as name, but must be unique and match the storeId in the StoreProduct object, and the soldFrom in the OrderLineItem object
+          example: 'Acme Store #1'
         storeName:
           type: string
           description: Name of the store
