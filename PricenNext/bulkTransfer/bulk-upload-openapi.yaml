@@ -94,8 +94,8 @@ components:
       properties:
         soldFrom:
           type: string
-          description: Name of the shop, channel, website, POS. Grouping factor for sales analytics
-          example: 'www.acme-inc.com'
+          description: Name of the shop, channel, website, POS. Should match storeId in the Store object
+          example: 'Acme Store #1'
         orderNumber:
           type: string
           description: Order number of whole order 
