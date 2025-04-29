@@ -360,6 +360,11 @@ components:
           type: string
           description: This must match the SKU of the product in the ProductVariant object to create a match
           example: 'SKU-123456-Y4'
+        storeId:
+          type: string
+          nullable: true
+          description: If the competitor product is supposed to be matched to a specific store, send the storeId here. Otherwise leave it empty. Must match the storeId in the Store object
+          example: 'Acme Inc.'
         compareAtPrice:
           type: number
           format: double
