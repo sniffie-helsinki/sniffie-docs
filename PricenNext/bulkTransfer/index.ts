@@ -162,6 +162,7 @@ const data = {
 };
 
 const token = "<accountId>&&<token>"; // you get this from Pricen
-getSignedUrlAndPost(token, data).then((response) => {
+const env = "prod"; // or "staging"
+getSignedUrlAndPost(token, data, env).then((response) => {
   console.log(response);
 });
