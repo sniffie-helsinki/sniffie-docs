@@ -32,10 +32,10 @@ In index.ts replace the token value with your own token (which you can get from 
 Run `npm run test`
 
 ## Validate your objects
-To make sure your objects are valid according to the schema, you can put your data in the respective files under the data-folder, and use the commands to see if they pass the validation
-`npm run validate-products`
-`npm run validate-orders`
-`npm run validate-competitors`
+To make sure your objects are valid according to the schema, you can put your data in the respective files under the data-folder, and use the commands to see if they pass the validation:  
+`npm run validate-products`  
+`npm run validate-orders`  
+`npm run validate-competitors`  
 
 ## Documentation
 
