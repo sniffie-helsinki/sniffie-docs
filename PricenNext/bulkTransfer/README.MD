@@ -31,6 +31,12 @@ And then you're done
 In index.ts replace the token value with your own token (which you can get from Pricen). Then either leave the data in index.ts as is, or modify it to your liking and then just.... 
 Run `npm run test`
 
+## Validate your objects
+To make sure your objects are valid according to the schema, you can put your data in the respective files under the data-folder, and use the commands to see if they pass the validation
+`npm run validate-products`
+`npm run validate-orders`
+`npm run validate-competitors`
+
 ## Documentation
 
 See our openapi spec [bulk-upload-openapi.yaml]
