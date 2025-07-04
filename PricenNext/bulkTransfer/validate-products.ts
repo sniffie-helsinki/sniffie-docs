@@ -18,6 +18,7 @@ async function validateData(filePath: string) {
       console.error("Error parsing JSON", line);
       if (error instanceof Error) {
         console.error(error.message);
+        return error.message;
       } else {
         console.error("Unknown error", error);
       }

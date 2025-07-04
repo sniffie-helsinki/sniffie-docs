@@ -16,7 +16,8 @@ import {
 } from "./models";
 import jsonSchema from "./schema.json";
 
-const ajv = new Ajv({ strict: false });
+const ajv = new Ajv({strict: false, allErrors: true});
+
 addFormats(ajv, ["double", "date-time"]);
 ajv.compile(jsonSchema);
 

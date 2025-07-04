@@ -3,7 +3,7 @@
   "title": "Schema",
   "definitions": {
     "OrderLineItem": {
-      "description": "Send all orders to be updated in a jsonl file, where each json item is in its own row",
+      "description": "Send all orders to be updated in a jsonl file, where each json item is in its own row. Must include all orders for a given date for a product. Meaning, if you send one order for a product for 2025-01-17, you must send all orders for that product for that date.",
       "type": "object",
       "required": [
         "soldFrom",
@@ -18,7 +18,7 @@
       "properties": {
         "soldFrom": {
           "type": "string",
-          "description": "Name of the shop, channel, website, POS. Grouping factor for sales analytics"
+          "description": "ID of the shop, channel, website, POS. Should match storeId in the Store object"
         },
         "orderNumber": {
           "type": "string",
@@ -328,6 +328,13 @@
           "type": "string",
           "description": "This must match the SKU of the product in the ProductVariant object to create a match"
         },
+        "storeId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "If the competitor product is supposed to be matched to a specific store, send the storeId here. Otherwise leave it empty. Must match the storeId in the Store object"
+        },
         "compareAtPrice": {
           "type": "number",
           "format": "double",
@@ -551,10 +558,15 @@
       "description": "Send all store data to be updated in a jsonl file, where each json item is in its own row",
       "type": "object",
       "required": [
+        "storeId",
         "storeName",
         "pricingEnabled"
       ],
       "properties": {
+        "storeId": {
+          "type": "string",
+          "description": "id of the store, can be the same as name, but must be unique and match the storeId in the StoreProduct object, and the soldFrom in the OrderLineItem object"
+        },
         "storeName": {
           "type": "string",
           "description": "Name of the store"

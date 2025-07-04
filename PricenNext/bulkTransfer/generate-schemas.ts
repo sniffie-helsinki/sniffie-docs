@@ -1,3 +1,4 @@
+// @ts-expect-error
 const path = require("path");
 const { generate } = require("openapi-typescript-validator");
 const Ajv = require('ajv');

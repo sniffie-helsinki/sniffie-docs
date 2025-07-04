@@ -7,11 +7,11 @@
  */
 
 /**
- * Send all orders to be updated in a jsonl file, where each json item is in its own row
+ * Send all orders to be updated in a jsonl file, where each json item is in its own row. Must include all orders for a given date for a product. Meaning, if you send one order for a product for 2025-01-17, you must send all orders for that product for that date.
  */
 export interface OrderLineItem {
   /**
-   * Name of the shop, channel, website, POS. Grouping factor for sales analytics
+   * ID of the shop, channel, website, POS. Should match storeId in the Store object
    */
   soldFrom: string;
   /**
@@ -242,6 +242,10 @@ export interface CompetitorProductVariant {
    */
   sku: string;
   /**
+   * If the competitor product is supposed to be matched to a specific store, send the storeId here. Otherwise leave it empty. Must match the storeId in the Store object
+   */
+  storeId?: string | null;
+  /**
    * Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true
    */
   compareAtPrice?: number;
@@ -375,6 +379,10 @@ export interface StoreProduct {
  * Send all store data to be updated in a jsonl file, where each json item is in its own row
  */
 export interface Store {
+  /**
+   * id of the store, can be the same as name, but must be unique and match the storeId in the StoreProduct object, and the soldFrom in the OrderLineItem object
+   */
+  storeId: string;
   /**
    * Name of the store
    */
