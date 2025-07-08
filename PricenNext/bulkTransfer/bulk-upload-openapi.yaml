@@ -6,7 +6,7 @@ servers:
 - url: "https://api.pricen.ai/v2/data/"
 - url: "https://api-staging.pricen.ai/v2/data/"
 paths:
-  /validate/products:
+  /validate/product:
     post:
       summary: "Validate a single ProductVariant object"
       description: "Validate one ProductVariant object in json format"
@@ -16,6 +16,37 @@ paths:
             schema:
               type: string
               format: json
+              example: |
+                {
+                  "gid": "BLUE-SHIRT-1-M",
+                  "groupId": "product-123",
+                  "groupName": "The Blue Shirt",
+                  "variantName": "The Blue Shirt #1, size M",
+                  "price": 99.95,
+                  "compareAtPrice": 129.99,
+                  "categories": ["Tools", "Anvils"],
+                  "currency": "EUR",
+                  "sku": "SKU-123456-Y4",
+                  "cogs": 22.57,
+                  "stockCount": 90,
+                  "cogsNotAvailable": false,
+                  "parentProductId": null,
+                  "variantStatus": null,
+                  "stockCountNotAvailable": false,
+                  "ean": null,
+                  "manufacturer": null,
+                  "productBrand": null,
+                  "imageUrl": null,
+                  "productUrl": null,
+                  "productType": null,
+                  "onSale": false,
+                  "dateForPrice": null,
+                  "tags": [],
+                  "marginTargetPercentile": 0.5,
+                  "recommendedRetailPrice": 99.95,
+                  "vatRate": 0.24,
+                  "inventoryPolicy": null
+                }
       responses:
         default:
           description: "Validation result"
