@@ -105,6 +105,7 @@
         "stockCount",
         "variantName"
       ],
+      "additionalProperties": false,
       "properties": {
         "gid": {
           "type": "string",
@@ -186,7 +187,10 @@
           "description": "Parent product id, if the variant is a child of a parent product."
         },
         "variantStatus": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "Status of the product, is it active or disabled. Considered enabled by default",
           "enum": [
             "enabled",
@@ -265,7 +269,10 @@
           "maximum": 1.7976931348623157e+308
         },
         "inventoryPolicy": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "Inventory policy for the product, can it continue selling even if the stock runs out. If no value is sent, the default is CONTINUE",
           "enum": [
             "DENY",
@@ -299,6 +306,7 @@
         "sku",
         "dateForPrice"
       ],
+      "additionalProperties": false,
       "properties": {
         "gid": {
           "type": "string",
@@ -427,7 +435,10 @@
           "description": "If the cogs are not available, send true. Otherwise it's considered false"
         },
         "variantStatus": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "Status of the product, is it active or disabled. Considered enabled by default",
           "enum": [
             "enabled",
@@ -531,6 +542,7 @@
         "price",
         "currency"
       ],
+      "additionalProperties": false,
       "properties": {
         "price": {
           "type": "number",
@@ -562,6 +574,7 @@
         "storeName",
         "pricingEnabled"
       ],
+      "additionalProperties": false,
       "properties": {
         "storeId": {
           "type": "string",
@@ -592,7 +605,7 @@
       "$schema": "http://json-schema.org/draft-04/schema#"
     },
     "SupplementalData": {
-      "description": "Send all supplemental data to be updated for products in a jsonl file, where each json item is in its own row",
+      "description": "Send all supplemental data, or data that overrides the original(e.g. vatRate from a different source) to be updated/overwritten for products in a jsonl file, where each json item is in its own row",
       "type": "object",
       "required": [
         "gid"
@@ -600,7 +613,183 @@
       "properties": {
         "gid": {
           "type": "string",
-          "description": "Unique global identifier that matches the product variant to which the data is to be added to"
+          "description": "Unique global identifier for the variant, to distinguish it from the other variants. Use sku if no other id is available"
+        },
+        "groupId": {
+          "type": "string",
+          "description": "A grouping id with which the variant is tied to other variants. Used for grouping in analytics and pricing and user interface. Usually a parentProduct's id, if no other groups exist. If no grouping id exists, use gid"
+        },
+        "groupName": {
+          "type": "string",
+          "description": "Name of the group this variant belongs to. Will be used in the user interface to group the variants under the parent and display this value as the group name"
+        },
+        "variantName": {
+          "type": "string",
+          "description": "Name of the variant"
+        },
+        "price": {
+          "type": "number",
+          "format": "double",
+          "description": "Price what the customer pays (with VAT)",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
+        },
+        "compareAtPrice": {
+          "type": "number",
+          "format": "double",
+          "description": "Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
+        },
+        "categories": {
+          "type": "array",
+          "description": "Names of the categories the item is belongs to. Send them in order from highest to lowest. Used as a grouping factor amongst different items. If no category exists send ['All']",
+          "items": {
+            "type": "string"
+          }
+        },
+        "currency": {
+          "type": "string",
+          "description": "Three letter currency code as defined by ISO-4217",
+          "format": "iso-4217"
+        },
+        "sku": {
+          "type": "string",
+          "description": "SKU (stock keeping unit) of the product. This must match the sku in the orders"
+        },
+        "cogs": {
+          "type": "number",
+          "format": "double",
+          "description": "All costs related to the product, used to calculate margins. If cogsNotAvailable is true, send 0.01",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
+        },
+        "cogsCurrency": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Provide cogs currency, if the cogs is in another currency other than the default. Three letter currency code as defined by ISO-4217",
+          "format": "iso-4217"
+        },
+        "stockCount": {
+          "type": "number",
+          "description": "Amount of items available in stock. If stockCountNotAvailable is true, send 10000000"
+        },
+        "cogsNotAvailable": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "If the cogs are not available, send true. Otherwise it's considered false"
+        },
+        "parentProductId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Parent product id, if the variant is a child of a parent product."
+        },
+        "variantStatus": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Status of the product, is it active or disabled. Considered enabled by default",
+          "enum": [
+            "enabled",
+            "disabled",
+            null
+          ]
+        },
+        "stockCountNotAvailable": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "If the stock count is not available, send true. Otherwise it's considered false"
+        },
+        "ean": {
+          "type": "string",
+          "description": "European Article Number. Unified code for products. Required for competitor matching"
+        },
+        "manufacturer": {
+          "type": "string",
+          "description": "Manufacturer"
+        },
+        "productBrand": {
+          "type": "string",
+          "description": "Brand of the product"
+        },
+        "imageUrl": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Url to the image of the product"
+        },
+        "productUrl": {
+          "type": "string",
+          "description": "Url to the product page"
+        },
+        "productType": {
+          "type": "string",
+          "description": "What kind of a product is it"
+        },
+        "onSale": {
+          "type": "boolean",
+          "description": "if the product is on sale send true. Otherwise it's considered false"
+        },
+        "dateForPrice": {
+          "type": "string",
+          "description": "ISO Date for the price, if in the past"
+        },
+        "tags": {
+          "type": "array",
+          "description": "Possible tags to help with grouping, searching and sorting",
+          "items": {
+            "type": "string"
+          }
+        },
+        "marginTargetPercentile": {
+          "type": "number",
+          "format": "double",
+          "description": "Target margin percentile for the product",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
+        },
+        "recommendedRetailPrice": {
+          "type": "number",
+          "format": "double",
+          "description": "Recommended retail price for the product",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
+        },
+        "vatRate": {
+          "type": "number",
+          "format": "double",
+          "description": "Default vat rate in percentile. If multiple vat rates are used, use the supplemental data upload to send the vat rates for each variant per store",
+          "minimum": -1.7976931348623157e+308,
+          "maximum": 1.7976931348623157e+308
+        },
+        "inventoryPolicy": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Inventory policy for the product, can it continue selling even if the stock runs out. If no value is sent, the default is CONTINUE",
+          "enum": [
+            "DENY",
+            "CONTINUE",
+            null
+          ]
+        },
+        "otherPrices": {
+          "type": "array",
+          "description": "Any and all other currencies and prices that the product may be sold at",
+          "items": {
+            "$ref": "#/definitions/AlternativePrice"
+          }
         },
         "additionalProperties": {
           "type": "object",
@@ -612,6 +801,7 @@
     },
     "BulkUploadResponse": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "requestId": {
           "type": "string"

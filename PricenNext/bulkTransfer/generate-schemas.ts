@@ -4,7 +4,7 @@ const { generate } = require("openapi-typescript-validator");
 const Ajv = require('ajv');
 const addFormats = require('ajv-formats');
 
-const ajv = new Ajv({format: "full", strict: false, allErrors: true, verbose: true});
+const ajv = new Ajv({format: "full", strict: true, allErrors: true, verbose: true});
 addFormats(ajv);
 
 generate({

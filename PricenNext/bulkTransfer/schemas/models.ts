@@ -405,13 +405,129 @@ export interface Store {
   additionalAttributes?: {};
 }
 /**
- * Send all supplemental data to be updated for products in a jsonl file, where each json item is in its own row
+ * Send all supplemental data, or data that overrides the original(e.g. vatRate from a different source) to be updated/overwritten for products in a jsonl file, where each json item is in its own row
  */
 export interface SupplementalData {
   /**
-   * Unique global identifier that matches the product variant to which the data is to be added to
+   * Unique global identifier for the variant, to distinguish it from the other variants. Use sku if no other id is available
    */
   gid: string;
+  /**
+   * A grouping id with which the variant is tied to other variants. Used for grouping in analytics and pricing and user interface. Usually a parentProduct's id, if no other groups exist. If no grouping id exists, use gid
+   */
+  groupId?: string;
+  /**
+   * Name of the group this variant belongs to. Will be used in the user interface to group the variants under the parent and display this value as the group name
+   */
+  groupName?: string;
+  /**
+   * Name of the variant
+   */
+  variantName?: string;
+  /**
+   * Price what the customer pays (with VAT)
+   */
+  price?: number;
+  /**
+   * Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true
+   */
+  compareAtPrice?: number;
+  /**
+   * Names of the categories the item is belongs to. Send them in order from highest to lowest. Used as a grouping factor amongst different items. If no category exists send ['All']
+   */
+  categories?: string[];
+  /**
+   * Three letter currency code as defined by ISO-4217
+   */
+  currency?: string;
+  /**
+   * SKU (stock keeping unit) of the product. This must match the sku in the orders
+   */
+  sku?: string;
+  /**
+   * All costs related to the product, used to calculate margins. If cogsNotAvailable is true, send 0.01
+   */
+  cogs?: number;
+  /**
+   * Provide cogs currency, if the cogs is in another currency other than the default. Three letter currency code as defined by ISO-4217
+   */
+  cogsCurrency?: string | null;
+  /**
+   * Amount of items available in stock. If stockCountNotAvailable is true, send 10000000
+   */
+  stockCount?: number;
+  /**
+   * If the cogs are not available, send true. Otherwise it's considered false
+   */
+  cogsNotAvailable?: boolean | null;
+  /**
+   * Parent product id, if the variant is a child of a parent product.
+   */
+  parentProductId?: string | null;
+  /**
+   * Status of the product, is it active or disabled. Considered enabled by default
+   */
+  variantStatus?: "enabled" | "disabled" | null;
+  /**
+   * If the stock count is not available, send true. Otherwise it's considered false
+   */
+  stockCountNotAvailable?: boolean | null;
+  /**
+   * European Article Number. Unified code for products. Required for competitor matching
+   */
+  ean?: string;
+  /**
+   * Manufacturer
+   */
+  manufacturer?: string;
+  /**
+   * Brand of the product
+   */
+  productBrand?: string;
+  /**
+   * Url to the image of the product
+   */
+  imageUrl?: string | null;
+  /**
+   * Url to the product page
+   */
+  productUrl?: string;
+  /**
+   * What kind of a product is it
+   */
+  productType?: string;
+  /**
+   * if the product is on sale send true. Otherwise it's considered false
+   */
+  onSale?: boolean;
+  /**
+   * ISO Date for the price, if in the past
+   */
+  dateForPrice?: string;
+  /**
+   * Possible tags to help with grouping, searching and sorting
+   */
+  tags?: string[];
+  /**
+   * Target margin percentile for the product
+   */
+  marginTargetPercentile?: number;
+  /**
+   * Recommended retail price for the product
+   */
+  recommendedRetailPrice?: number;
+  /**
+   * Default vat rate in percentile. If multiple vat rates are used, use the supplemental data upload to send the vat rates for each variant per store
+   */
+  vatRate?: number;
+  /**
+   * Inventory policy for the product, can it continue selling even if the stock runs out. If no value is sent, the default is CONTINUE
+   */
+  inventoryPolicy?: "DENY" | "CONTINUE" | null;
+  /**
+   * Any and all other currencies and prices that the product may be sold at
+   */
+  otherPrices?: AlternativePrice[];
   /**
    * Any number of different attributes and values related to the supplemental data
    */
