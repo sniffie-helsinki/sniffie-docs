@@ -6,6 +6,48 @@ servers:
 - url: "https://api.pricen.ai/v2/data/"
 - url: "https://api-staging.pricen.ai/v2/data/"
 paths:
+  /validate/products:
+    post:
+      summary: "Validate a single ProductVariant object"
+      description: "Validate one ProductVariant object in json format"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+              format: json
+      responses:
+        default:
+          description: "Validation result"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  requestId:
+                    type: string
+                    example: "EhpTQixbAi0EMvg="
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example: "Product is valid"
+          400:
+            description: "Invalid request"
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    requestId:
+                      type: string
+                      example: "EhpTQixbAi0EMvg="
+                    error:
+                      type: string
+                      example: "Invalid ProductVariant object"
+      security:
+      - NextExternalLambdaTokenAuthorizer: []
   /bulk-uploads/orders-upload-link:
     get:
       responses:
