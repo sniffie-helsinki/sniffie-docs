@@ -192,19 +192,19 @@ paths:
                       message:
                         type: string
                         example: "Product is valid"
-          400:
-            description: "Invalid request"
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    requestId:
-                      type: string
-                      example: "EhpTQixbAi0EMvg="
-                    error:
-                      type: string
-                      example: "Invalid ProductVariant object"
+        400:
+          description: "Invalid request"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  requestId:
+                    type: string
+                    example: "EhpTQixbAi0EMvg="
+                  error:
+                    type: string
+                    example: "Invalid ProductVariant object"
       security:
       - NextExternalLambdaTokenAuthorizer: []
   /bulk-uploads/orders-upload-link:
@@ -263,16 +263,50 @@ paths:
       security:
       - NextExternalLambdaTokenAuthorizer: []
   /bulk-uploads/supplemental-data-upload-link:
-    get:
+    post:
+      summary: "Get upload link for supplemental data"
+      description: "Request a pre-signed upload link for supplemental data"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - supplements
+                - dataSetName
+              properties:
+                supplements:
+                  type: string
+                  description: Type of supplemental data to upload
+                  enum: ["products", "orders"]
+                  example: "products"
+                dataSetName:
+                  type: string
+                  description: Name of the data set to upload
+                  example: "COGS-2025-01-17"
       responses:
         default:
-          description: "Upload SupplementalData objects in jsonl format"
+          description: "Upload link response"
           content:
-           application/json:
-            schema:
-              $ref: "#/components/schemas/BulkUploadResponse"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BulkUploadResponse"
+        400:
+          description: "Invalid request"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  requestId:
+                    type: string
+                    example: "EhpTQixbAi0EMvg="
+                  error:
+                    type: string
+                    example: "Error in input. AccountId: 123, errors: Missing supplements, Invalid supplements. Must be one of products, orders, Missing dataSetName"
       security:
-      - NextExternalLambdaTokenAuthorizer: []
+        - NextExternalLambdaTokenAuthorizer: []
 components:
   securitySchemes:
     NextExternalLambdaTokenAuthorizer:
