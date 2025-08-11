@@ -307,6 +307,41 @@ paths:
                     example: "Error in input. AccountId: 123, errors: Missing supplements, Invalid supplements. Must be one of products, orders, Missing dataSetName"
       security:
         - NextExternalLambdaTokenAuthorizer: []
+  /bulk-downloads/competitor-download-link:
+    get:
+      summary: "Get download links for competitor data"
+      description: "Returns signed URLs for downloading linked and unlinked competitor data files."
+      responses:
+        200:
+          description: "Download links for competitor data"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  linkedCompetitorData:
+                    type: string
+                    description: "Signed URL to download linked competitor data"
+                    example: "https://bucket.s3.amazonaws.com/accountid/bulk-uploads/competitorData/linked-competitor-data.jsonl.gz?X-Amz-Signature=..."
+                  unlinkedCompetitorData:
+                    type: string
+                    description: "Signed URL to download unlinked competitor data"
+                    example: "https://bucket.s3.amazonaws.com/accountid/bulk-uploads/competitorData/unlinked-competitor-data.jsonl.gz?X-Amz-Signature=..."
+        400:
+          description: "Invalid request"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  requestId:
+                    type: string
+                    example: "EhpTQixbAi0EMvg="
+                  error:
+                    type: string
+                    example: "Error in input. AccountId: 123, errors: ..."
+      security:
+        - NextExternalLambdaTokenAuthorizer: []
 components:
   securitySchemes:
     NextExternalLambdaTokenAuthorizer:
