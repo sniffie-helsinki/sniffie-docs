@@ -1,10 +1,12 @@
 {
-  "name": "s3signedurlexample",
+  "name": "ts-validator",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "test": "npm install && npm run compile && node index.js",
     "compile": "tsc",
+    "generate-schemas": "npm install && npx ts-node generate-schemas",
+    "postgenerate-schemas": "npx ts-node fix-decoder.ts",
     "validate-products": "npx ts-node validate-products.ts",
     "validate-orders": "npx ts-node validate-orders.ts",
     "validate-competitors": "npx ts-node validate-competitorData.ts"
@@ -13,18 +15,11 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "ajv": "^8.17.1",
+    "ajv-errors": "^3.0.0",
     "ajv-formats": "^3.0.1",
-    "axios": "^1.7.5",
-    "pako": "^2.1.0",
-    "request": "^2.88.2",
-    "typedef": "^1.1.0"
+    "openapi-backend": "^5.14.0"
   },
   "devDependencies": {
-    "@types/pako": "^2.0.3",
-    "@types/request": "^2.48.12",
-    "openapi-typescript": "^7.6.1",
-    "openapi-typescript-validator": "^4.0.0",
     "typescript": "^5.7.3"
   }
 }
