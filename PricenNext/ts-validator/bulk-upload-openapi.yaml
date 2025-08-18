@@ -700,6 +700,13 @@ components:
         productUrl:
           type: string
           description: Url to the product page
+        additionalProperties:
+          type: object
+          additionalProperties: true
+          description: 'additional properties related to this product'
+          example:
+            decommissionDate: '2025-03-31'
+            comment: 'Moved to outlet on 2025-02-01'
     StoreProduct:
       type: object
       description: A mapping object between store and products. Can be used to provide store specific overriding values e.g. price, group id (groupId) etc. 

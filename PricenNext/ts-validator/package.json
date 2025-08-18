@@ -5,8 +5,7 @@
   "scripts": {
     "test": "npm install && npm run compile && node index.js",
     "compile": "tsc",
-    "generate-schemas": "npm install && npx ts-node generate-schemas",
-    "postgenerate-schemas": "npx ts-node fix-decoder.ts",
+    "download-schema": "curl -o ./bulk-upload-openapi.yaml https://raw.githubusercontent.com/sniffie-helsinki/sniffie-docs/refs/heads/main/PricenNext/bulkTransfer/bulk-upload-openapi.yaml",
     "validate-products": "npx ts-node validate-products.ts",
     "validate-orders": "npx ts-node validate-orders.ts",
     "validate-competitors": "npx ts-node validate-competitorData.ts"
