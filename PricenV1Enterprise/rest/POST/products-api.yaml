@@ -201,7 +201,6 @@ components:
         currency:
           type: string
           description: Three letter currency code as defined by ISO-4217
-          format: iso-4217
           example: "EUR"
         purchasePrice:
           type: number
@@ -336,7 +335,6 @@ components:
         currency:
           type: string
           description: Three letter currency code as defined by ISO-4217
-          format: iso-4217
           example: "SEK"
         country:
           type: string
