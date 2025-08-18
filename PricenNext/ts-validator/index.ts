@@ -30,3 +30,38 @@ export async function validateRequest(
 	return result.valid;
 }
 
+export async function validateProduct(req: { [key: string]: any }) {
+	const path = '/validate/product';
+	const method = 'POST';
+	return validateRequest(req, path, method);
+}
+
+export async function validateOrder(req: { [key: string]: any }) {
+	const path = '/validate/order';
+	const method = 'POST';
+	return validateRequest(req, path, method);
+}
+
+export async function validateCompetitor(req: { [key: string]: any }) {
+	const path = '/validate/competitor';
+	const method = 'POST';
+	return validateRequest(req, path, method);
+}
+
+export async function validateStoreProduct(req: { [key: string]: any }) {
+	const path = '/validate/store-product';
+	const method = 'POST';
+	return validateRequest(req, path, method);
+}
+
+export async function validateStore(req: { [key: string]: any }) {
+	const path = '/validate/store';
+	const method = 'POST';
+	return validateRequest(req, path, method);
+}
+
+export async function validateSupplementalData(req: { [key: string]: any }) {
+	const path = '/validate/supplemental-data';
+	const method = 'POST';
+	return validateRequest(req, path, method);
+}

@@ -1,6 +1,6 @@
 import { createReadStream } from 'fs';
 import readline from 'readline';
-import { validateRequest } from '../ts-validator';
+import { validateCompetitor } from '../ts-validator';
 
 async function validateData(filePath: string) {
 	const fileStream = createReadStream(filePath);
@@ -12,11 +12,7 @@ async function validateData(filePath: string) {
 	for await (const line of rl) {
 		try {
 			const json = JSON.parse(line);
-			const productVariant = await validateRequest(
-				json,
-				'/validate/competitor',
-				'POST'
-			);
+			const productVariant = await validateCompetitor(json);
 			return productVariant;
 		} catch (error) {
 			console.error('Error parsing JSON', line);
