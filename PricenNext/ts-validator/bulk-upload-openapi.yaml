@@ -700,6 +700,66 @@ components:
         productUrl:
           type: string
           description: Url to the product page
+        groupId:
+          type: string
+          description: A grouping id with which the variant is tied to other variants. Used for grouping in analytics and pricing and user interface. Usually a parentProduct's id, if no other groups exist. If no grouping id exists, use gid
+        groupName:
+          type: string
+          description: Name of the group this variant belongs to. Will be used in the user interface to group the variants under the parent and display this value as the group name
+          example: 'The Blue Shirt'
+        variantName:
+          type: string
+          description: Name of the variant
+          example: 'The Blue Shirt #1, size M'
+        categories:
+          type: array
+          description: Names of the categories the item is belongs to. Send them in order from highest to lowest. Used as a grouping factor amongst different items. If no category exists send ['All']
+          example: ['Tools', 'Anvils']
+          items: 
+            type: string
+        parentProductId: 
+          type: string
+          description: Parent product id, if the variant is a child of a parent product. 
+          example: 'product-123'
+          nullable: true
+        ean:
+          type: string
+          description: European Article Number. Unified code for products. Required for competitor matching
+        manufacturer:
+          type: string
+          description: Manufacturer
+          example: 'Acme' 
+        productBrand:
+          type: string
+          description: Brand of the product
+          example: 'Acme Anvils'
+        imageUrl:
+          type: string
+          description: Url to the image of the product
+          nullable: true
+        productType:
+          type: string
+          description: What kind of a product is it
+          example: Tool
+        onSale:
+          type: boolean
+          description: if the product is on sale send true. Otherwise it's considered false
+        tags:
+          type: array
+          description: Possible tags to help with grouping, searching and sorting
+          example: ['Black Friday 2025', 'Outlet']
+          items: 
+            type: string
+        recommendedRetailPrice:
+          type: number
+          format: double
+          description: Recommended retail price for the product
+          example: 99.95
+        otherPrices:
+          type: array
+          description: Any and all other currencies and prices that the product may be sold at
+          items:
+            $ref: '#/components/schemas/AlternativePrice'
         additionalProperties:
           type: object
           additionalProperties: true
