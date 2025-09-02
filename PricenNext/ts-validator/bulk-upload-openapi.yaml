@@ -448,7 +448,11 @@ components:
         quantity:
           type: number
           description: How many items were sold of this particular sku
-          example: '1'
+          example: 1
+        cogs:
+          type: number
+          description: Total costs associated with this line item
+          example: 35.54
         productId:
           type: string
           description: Unique global identifier for the product, needs to match the gid in the ProductVariant object. Grouping factor for sales analytics

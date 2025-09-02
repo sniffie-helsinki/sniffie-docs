@@ -27,7 +27,7 @@ export async function validateRequest(
 		body: req,
 	});
 	if (result.errors) console.error(result.errors);
-	return result.valid;
+	return {valid: result.valid, errors: result.errors};
 }
 
 export async function validateProduct(req: { [key: string]: any }) {

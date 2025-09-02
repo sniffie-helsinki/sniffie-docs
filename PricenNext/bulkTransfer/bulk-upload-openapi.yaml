@@ -449,7 +449,7 @@ components:
           type: number
           description: How many items were sold of this particular sku
           example: 1
-        costs:
+        cogs:
           type: number
           description: Total costs associated with this line item
           example: 35.54
