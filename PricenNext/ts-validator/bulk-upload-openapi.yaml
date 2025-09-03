@@ -759,6 +759,11 @@ components:
           format: double
           description: Recommended retail price for the product
           example: 99.95
+        availability:
+          type: boolean
+          description: Indicates if the product is available for purchase
+          nullable: true
+          example: true
         otherPrices:
           type: array
           description: Any and all other currencies and prices that the product may be sold at
