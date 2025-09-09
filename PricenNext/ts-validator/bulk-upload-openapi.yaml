@@ -551,6 +551,12 @@ components:
           description: Provide cogs currency, if the cogs is in another currency other than the default. Three letter currency code as defined by ISO-4217
           example: 'SEK'
           nullable: true
+        cogsCurrencyExchangeRate:
+          type: number
+          format: double
+          description: Exchange rate used to convert the price to the default currency of the account. If no exchange rate is provided, the system will use the latest available exchange rate from an external rate provider
+          nullable: true
+          example: 0.097
         stockCount:
           type: number
           description: Amount of items available in stock. If stockCountNotAvailable is true, send 10000000
@@ -826,6 +832,12 @@ components:
           type: string
           description: Three letter currency code as defined by ISO-4217
           example: 'EUR'
+        exchangeRate: 
+          type: number
+          format: double
+          description: Exchange rate used to convert the price to the default currency of the account, if the currencies differ. If no exchange rate is provided, the system will use the latest available exchange rate from an external rate provider
+          example: 0.097
+          nullable: true
         sku:
           type: string
           description: SKU (stock keeping unit) of the product. This must match the sku in the orders
@@ -835,6 +847,17 @@ components:
           format: double
           description: All costs related to the product, used to calculate margins. If cogsNotAvailable is true, send 0.01
           example: '22.57'
+        cogsCurrency:
+          type: string
+          description: Provide cogs currency, if the cogs is in another currency other than the default currency
+          example: 'SEK'
+          nullable: true
+        cogsCurrencyExchangeRate:
+          type: number
+          format: double
+          description: Exchange rate used to convert the price to the default currency of the account. If no exchange rate is provided, the system will use the latest available exchange rate from an external rate provider
+          nullable: true
+          example: 0.097
         stockCount:
           type: number
           description: Amount of items available in stock. If stockCountNotAvailable is true, send 10000000
@@ -961,6 +984,16 @@ components:
           type: boolean
           description: Is pricing enabled for the store
           example: true
+        defaultCurrency:
+          type: string
+          description: Three letter currency code as defined by ISO-4217
+          example: 'SEK' 
+        defaultCurrencyExchangeRate:
+          type: number
+          format: double
+          description: Exchange rate used to convert the price to the default currency of the account. If no exchange rate is provided, the system will use the latest available exchange rate from an external rate provider
+          nullable: true
+          example: 0.097
         region:
           type: string
           description: Region where the store is located
@@ -1034,6 +1067,12 @@ components:
           description: Provide cogs currency, if the cogs is in another currency other than the default. Three letter currency code as defined by ISO-4217
           example: 'SEK'
           nullable: true
+        cogsCurrencyExchangeRate: 
+          type: number
+          format: double
+          nullable: true
+          description: Exchange rate used to convert the price to the default currency of the account. If no exchange rate is provided, the system will use the latest available exchange rate from an external rate provider
+          example: 0.097
         stockCount:
           type: number
           description: Amount of items available in stock. If stockCountNotAvailable is true, send 10000000
