@@ -407,7 +407,7 @@ components:
       in: "header"
   schemas:
     OrderLineItem:
-      description: Send all orders to be updated in a jsonl file, where each json item is in its own row. Must include all orders for a given date for a product. Meaning, if you send one order for a product for 2025-01-17, you must send all orders for that product for that date.
+      description: Send all orders to be updated in a jsonl file, where each json item is in its own row. Must include all orders for a given date for a product. Meaning, if you send one order for a product for 2025-01-17, you must send all orders for that product for that date. All values should be sent as single item values - So if the order line consists of 2 sold jackets, serve it as quantity: 2, but all the values (price, taxAmount, discountAmount etc) should be the values for a single item, not the total for the line.
       type: object
       required:
         - soldFrom
@@ -429,7 +429,7 @@ components:
           example: 'ORD9876-11'
         orderLineNumber:
           type: string
-          description: Order line number of the product line item 
+          description: Order line number of the product line item, should be unique per orderNumber
           example: 'ORD9876-11-1'
         createdAt:
           type: string
@@ -439,7 +439,7 @@ components:
         price:
           type: number
           format: double
-          description: Price what the customer paid for the item (all discounts, taxes and other charges included)
+          description: Price what the customer paid for the item (all discounts, taxes and other charges included). If quantity is more than 1, this is the price for a single item.
           example: '99.95'
         currency:
           type: string
@@ -451,7 +451,7 @@ components:
           example: 1
         cogs:
           type: number
-          description: Total costs associated with this line item
+          description: Total costs associated with this line item. If quantity is more than 1, this is the cogs for a single item.
           example: 35.54
         productId:
           type: string
@@ -468,17 +468,17 @@ components:
         taxAmount:
           type: number
           format: double
-          description: Amount of tax applied to the line item
+          description: Amount of tax applied to the line item. If quantity is more than 1, this is the tax for a single item.
           example: '23.99'
         discountAmount:
           type: number
           format: double
-          description: Amount of discount applied to the line item
+          description: Amount of discount applied to the line item. If quantity is more than 1, this is the discount for a single item.
           example: '0.00'
         originalPrice: 
           type: number
           format: double
-          description: Original (RRP) price of the line item, including tax and excluding discount
+          description: Original (RRP) price of the line item, including tax and excluding discount. If quantity is more than 1, this is the original price for a single item.
         additionalProperties:
           type: object
           additionalProperties: true
