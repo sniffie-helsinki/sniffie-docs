@@ -407,7 +407,7 @@ components:
       in: "header"
   schemas:
     OrderLineItem:
-      description: Send all orders to be updated in a jsonl file, where each json item is in its own row. Must include all orders for a given date for a product. Meaning, if you send one order for a product for 2025-01-17, you must send all orders for that product for that date. All values should be sent as single item values - So if the order line consists of 2 sold jackets, serve it as quantity: 2, but all the values (price, taxAmount, discountAmount etc) should be the values for a single item, not the total for the line.
+      description: Send all orders to be updated in a jsonl file, where each json item is in its own row. Must include all orders for a given date for a product. Meaning, if you send one order for a product for 2025-01-17, you must send all orders for that product for that date. All values should be sent as single item values - So if the order line consists of 2 sold jackets, serve it as quantity = 2, but all the values (price, taxAmount, discountAmount etc) should be the values for a single item, not the total for the line.
       type: object
       required:
         - soldFrom
