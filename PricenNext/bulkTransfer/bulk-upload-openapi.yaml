@@ -451,7 +451,7 @@ components:
           example: 1
         cogs:
           type: number
-          description: Total costs associated with this line item. If quantity is more than 1, this is the cogs for a single item.
+          description: Total costs associated with this line item without VAT. If quantity is more than 1, this is the cogs for a single item.
           example: 35.54
         productId:
           type: string
@@ -544,7 +544,7 @@ components:
         cogs:
           type: number
           format: double
-          description: All costs related to the product, used to calculate margins. If cogsNotAvailable is true, send 0.01
+          description: All costs related to the product without VAT, used to calculate margins. If cogsNotAvailable is true, send 0.01
           example: '22.57'
         cogsCurrency:
           type: string
@@ -845,7 +845,7 @@ components:
         cogs:
           type: number
           format: double
-          description: All costs related to the product, used to calculate margins. If cogsNotAvailable is true, send 0.01
+          description: All costs related to the product without VAT, used to calculate margins. If cogsNotAvailable is true, send 0.01
           example: '22.57'
         cogsCurrency:
           type: string
@@ -1060,7 +1060,7 @@ components:
         cogs:
           type: number
           format: double
-          description: All costs related to the product, used to calculate margins. If cogsNotAvailable is true, send 0.01
+          description: All costs related to the product without VAT, used to calculate margins. If cogsNotAvailable is true, send 0.01
           example: '22.57'
         cogsCurrency:
           type: string
