@@ -661,7 +661,8 @@ components:
       description: |
         Competitor variant is automatically matched to product variants by their sku. 
         That's why sku is mandatory, along with price and currency and the date when the price was collected. 
-        Send all competitor variants to be updated in a jsonl file, where each json item is in its own row
+        Send all competitor variants in a jsonl file, where each json item is in its own row.
+        Always send all the competitor data in the batch as the competitor data is replaced with the latest incoming data.
       type: object
       required:
         - gid
