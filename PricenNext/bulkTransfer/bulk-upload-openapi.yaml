@@ -487,7 +487,7 @@ components:
             vat: 0.255%
         
     ProductVariant:
-      description: Send all variants to be updated in a jsonl file, where each json item is in its own row
+      description: Always send the active product variants that should be available in the system and in the UI, the list of products is always replaced in its entirety. Send all variants in a jsonl file, where each json item is in its own row
       type: object
       required:
         - gid
