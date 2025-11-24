@@ -1003,6 +1003,12 @@ components:
           type: string
           description: Zone within the region where the store is located
           example: 'West Coast'
+        soldFromFilterList:
+          type: array
+          description: List of soldFrom identifiers that are associated with this store. Used to filter orders for this store
+          example: ['Acme Store #1', 'Acme Online Store']
+          items:
+            type: string
         additionalAttributes:
           type: object
           additionalProperties: true
