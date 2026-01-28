@@ -962,6 +962,10 @@ components:
           format: double
           description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units
           example: '1299.99'
+        description:
+          type: string
+          description: Description of the alternative price
+          example: 'Black Friday special price'
     
     Store:
       description: Send all store data to be updated in a jsonl file, where each json item is in its own row
