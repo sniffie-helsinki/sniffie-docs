@@ -364,6 +364,34 @@ paths:
                     example: "Error in input. AccountId: 123, errors: Missing supplements, Invalid supplements. Must be one of products, orders, Missing dataSetName"
       security:
         - NextExternalLambdaTokenAuthorizer: []
+  /pricesuggestions/get-queue-and-credentials:
+    get:
+      summary: "Get SQS queue URL and temporary AWS credentials for price suggestions"
+      description: "Returns temporary AWS credentials and an SQS queue URL for receiving price suggestions. The credentials are short-lived and should be refreshed before expiration."
+      operationId: "getPriceSuggestionsQueueAndCredentials"
+      responses:
+        200:
+          description: "Queue URL and temporary credentials"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QueueAndCredentialsResponse"
+        400:
+          description: "Invalid request"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  requestId:
+                    type: string
+                    example: "EhpTQixbAi0EMvg="
+                  error:
+                    type: string
+                    example: "Error retrieving queue credentials"
+      security:
+        - NextExternalLambdaTokenAuthorizer: []
+
   /bulk-downloads/competitor-download-link:
     get:
       summary: "Get download links for competitor data"
@@ -1233,3 +1261,40 @@ components:
                 X-Amz-Signature:
                   type: string
                   example: "3d93c156f943a2685faf5d87dca11b128f8217173a2826affa0905ccfacb887d"
+
+    QueueAndCredentialsResponse:
+      type: object
+      description: Response containing temporary AWS credentials and SQS queue URL for receiving price suggestions
+      properties:
+        requestId:
+          type: string
+          description: Unique identifier for this request
+          example: "XmW08jmSAi0EJrw="
+        data:
+          type: object
+          properties:
+            credentials:
+              type: object
+              description: Temporary AWS credentials for accessing the SQS queue
+              properties:
+                AccessKeyId:
+                  type: string
+                  description: AWS access key ID
+                  example: "ASIAXXXXXXXXXXX"
+                SecretAccessKey:
+                  type: string
+                  description: AWS secret access key
+                  example: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+                SessionToken:
+                  type: string
+                  description: AWS session token for temporary credentials
+                  example: "IQoJb3JpZ2luX2VjEBoaCmV1LW5vcnRoLTEiRz..."
+                Expiration:
+                  type: string
+                  format: date-time
+                  description: Expiration time of the temporary credentials in ISO 8601 format
+                  example: "2026-01-22T19:24:21.000Z"
+            queueUrl:
+              type: string
+              description: URL of the SQS queue for receiving price suggestions
+              example: "https://sqs.eu-north-1.amazonaws.com/123456789012/accountPriceSuggestions.fifo"
