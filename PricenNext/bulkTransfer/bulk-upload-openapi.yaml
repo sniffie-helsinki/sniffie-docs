@@ -507,6 +507,25 @@ components:
           type: number
           format: double
           description: Original (RRP) price of the line item, including tax and excluding discount. If quantity is more than 1, this is the original price for a single item.
+        exchangeRates:
+          type: array
+          description: Any and all exchange rates used to convert the price to the default currency of the account. If no exchange rates are provided, the system will use the latest available exchange rates from an external rate provider
+          items:
+            type: object
+            properties:
+              fromCurrency:
+                type: string
+                description: Three letter currency code as defined by ISO-4217
+                example: 'SEK'
+              toCurrency:
+                type: string
+                description: Three letter currency code as defined by ISO-4217
+                example: 'EUR'
+              rate:
+                type: number
+                format: double
+                description: Exchange rate used to convert the price to the default currency of the account
+                example: 0.097
         additionalProperties:
           type: object
           additionalProperties: true
