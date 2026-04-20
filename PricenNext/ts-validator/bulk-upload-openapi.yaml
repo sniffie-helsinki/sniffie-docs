@@ -5,6 +5,7 @@ info:
 servers:
 - url: "https://api.pricen.ai/v2/data/"
 - url: "https://api-staging.pricen.ai/v2/data/"
+- url: "https://api-dev.pricen.ai/v2/data/"
 paths:
   /validate/product:
     post:
