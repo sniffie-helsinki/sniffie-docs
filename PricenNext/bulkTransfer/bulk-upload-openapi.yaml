@@ -575,6 +575,7 @@ components:
           format: double
           description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true
           example: '129.99'
+          nullable: true
         categories:
           type: array
           description: Names of the categories the item is belongs to. Send them in order from highest to lowest. Used as a grouping factor amongst different items. If no category exists send ['All']
@@ -756,6 +757,7 @@ components:
           format: double
           description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true
           example: '129.99'
+          nullable: true
         productUrl:
           type: string
           description: Url to the product page
@@ -867,6 +869,7 @@ components:
           format: double
           description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true
           example: '129.99'
+          nullable: true
         dateForPrice:
           type: string
           description: ISO Date for the price
@@ -1102,6 +1105,7 @@ components:
           format: double
           description: Compare at Price / Suggested retail price, expressed as a decimal number of major currency units. Required if onSale is true
           example: '129.99'
+          nullable: true
         categories:
           type: array
           description: Names of the categories the item is belongs to. Send them in order from highest to lowest. Used as a grouping factor amongst different items. If no category exists send ['All']
