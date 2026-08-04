@@ -568,7 +568,7 @@ components:
         price:
           type: number
           format: double
-          description: Price what the customer pays (with VAT)
+          description: Price what the customer pays (with VAT). Must be greater than zero, otherwise the product is not processed.
           example: '99.95'
         compareAtPrice:
           type: number
@@ -862,7 +862,7 @@ components:
         price:
           type: number
           format: double
-          description: Price what the customer pays (with VAT)
+          description: Price what the customer pays (with VAT). Must be greater than zero, otherwise the product is not processed.
           example: '99.95'
         compareAtPrice:
           type: number
